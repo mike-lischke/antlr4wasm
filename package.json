@@ -18,6 +18,7 @@
     },
     "scripts": {
         "build": "./scripts/build.sh",
+        "generate": "./scripts/generate.sh",
         "start": "ts-node src/antlr4-runtime.ts"
     },
     "devDependencies": {

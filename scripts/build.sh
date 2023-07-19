@@ -10,7 +10,7 @@ em++ \
     antlr4-cpp-runtime/tree/pattern/*.cpp\
     antlr4-cpp-runtime/tree/xpath/*.cpp\
     -O0\
-    -std=c++17 -lembind -Iantlr4-runtime/ \
+    -std=c++17 -lembind -Iantlr4-cpp-runtime/ \
     -fwasm-exceptions\
     -o wasm/antlr4-runtime-wasm.js\
     -s EXPORT_ES6=1\

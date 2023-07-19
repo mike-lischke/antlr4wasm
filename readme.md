@@ -7,7 +7,7 @@ This projects realizes a WebAssembly target for ANTLR4. It is based on the [ANTL
 To build the wasm module, you need to have the [Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html) installed. Then you can build the module with:
 
 ```bash
-./script/build.sh
+./scripts/build.sh
 ```
 
 Installing the emscripten SDK usually requires additional build tools (like XCode terminal tools on macOS), it is therefore recommended to use packager tools of your platform like [Homebrew](https://brew.sh/) on macOS or [Chocolatey](https://chocolatey.org/) on Windows. All details can be found in the [Emscripten documentation](https://emscripten.org/docs/getting_started/downloads.html).
