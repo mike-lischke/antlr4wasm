@@ -1,0 +1,19 @@
+# Coverage directory used by tools like istanbul
+coverage
+
+# Compiled output
+wasm/antlr4-runtime-wasm.js
+wasm/antlr4-runtime-wasm.wasm
+
+# Dependency directories
+node_modules
+
+# Optional internal files/folders
+.npm
+.vscode/numbered-bookmarks.json
+
+# Optional vscode-antlr4 directory if plugin enabled
+.antlr
+
+# Generated files
+/tests/generated

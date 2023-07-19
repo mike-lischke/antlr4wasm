@@ -1,0 +1,18 @@
+# Node generated files
+node_modules
+npm-debug.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Ignored files
+src/
+tests/
+.vscode/
+.eslintrc.json
+.github/
+.git/
+cspell.json
+tsconfig.json
+jest.config.ts

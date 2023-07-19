@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "ES2022",
+        "module": "ES2022",
+        "outDir": "./lib",
+        "declaration": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "removeComments": false,
+    },
+    "ts-node": {
+        "esm": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "wasm/**/*.js",
+        "wasm/antlr4-runtime-wasm.d.ts",
+        "tests/test.ts"
+    ],
+    "exclude": [
+        "node_modules/**/*.*",
+        "lib/**/*.*",
+        "tests/**/*.*",
+        "simple/**/*.*",
+    ],
+}

@@ -1,0 +1,29 @@
+{
+    "version": "0.2",
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [],
+    "ignoreWords": [
+        "Evals",
+        "Harwell",
+        "SQUOTE",
+        "Whitebox",
+        "ambig",
+        "antlr",
+        "antlrcpp",
+        "embind",
+        "emscripten",
+        "localctx",
+        "nvae",
+        "parentctx",
+        "precpred",
+        "recog",
+        "seealso",
+        "sempred",
+        "sempreds"
+    ],
+    "import": [],
+    "ignorePaths": [
+        "wasm/antlr4-runtime-wasm.js"
+    ]
+}

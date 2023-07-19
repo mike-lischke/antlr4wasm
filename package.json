@@ -1,0 +1,29 @@
+{
+    "name": "antlr4wasm",
+    "version": "0.1.0",
+    "description": "ANTLR4 runtime for WebAssembly",
+    "type": "module",
+    "keywords": [
+        "antlr",
+        "antlr4",
+        "antlr4-runtime",
+        "wasm",
+        "webassembly"
+    ],
+    "author": "Mike Lischke",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mike-lischke/antl4wasm.git"
+    },
+    "scripts": {
+        "build": "./scripts/build.sh",
+        "start": "ts-node src/antlr4-runtime.ts"
+    },
+    "devDependencies": {
+        "@tsconfig/node-lts-strictest-esm": "18.12.1",
+        "@types/emscripten": "1.39.6",
+        "ts-node": "10.9.1",
+        "typescript": "5.1.6"
+    }
+}
