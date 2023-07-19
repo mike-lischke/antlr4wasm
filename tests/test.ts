@@ -6,7 +6,7 @@
 import {
     ANTLRInputStream, std$$exception
 } from "../src/antlr4-runtime.js";
-import WhiteboxLexer from "./generated/WhiteboxLexer.js";
+import WhiteboxLexer from "./generated/TypeScript/WhiteboxLexer.js";
 
 try {
     const stream = new ANTLRInputStream();

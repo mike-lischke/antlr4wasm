@@ -4,6 +4,7 @@ coverage
 # Compiled output
 wasm/antlr4-runtime-wasm.js
 wasm/antlr4-runtime-wasm.wasm
+lib
 
 # Dependency directories
 node_modules
@@ -16,4 +17,4 @@ node_modules
 .antlr
 
 # Generated files
-/tests/generated
+#/tests/generated

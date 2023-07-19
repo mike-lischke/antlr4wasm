@@ -17,7 +17,8 @@
         "url": "git+https://github.com/mike-lischke/antl4wasm.git"
     },
     "scripts": {
-        "build": "./scripts/build.sh",
+        "build-wasm": "./scripts/build.sh",
+        "build": "tsc -w",
         "generate": "./scripts/generate.sh",
         "start": "ts-node src/antlr4-runtime.ts"
     },
