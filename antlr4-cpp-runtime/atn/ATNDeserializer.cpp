@@ -86,15 +86,14 @@ namespace {
       }
 
       /* We analyze the ATN to determine if this ATN decision state is the
-       * decision for the closure block that determines whether a
-       * precedence rule should continue or complete.
-       */
+      * decision for the closure block that determines whether a
+      * precedence rule should continue or complete.
+      */
       if (atn.ruleToStartState[state->ruleIndex]->isLeftRecursiveRule) {
         ATNState *maybeLoopEndState = state->transitions[state->transitions.size() - 1]->target;
         if (LoopEndState::is(maybeLoopEndState)) {
-          if (maybeLoopEndState->epsilonOnlyTransitions &&
-              RuleStopState::is(maybeLoopEndState->transitions[0]->target)) {
-            downCast<StarLoopEntryState *>(state)->isPrecedenceDecision = true;
+          if (maybeLoopEndState->epsilonOnlyTransitions && RuleStopState::is(maybeLoopEndState->transitions[0]->target)) {
+            downCast<StarLoopEntryState*>(state)->isPrecedenceDecision = true;
           }
         }
       }
@@ -110,7 +109,7 @@ namespace {
         return std::make_shared<LexerCustomAction>(data1, data2);
 
       case LexerActionType::MODE:
-        return std::make_shared<LexerModeAction>(data1);
+        return std::make_shared< LexerModeAction>(data1);
 
       case LexerActionType::MORE:
         return LexerMoreAction::getInstance();
@@ -129,12 +128,12 @@ namespace {
 
       default:
         throw IllegalArgumentException("The specified lexer action type " + std::to_string(static_cast<size_t>(type)) +
-                                       " is not valid.");
+                                      " is not valid.");
     }
   }
 
-  ConstTransitionPtr edgeFactory(const ATN &atn, TransitionType type, size_t trg, size_t arg1, size_t arg2, size_t arg3,
-                                 const std::vector<misc::IntervalSet> &sets) {
+  ConstTransitionPtr edgeFactory(const ATN &atn, TransitionType type, size_t trg, size_t arg1, size_t arg2,
+                                        size_t arg3, const std::vector<misc::IntervalSet> &sets) {
     ATNState *target = atn.states[trg];
     switch (type) {
       case TransitionType::EPSILON:
@@ -146,7 +145,7 @@ namespace {
           return std::make_unique<RangeTransition>(target, arg1, arg2);
         }
       case TransitionType::RULE:
-        return std::make_unique<RuleTransition>(downCast<RuleStartState *>(atn.states[arg1]), arg2, (int)arg3, target);
+        return std::make_unique<RuleTransition>(downCast<RuleStartState*>(atn.states[arg1]), arg2, (int)arg3, target);
       case TransitionType::PREDICATE:
         return std::make_unique<PredicateTransition>(target, arg1, arg2, arg3 != 0);
       case TransitionType::PRECEDENCE:
@@ -171,50 +170,49 @@ namespace {
   }
 
   /* mem check: all created instances are freed in the d-tor of the ATN. */
-  ATNState *stateFactory(ATNStateType type, size_t ruleIndex) {
+  ATNState* stateFactory(ATNStateType type, size_t ruleIndex) {
     ATNState *s;
     switch (type) {
       case ATNStateType::INVALID:
         return nullptr;
-      case ATNStateType::BASIC:
+      case ATNStateType::BASIC :
         s = new BasicState();
         break;
-      case ATNStateType::RULE_START:
+      case ATNStateType::RULE_START :
         s = new RuleStartState();
         break;
-      case ATNStateType::BLOCK_START:
+      case ATNStateType::BLOCK_START :
         s = new BasicBlockStartState();
         break;
-      case ATNStateType::PLUS_BLOCK_START:
+      case ATNStateType::PLUS_BLOCK_START :
         s = new PlusBlockStartState();
         break;
-      case ATNStateType::STAR_BLOCK_START:
+      case ATNStateType::STAR_BLOCK_START :
         s = new StarBlockStartState();
         break;
-      case ATNStateType::TOKEN_START:
+      case ATNStateType::TOKEN_START :
         s = new TokensStartState();
         break;
-      case ATNStateType::RULE_STOP:
+      case ATNStateType::RULE_STOP :
         s = new RuleStopState();
         break;
-      case ATNStateType::BLOCK_END:
+      case ATNStateType::BLOCK_END :
         s = new BlockEndState();
         break;
-      case ATNStateType::STAR_LOOP_BACK:
+      case ATNStateType::STAR_LOOP_BACK :
         s = new StarLoopbackState();
         break;
-      case ATNStateType::STAR_LOOP_ENTRY:
+      case ATNStateType::STAR_LOOP_ENTRY :
         s = new StarLoopEntryState();
         break;
-      case ATNStateType::PLUS_LOOP_BACK:
+      case ATNStateType::PLUS_LOOP_BACK :
         s = new PlusLoopbackState();
         break;
-      case ATNStateType::LOOP_END:
+      case ATNStateType::LOOP_END :
         s = new LoopEndState();
         break;
-      default:
-        std::string message =
-          "The specified state type " + std::to_string(static_cast<size_t>(type)) + " is not valid.";
+      default :
+        std::string message = "The specified state type " + std::to_string(static_cast<size_t>(type)) + " is not valid.";
         throw IllegalArgumentException(message);
     }
     assert(s->getStateType() == type);
@@ -222,11 +220,14 @@ namespace {
     return s;
   }
 
-  ssize_t readUnicodeInt32(SerializedATNView data, int &p) {
+  ssize_t readUnicodeInt32(SerializedATNView data, int& p) {
     return static_cast<ssize_t>(data[p++]);
   }
 
-  void deserializeSets(SerializedATNView data, int &p, std::vector<misc::IntervalSet> &sets) {
+  void deserializeSets(
+    SerializedATNView data,
+    int& p,
+    std::vector<misc::IntervalSet>& sets) {
     size_t nsets = data[p++];
     sets.reserve(sets.size() + nsets);
     for (size_t i = 0; i < nsets; i++) {
@@ -247,21 +248,17 @@ namespace {
     }
   }
 
-} // namespace
-
-ATNDeserializer::ATNDeserializer() : ATNDeserializer(ATNDeserializationOptions::getDefaultOptions()) {
 }
 
-ATNDeserializer::ATNDeserializer(ATNDeserializationOptions deserializationOptions)
-  : _deserializationOptions(std::move(deserializationOptions)) {
-}
+ATNDeserializer::ATNDeserializer() : ATNDeserializer(ATNDeserializationOptions::getDefaultOptions()) {}
+
+ATNDeserializer::ATNDeserializer(ATNDeserializationOptions deserializationOptions) : _deserializationOptions(std::move(deserializationOptions)) {}
 
 std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const {
   int p = 0;
   int version = data[p++];
   if (version != SERIALIZED_VERSION) {
-    std::string reason = "Could not deserialize ATN with version" + std::to_string(version) + "(expected " +
-                         std::to_string(SERIALIZED_VERSION) + ").";
+    std::string reason = "Could not deserialize ATN with version" + std::to_string(version) + "(expected " + std::to_string(SERIALIZED_VERSION) + ").";
 
     throw UnsupportedOperationException(reason);
   }
@@ -274,12 +271,12 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
   // STATES
   //
   {
-    std::vector<std::pair<LoopEndState *, size_t>> loopBackStateNumbers;
-    std::vector<std::pair<BlockStartState *, size_t>> endStateNumbers;
+    std::vector<std::pair<LoopEndState*, size_t>> loopBackStateNumbers;
+    std::vector<std::pair<BlockStartState*, size_t>> endStateNumbers;
     size_t nstates = data[p++];
     atn->states.reserve(nstates);
-    loopBackStateNumbers.reserve(nstates); // Reserve worst case size, its short lived.
-    endStateNumbers.reserve(nstates);      // Reserve worst case size, its short lived.
+    loopBackStateNumbers.reserve(nstates);  // Reserve worst case size, its short lived.
+    endStateNumbers.reserve(nstates);  // Reserve worst case size, its short lived.
     for (size_t i = 0; i < nstates; i++) {
       ATNStateType stype = static_cast<ATNStateType>(data[p++]);
       // ignore bad type of states
@@ -292,10 +289,10 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
       ATNState *s = stateFactory(stype, ruleIndex);
       if (stype == ATNStateType::LOOP_END) { // special case
         int loopBackStateNumber = data[p++];
-        loopBackStateNumbers.push_back({ downCast<LoopEndState *>(s), loopBackStateNumber });
+        loopBackStateNumbers.push_back({ downCast<LoopEndState*>(s),  loopBackStateNumber });
       } else if (BlockStartState::is(s)) {
         int endStateNumber = data[p++];
-        endStateNumbers.push_back({ downCast<BlockStartState *>(s), endStateNumber });
+        endStateNumbers.push_back({ downCast<BlockStartState*>(s), endStateNumber });
       }
       atn->addState(s);
     }
@@ -306,7 +303,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
     }
 
     for (auto &pair : endStateNumbers) {
-      pair.first->endState = downCast<BlockEndState *>(atn->states[pair.second]);
+      pair.first->endState = downCast<BlockEndState*>(atn->states[pair.second]);
     }
   }
 
@@ -315,13 +312,13 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
     size_t stateNumber = data[p++];
     // The serialized ATN must be specifying the right states, so that the
     // cast below is correct.
-    downCast<DecisionState *>(atn->states[stateNumber])->nonGreedy = true;
+    downCast<DecisionState*>(atn->states[stateNumber])->nonGreedy = true;
   }
 
   size_t numPrecedenceStates = data[p++];
   for (size_t i = 0; i < numPrecedenceStates; i++) {
     size_t stateNumber = data[p++];
-    downCast<RuleStartState *>(atn->states[stateNumber])->isLeftRecursiveRule = true;
+    downCast<RuleStartState*>(atn->states[stateNumber])->isLeftRecursiveRule = true;
   }
 
   //
@@ -332,7 +329,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
   for (size_t i = 0; i < nrules; i++) {
     size_t s = data[p++];
     // Also here, the serialized atn must ensure to point to the correct class type.
-    RuleStartState *startState = downCast<RuleStartState *>(atn->states[s]);
+    RuleStartState *startState = downCast<RuleStartState*>(atn->states[s]);
     atn->ruleToStartState.push_back(startState);
     if (atn->grammarType == ATNType::LEXER) {
       size_t tokenType = data[p++];
@@ -346,7 +343,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
       continue;
     }
 
-    RuleStopState *stopState = downCast<RuleStopState *>(state);
+    RuleStopState *stopState = downCast<RuleStopState*>(state);
     atn->ruleToStopState[state->ruleIndex] = stopState;
     atn->ruleToStartState[state->ruleIndex]->stopState = stopState;
   }
@@ -358,7 +355,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
   atn->modeToStartState.reserve(nmodes);
   for (size_t i = 0; i < nmodes; i++) {
     size_t s = data[p++];
-    atn->modeToStartState.push_back(downCast<TokensStartState *>(atn->states[s]));
+    atn->modeToStartState.push_back(downCast<TokensStartState*>(atn->states[s]));
   }
 
   //
@@ -395,7 +392,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
         continue;
       }
 
-      const RuleTransition *ruleTransition = downCast<const RuleTransition *>(t);
+      const RuleTransition *ruleTransition = downCast<const RuleTransition*>(t);
       size_t outermostPrecedenceReturn = INVALID_INDEX;
       if (atn->ruleToStartState[ruleTransition->target->ruleIndex]->isLeftRecursiveRule) {
         if (ruleTransition->precedence == 0) {
@@ -403,15 +400,14 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
         }
       }
 
-      ConstTransitionPtr returnTransition =
-        std::make_unique<EpsilonTransition>(ruleTransition->followState, outermostPrecedenceReturn);
+      ConstTransitionPtr returnTransition = std::make_unique<EpsilonTransition>(ruleTransition->followState, outermostPrecedenceReturn);
       atn->ruleToStopState[ruleTransition->target->ruleIndex]->addTransition(std::move(returnTransition));
     }
   }
 
   for (ATNState *state : atn->states) {
     if (BlockStartState::is(state)) {
-      BlockStartState *startState = downCast<BlockStartState *>(state);
+      BlockStartState *startState = downCast<BlockStartState*>(state);
 
       // we need to know the end state to set its start state
       if (startState->endState == nullptr) {
@@ -423,23 +419,23 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
         throw IllegalStateException();
       }
 
-      startState->endState->startState = downCast<BlockStartState *>(state);
+      startState->endState->startState = downCast<BlockStartState*>(state);
     }
 
     if (PlusLoopbackState::is(state)) {
-      PlusLoopbackState *loopbackState = downCast<PlusLoopbackState *>(state);
+      PlusLoopbackState *loopbackState = downCast<PlusLoopbackState*>(state);
       for (size_t i = 0; i < loopbackState->transitions.size(); i++) {
         ATNState *target = loopbackState->transitions[i]->target;
         if (PlusBlockStartState::is(target)) {
-          (downCast<PlusBlockStartState *>(target))->loopBackState = loopbackState;
+          (downCast<PlusBlockStartState*>(target))->loopBackState = loopbackState;
         }
       }
     } else if (StarLoopbackState::is(state)) {
-      StarLoopbackState *loopbackState = downCast<StarLoopbackState *>(state);
+      StarLoopbackState *loopbackState = downCast<StarLoopbackState*>(state);
       for (size_t i = 0; i < loopbackState->transitions.size(); i++) {
         ATNState *target = loopbackState->transitions[i]->target;
         if (StarLoopEntryState::is(target)) {
-          downCast<StarLoopEntryState *>(target)->loopBackState = loopbackState;
+          downCast<StarLoopEntryState*>(target)->loopBackState = loopbackState;
         }
       }
     }
@@ -452,7 +448,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
   atn->decisionToState.reserve(ndecisions);
   for (size_t i = 0; i < ndecisions; i++) {
     size_t s = data[p++];
-    DecisionState *decState = downCast<DecisionState *>(atn->states[s]);
+    DecisionState *decState = downCast<DecisionState*>(atn->states[s]);
     if (decState == nullptr)
       throw IllegalStateException();
 
@@ -485,7 +481,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
       atn->ruleToTokenType[i] = static_cast<int>(atn->maxTokenType + i + 1);
     }
 
-    for (std::vector<RuleStartState *>::size_type i = 0; i < atn->ruleToStartState.size(); i++) {
+    for (std::vector<RuleStartState*>::size_type i = 0; i < atn->ruleToStartState.size(); i++) {
       BasicBlockStartState *bypassStart = new BasicBlockStartState(); /* mem check: freed in ATN d-tor */
       bypassStart->ruleIndex = static_cast<int>(i);
       atn->addState(bypassStart);
@@ -518,8 +514,7 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
             continue;
           }
 
-          if (maybeLoopEndState->epsilonOnlyTransitions &&
-              RuleStopState::is(maybeLoopEndState->transitions[0]->target)) {
+          if (maybeLoopEndState->epsilonOnlyTransitions && RuleStopState::is(maybeLoopEndState->transitions[0]->target)) {
             endState = state;
             break;
           }
@@ -527,9 +522,10 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
 
         if (endState == nullptr) {
           throw UnsupportedOperationException("Couldn't identify final state of the precedence rule prefix section.");
+
         }
 
-        excludeTransition = (static_cast<StarLoopEntryState *>(endState))->loopBackState->transitions[0].get();
+        excludeTransition = (static_cast<StarLoopEntryState*>(endState))->loopBackState->transitions[0].get();
       } else {
         endState = atn->ruleToStopState[i];
       }
@@ -542,15 +538,14 @@ std::unique_ptr<ATN> ATNDeserializer::deserialize(SerializedATNView data) const 
           }
 
           if (transition->target == endState) {
-            const_cast<Transition *>(transition.get())->target = bypassStop;
+            const_cast<Transition*>(transition.get())->target = bypassStop;
           }
         }
       }
 
       // all transitions leaving the rule start state need to leave blockStart instead
       while (atn->ruleToStartState[i]->transitions.size() > 0) {
-        ConstTransitionPtr transition =
-          atn->ruleToStartState[i]->removeTransition(atn->ruleToStartState[i]->transitions.size() - 1);
+        ConstTransitionPtr transition = atn->ruleToStartState[i]->removeTransition(atn->ruleToStartState[i]->transitions.size() - 1);
         bypassStart->addTransition(std::move(transition));
       }
 
@@ -583,16 +578,16 @@ void ATNDeserializer::verifyATN(const ATN &atn) const {
     checkCondition(state->epsilonOnlyTransitions || state->transitions.size() <= 1);
 
     if (PlusBlockStartState::is(state)) {
-      checkCondition((downCast<PlusBlockStartState *>(state))->loopBackState != nullptr);
+      checkCondition((downCast<PlusBlockStartState*>(state))->loopBackState != nullptr);
     }
 
     if (StarLoopEntryState::is(state)) {
-      StarLoopEntryState *starLoopEntryState = downCast<StarLoopEntryState *>(state);
+      StarLoopEntryState *starLoopEntryState = downCast<StarLoopEntryState*>(state);
       checkCondition(starLoopEntryState->loopBackState != nullptr);
       checkCondition(starLoopEntryState->transitions.size() == 2);
 
       if (StarBlockStartState::is(starLoopEntryState->transitions[0]->target)) {
-        checkCondition(downCast<LoopEndState *>(starLoopEntryState->transitions[1]->target) != nullptr);
+        checkCondition(downCast<LoopEndState*>(starLoopEntryState->transitions[1]->target) != nullptr);
         checkCondition(!starLoopEntryState->nonGreedy);
       } else if (LoopEndState::is(starLoopEntryState->transitions[0]->target)) {
         checkCondition(StarBlockStartState::is(starLoopEntryState->transitions[1]->target));
@@ -608,23 +603,23 @@ void ATNDeserializer::verifyATN(const ATN &atn) const {
     }
 
     if (LoopEndState::is(state)) {
-      checkCondition((downCast<LoopEndState *>(state))->loopBackState != nullptr);
+      checkCondition((downCast<LoopEndState*>(state))->loopBackState != nullptr);
     }
 
     if (RuleStartState::is(state)) {
-      checkCondition((downCast<RuleStartState *>(state))->stopState != nullptr);
+      checkCondition((downCast<RuleStartState*>(state))->stopState != nullptr);
     }
 
     if (BlockStartState::is(state)) {
-      checkCondition((downCast<BlockStartState *>(state))->endState != nullptr);
+      checkCondition((downCast<BlockStartState*>(state))->endState != nullptr);
     }
 
     if (BlockEndState::is(state)) {
-      checkCondition((downCast<BlockEndState *>(state))->startState != nullptr);
+      checkCondition((downCast<BlockEndState*>(state))->startState != nullptr);
     }
 
     if (DecisionState::is(state)) {
-      DecisionState *decisionState = downCast<DecisionState *>(state);
+      DecisionState *decisionState = downCast<DecisionState*>(state);
       checkCondition(decisionState->transitions.size() <= 1 || decisionState->decision >= 0);
     } else {
       checkCondition(state->transitions.size() <= 1 || RuleStopState::is(state));

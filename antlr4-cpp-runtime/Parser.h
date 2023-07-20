@@ -17,6 +17,7 @@ namespace antlr4 {
   /// This is all the parsing support code essentially; most of it is error recovery stuff.
   class ANTLR4CPP_PUBLIC Parser : public Recognizer {
   public:
+
     class TraceListener : public tree::ParseTreeListener {
     public:
       TraceListener(Parser *outerInstance);
@@ -67,7 +68,7 @@ namespace antlr4 {
     /// <exception cref="RecognitionException"> if the current input symbol did not match
     /// {@code ttype} and the error strategy could not recover from the
     /// mismatched symbol </exception>
-    virtual Token *match(size_t ttype);
+    virtual Token* match(size_t ttype);
 
     /// <summary>
     /// Match current input symbol as a wildcard. If the symbol type matches
@@ -85,7 +86,7 @@ namespace antlr4 {
     /// <exception cref="RecognitionException"> if the current input symbol did not match
     /// a wildcard and the error strategy could not recover from the mismatched
     /// symbol </exception>
-    virtual Token *matchWildcard();
+    virtual Token* matchWildcard();
 
     /// <summary>
     /// Track the <seealso cref="ParserRuleContext"/> objects during the parse and hook
@@ -116,8 +117,8 @@ namespace antlr4 {
     /// Trim the internal lists of the parse tree during parsing to conserve memory.
     /// This property is set to {@code false} by default for a newly constructed parser.
     /// </summary>
-    /// <param name="trimParseTrees"> {@code true} to trim the capacity of the <seealso
-    /// cref="ParserRuleContext#children"/> list to its size after a rule is parsed. </param>
+    /// <param name="trimParseTrees"> {@code true} to trim the capacity of the <seealso cref="ParserRuleContext#children"/>
+    /// list to its size after a rule is parsed. </param>
     virtual void setTrimParseTree(bool trimParseTrees);
 
     /// <returns> {@code true} if the <seealso cref="ParserRuleContext#children"/> list is trimmed
@@ -192,17 +193,18 @@ namespace antlr4 {
     /// <seealso cref= #notifyErrorListeners </seealso>
     virtual size_t getNumberOfSyntaxErrors();
 
-    virtual TokenFactory<CommonToken> *getTokenFactory() const override;
+    virtual TokenFactory<CommonToken>* getTokenFactory() override;
 
     /// <summary>
     /// Tell our token source and error strategy about a new way to create tokens. </summary>
-    virtual void setTokenFactory(TokenFactory<CommonToken> *factory) override {
+    template<typename T1>
+    void setTokenFactory(TokenFactory<T1> *factory)  {
       _input->getTokenSource()->setTokenFactory(factory);
     }
 
     /// The ATN with bypass alternatives is expensive to create so we create it
     /// lazily. The ATN is owned by us.
-    virtual const atn::ATN &getATNWithBypassAlts();
+    virtual const atn::ATN& getATNWithBypassAlts();
 
     /// <summary>
     /// The preferred method of getting a tree pattern. For example, here's a
@@ -225,12 +227,12 @@ namespace antlr4 {
                                                                     Lexer *lexer);
 
     virtual Ref<ANTLRErrorStrategy> getErrorHandler();
-    virtual void setErrorHandler(Ref<ANTLRErrorStrategy> const &handler);
+    virtual void setErrorHandler(Ref<ANTLRErrorStrategy> const& handler);
 
-    virtual IntStream *getInputStream() const override;
+    virtual IntStream* getInputStream() override;
     void setInputStream(IntStream *input) override;
 
-    virtual TokenStream *getTokenStream() const;
+    virtual TokenStream* getTokenStream();
 
     /// Set the token stream and reset the parser.
     virtual void setTokenStream(TokenStream *input);
@@ -239,7 +241,7 @@ namespace antlr4 {
     /// Match needs to return the current input symbol, which gets put
     ///  into the label for the associated token ref; e.g., x=ID.
     /// </summary>
-    virtual Token *getCurrentToken();
+    virtual Token* getCurrentToken();
 
     void notifyErrorListeners(const std::string &msg);
 
@@ -264,7 +266,7 @@ namespace antlr4 {
     /// {@link ParserRuleContext#addErrorNode(ErrorNode)} and
     /// <seealso cref="ParseTreeListener#visitErrorNode"/> is called on any parse
     /// listeners.
-    virtual Token *consume();
+    virtual Token* consume();
 
     /// Always called by generated parsers upon entry to a rule. Access field
     /// <seealso cref="#_ctx"/> get the current context.
@@ -292,8 +294,8 @@ namespace antlr4 {
      */
     virtual void pushNewRecursionContext(ParserRuleContext *localctx, size_t state, size_t ruleIndex);
     virtual void unrollRecursionContexts(ParserRuleContext *parentctx);
-    virtual ParserRuleContext *getInvokingContext(size_t ruleIndex);
-    virtual ParserRuleContext *getContext();
+    virtual ParserRuleContext* getInvokingContext(size_t ruleIndex);
+    virtual ParserRuleContext* getContext();
     virtual void setContext(ParserRuleContext *ctx);
     virtual bool precpred(RuleContext *localctx, int precedence) override;
     virtual bool inContext(const std::string &context);
@@ -328,7 +330,7 @@ namespace antlr4 {
     /// Get a rule's index (i.e., {@code RULE_ruleName} field) or INVALID_INDEX if not found.
     virtual size_t getRuleIndex(const std::string &ruleName);
 
-    virtual ParserRuleContext *getRuleContext();
+    virtual ParserRuleContext* getRuleContext();
 
     /// <summary>
     /// Return List&lt;String&gt; of the rule names in your parser instance
@@ -373,9 +375,7 @@ namespace antlr4 {
      */
     bool isTrace() const;
 
-    tree::ParseTreeTracker &getTreeTracker() {
-      return _tracker;
-    }
+    tree::ParseTreeTracker& getTreeTracker() { return _tracker; }
 
     /** How to create a token leaf node associated with a parent.
      *  Typically, the terminal node to create is not a function of the parent
@@ -390,15 +390,15 @@ namespace antlr4 {
     tree::TerminalNode *createTerminalNode(Token *t);
 
     /** How to create an error node, given a token, associated with a parent.
-     *  Typically, the error node to create is not a function of the parent
-     *  but this method must still set the parent pointer of the terminal node
-     *  returned. I would prefer having {@link ParserRuleContext#addAnyChild(ParseTree)}
-     *  set the parent pointer, but the parent pointer is implementation dependent
-     *  and currently there is no setParent() in {@link ErrorNode} (and can't
-     *  add method in Java 1.7 without breaking backward compatibility).
-     *
-     * @since 4.7
-     */
+       *  Typically, the error node to create is not a function of the parent
+       *  but this method must still set the parent pointer of the terminal node
+       *  returned. I would prefer having {@link ParserRuleContext#addAnyChild(ParseTree)}
+       *  set the parent pointer, but the parent pointer is implementation dependent
+       *  and currently there is no setParent() in {@link ErrorNode} (and can't
+       *  add method in Java 1.7 without breaking backward compatibility).
+       *
+       * @since 4.7
+       */
     tree::ErrorNode *createErrorNode(Token *t);
 
   protected:

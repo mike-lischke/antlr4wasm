@@ -3,7 +3,17 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-/// Generates a getter and setter for the given property.
+/**
+ *  Generates a getter for the given property.
+ */
+#define GETTER(TYPE, NAME)        \
+  inline TYPE NAME##Get() const { \
+    return NAME;                  \
+  }
+
+/**
+ *  Generates a getter and setter for the given property.
+ */
 #define GETTER_SETTER(TYPE, NAME)   \
   inline void NAME##Set(TYPE val) { \
     NAME = val;                     \

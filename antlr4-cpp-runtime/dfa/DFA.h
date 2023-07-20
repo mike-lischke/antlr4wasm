@@ -84,16 +84,6 @@ namespace antlr4 {
 
       std::string toLexerString() const;
 
-      // Needed by embind.
-      atn::DecisionState *getAtnStartState() const {
-        return atnStartState;
-      }
-
-      // Needed by embind.
-      DFAState *getS0() const {
-        return s0;
-      }
-
     private:
       /**
        * {@code true} if this DFA is for a precedence decision; otherwise,

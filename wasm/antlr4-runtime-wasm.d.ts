@@ -448,8 +448,6 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public triggerEnterRuleEvent(): void;
     public triggerExitRuleEvent(): void;
     public getNumberOfSyntaxErrors(): number;
-    public getTokenFactory(): TokenFactory;
-    public setTokenFactory(factory: TokenFactory): void;
     public compileParseTreePattern(pattern: string, patternIndex: number, lexer?: Lexer): ParseTreePattern;
     public getErrorHandler(): ANTLRErrorStrategy;
     public setErrorHandler(handler: ANTLRErrorStrategy): void;
@@ -599,8 +597,6 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public setState(atnState: number): void;
     public getInputStream(): IntStream;
     public setInputStream(input: IntStream): void;
-    public getTokenFactory(): TokenFactory;
-    public setTokenFactory(factory: TokenFactory): void;
 }
 
 export declare class RuleContext extends Deletable {
@@ -736,22 +732,6 @@ export declare abstract class TokenSource {
      * returns {@link IntStream#UNKNOWN_SOURCE_NAME}.
      */
     public abstract getSourceName(): string;
-
-    /**
-     * Set the {@link TokenFactory} this token source should use for creating
-     * {@link Token} objects from the input.
-     *
-     * @param factory The {@link TokenFactory} to use for creating tokens.
-     */
-    public abstract setTokenFactory(factory: TokenFactory): void;
-
-    /**
-     * Gets the {@link TokenFactory} this token source is currently using for
-     * creating {@link Token} objects from the input.
-     *
-     * @returns The {@link TokenFactory} currently used by this token source.
-     */
-    public abstract getTokenFactory(): TokenFactory;
 }
 
 /**
@@ -1207,14 +1187,14 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
     public static readonly MIN_CHAR_VALUE: number;
     public static readonly MAX_CHAR_VALUE: number;
 
-    public readonly tokenStartCharIndex: number;
-    public readonly tokenStartLine: number;
-    public readonly tokenStartCharPositionInLine: number;
-    public readonly hitEOF: boolean;
+    public tokenStartCharIndex: number;
+    public tokenStartLine: number;
+    public tokenStartCharPositionInLine: number;
+    public hitEOF: boolean;
     public channel: number;
     public type: number;
-    public readonly modeStack: number[];
-    public readonly mode: number;
+    public readonly modeStack: Vector<number>;
+    public mode: number;
 
     public constructor();
     public constructor(input: CharStream);
@@ -1229,8 +1209,6 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
     public setMode(mode: number): void;
     public pushMode(mode: number): void;
     public popMode(): number;
-    public setTokenFactory(tokenFactory: TokenFactory): void;
-    public getTokenFactory(): TokenFactory;
     public setInputStream(input: CharStream): void;
     public getSourceName(): string;
     public getInputStream(): CharStream;
@@ -1319,7 +1297,8 @@ export declare class LexerATNSimulator extends ATNSimulator {
 export declare class ParserATNSimulator extends ATNSimulator {
     public static readonly TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT: boolean;
 
-    public constructor(parser: Parser, atn: ATN, decisionToDFA: DFA[], sharedContextCache: PredictionContextCache);
+    // TODO: needs fix in bindings.
+    //public constructor(parser: Parser, atn: ATN, decisionToDFA: DFA[], sharedContextCache: PredictionContextCache);
 
     public override reset(): void;
     public override clearDFA(): number;
@@ -1404,11 +1383,11 @@ export declare enum PredictionMode {
 }
 
 export declare class RuleStartState extends ATNState {
-    public readonly stopState: RuleStopState;
     public readonly isPrecedenceRule: boolean;
     public readonly leftFactored: boolean;
 
     public getStateType(): ATNStateType;
+    public stopState(): RuleStopState;
 }
 
 export declare class RuleStopState extends ATNState {
@@ -1422,7 +1401,6 @@ export declare class RuntimeException extends Deletable {
 }
 
 export declare class SerializedATNView extends Deletable {
-    //public constructor(data: Int32Array);
     public constructor(data: number[]);
 
     public empty(): boolean;
@@ -1451,7 +1429,7 @@ export declare abstract class Transition extends Deletable {
     static readonly serializationNames: string[];
 
     /** The target of this transition. */
-    getTarget(): ATNState;
+    target(): ATNState;
 
     getTransitionType(): TransitionType;
 
@@ -1599,8 +1577,8 @@ export declare class DFA extends Deletable {
     public getStates(precedence: number): DFAState[];
     public toString(vocabulary: Vocabulary): string;
     public toLexerString(): string;
-    public getAtnStartState(): DecisionState;
-    public getS0(): DFAState;
+    public atnStartState(): DecisionState;
+    public s0(): DFAState;
 }
 
 export declare class DFAState extends Deletable {
@@ -1946,8 +1924,8 @@ export declare abstract class ErrorNode extends TerminalNode {
  * The payload is either a {@link Token} or a {@link RuleContext} object.
  */
 export declare abstract class ParseTree extends Deletable {
-    public getChildren(): ParseTree[];
-    public getParent(): ParseTree | undefined;
+    public children(): ParseTree[];
+    public parent(): ParseTree | undefined;
 
     public abstract toStringTree(pretty: boolean): string;
 

@@ -4,13 +4,23 @@
  */
 
 import {
-    ANTLRInputStream, std$$exception
+    ANTLRInputStream, std$$exception, Token
 } from "../src/antlr4-runtime.js";
 import WhiteboxLexer from "./generated/TypeScript/WhiteboxLexer.js";
 
 try {
     const stream = new ANTLRInputStream();
     stream.load("LO", true);
+
+    while (true) {
+        const t = stream.LA(1);
+        console.log(t);
+        if (t == Token.EOF) {
+            break;
+        }
+        stream.consume();
+    };
+    stream.reset();
 
     const lexer = new WhiteboxLexer(stream);
     const token = lexer.nextToken();

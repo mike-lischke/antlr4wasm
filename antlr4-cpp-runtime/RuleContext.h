@@ -20,7 +20,7 @@ namespace antlr4 {
    *  The root node always has a null pointer and invokingState of -1.
    *
    *  Upon entry to parsing, the first invoked rule function creates a
-   *  context object (asubclass specialized for that rule such as
+   *  context object (a subclass specialized for that rule such as
    *  SContext) and makes it the root of a parse tree, recorded by field
    *  Parser._ctx.
    *
@@ -124,7 +124,7 @@ namespace antlr4 {
     /// Print out a whole tree, not just a node, in LISP format
     ///  (root child1 .. childN). Print just a node if this is a leaf.
     /// </summary>
-    virtual std::string toStringTree(const std::vector<std::string> &ruleNames, bool pretty = false);
+    virtual std::string toStringTree(std::vector<std::string> &ruleNames, bool pretty = false);
 
     virtual std::string toStringTree(bool pretty = false) override;
     virtual std::string toString() override;

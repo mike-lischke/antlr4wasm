@@ -11,8 +11,7 @@
 
 using namespace antlr4;
 
-ListTokenSource::ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_)
-  : ListTokenSource(std::move(tokens_), "") {
+ListTokenSource::ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_) : ListTokenSource(std::move(tokens_), "") {
 }
 
 ListTokenSource::ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_, const std::string &sourceName_)
@@ -32,13 +31,12 @@ ListTokenSource::ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_, co
     }
 
     size_t stop = std::max(INVALID_INDEX, start - 1);
-    tokens.emplace_back(
-      (_factory->create({ this, getInputStream() }, Token::EOF, "EOF", Token::DEFAULT_CHANNEL, start, stop,
-                        static_cast<int>(lastToken->getLine()), lastToken->getCharPositionInLine())));
+    tokens.emplace_back((_factory->create({ this, getInputStream() }, Token::EOF, "EOF",
+      Token::DEFAULT_CHANNEL, start, stop, static_cast<int>(lastToken->getLine()), lastToken->getCharPositionInLine())));
   }
 }
 
-size_t ListTokenSource::getCharPositionInLine() const {
+size_t ListTokenSource::getCharPositionInLine() {
   if (i < tokens.size()) {
     return tokens[i]->getCharPositionInLine();
   }
@@ -60,7 +58,7 @@ size_t ListTokenSource::getLine() const {
   return 1;
 }
 
-CharStream *ListTokenSource::getInputStream() const {
+CharStream *ListTokenSource::getInputStream() {
   if (i < tokens.size()) {
     return tokens[i]->getInputStream();
   } else if (!tokens.empty()) {
@@ -71,7 +69,7 @@ CharStream *ListTokenSource::getInputStream() const {
   return nullptr;
 }
 
-std::string ListTokenSource::getSourceName() const {
+std::string ListTokenSource::getSourceName() {
   if (sourceName != "") {
     return sourceName;
   }
@@ -84,7 +82,7 @@ std::string ListTokenSource::getSourceName() const {
   return "List";
 }
 
-TokenFactory<CommonToken> *ListTokenSource::getTokenFactory() const {
+TokenFactory<CommonToken>* ListTokenSource::getTokenFactory() {
   return _factory;
 }
 

@@ -2,7 +2,9 @@
     "version": "0.2",
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "words": [],
+    "words": [
+        "Struct"
+    ],
     "ignoreWords": [
         "Evals",
         "Harwell",

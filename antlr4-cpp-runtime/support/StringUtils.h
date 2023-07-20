@@ -13,4 +13,4 @@ namespace antlrcpp {
 
   ANTLR4CPP_PUBLIC std::string& escapeWhitespace(std::string& out, std::string_view in);
 
-} // namespace antlrcpp
+}

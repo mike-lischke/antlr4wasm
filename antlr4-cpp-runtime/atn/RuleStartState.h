@@ -10,7 +10,7 @@
 namespace antlr4 {
   namespace atn {
 
-    class ANTLR4CPP_PUBLIC RuleStartState final : public ATNState {
+    class ANTLR4CPP_PUBLIC RuleStartState : public ATNState {
     public:
       static bool is(const ATNState &atnState) {
         return atnState.getStateType() == ATNStateType::RULE_START;
@@ -24,11 +24,6 @@ namespace antlr4 {
       bool isLeftRecursiveRule = false;
 
       RuleStartState() : ATNState(ATNStateType::RULE_START) {
-      }
-
-      // Needed for embind.
-      RuleStopState *getStopState() const {
-        return stopState;
       }
     };
 

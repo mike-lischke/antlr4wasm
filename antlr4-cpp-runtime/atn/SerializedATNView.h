@@ -15,133 +15,79 @@
 #include "misc/MurmurHash.h"
 
 namespace antlr4 {
-  namespace atn {
+namespace atn {
 
-    class ANTLR4CPP_PUBLIC SerializedATNView {
-    public:
-      using value_type = int32_t;
-      using size_type = size_t;
-      using difference_type = ptrdiff_t;
-      using reference = int32_t &;
-      using const_reference = const int32_t &;
-      using pointer = int32_t *;
-      using const_pointer = const int32_t *;
-      using iterator = const_pointer;
-      using const_iterator = const_pointer;
-      using reverse_iterator = std::reverse_iterator<iterator>;
-      using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  class ANTLR4CPP_PUBLIC SerializedATNView final {
+  public:
+    using value_type = int32_t;
+    using size_type = size_t;
+    using difference_type = ptrdiff_t;
+    using reference = int32_t&;
+    using const_reference = const int32_t&;
+    using pointer = int32_t*;
+    using const_pointer = const int32_t*;
+    using iterator = const_pointer;
+    using const_iterator = const_pointer;
+    using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-      SerializedATNView() = default;
+    SerializedATNView() = default;
 
-      SerializedATNView(const_pointer data, size_type size) : _data(data), _size(size) {
-      }
+    SerializedATNView(const_pointer data, size_type size) : _data(data), _size(size) {}
 
-#ifdef EMSCRIPTEN
-      SerializedATNView(const std::vector<int32_t> &serializedATN) : _vector(serializedATN) {
-        _data = _vector.data();
-        _size = _vector.size();
-      }
+    SerializedATNView(const std::vector<int32_t> &serializedATN) : _data(serializedATN.data()), _size(serializedATN.size()) {}
 
-      SerializedATNView &operator=(const SerializedATNView &other) {
-        if (this != &other) {
-          _vector = other._vector;
-          _data = _vector.data();
-          _size = _vector.size();
-        }
+    SerializedATNView(const SerializedATNView&) = default;
 
-        return *this;
-      }
-#else
-      SerializedATNView(const std::vector<int32_t> &serializedATN)
-        : _data(serializedATN.data()), _size(serializedATN.size()) {
-      }
+    SerializedATNView& operator=(const SerializedATNView&) = default;
 
-      SerializedATNView &operator=(const SerializedATNView &) = default;
-#endif
+    const_iterator begin() const { return data(); }
 
-      SerializedATNView(const SerializedATNView &) = default;
+    const_iterator cbegin() const { return data(); }
 
-      const_iterator begin() const {
-        return data();
-      }
+    const_iterator end() const { return data() + size(); }
 
-      const_iterator cbegin() const {
-        return data();
-      }
+    const_iterator cend() const { return data() + size(); }
 
-      const_iterator end() const {
-        return data() + size();
-      }
+    const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
 
-      const_iterator cend() const {
-        return data() + size();
-      }
+    const_reverse_iterator crbegin() const { return const_reverse_iterator(cend()); }
 
-      const_reverse_iterator rbegin() const {
-        return const_reverse_iterator(end());
-      }
+    const_reverse_iterator rend() const { return const_reverse_iterator(begin()); }
 
-      const_reverse_iterator crbegin() const {
-        return const_reverse_iterator(cend());
-      }
+    const_reverse_iterator crend() const { return const_reverse_iterator(cbegin()); }
 
-      const_reverse_iterator rend() const {
-        return const_reverse_iterator(begin());
-      }
+    bool empty() const { return size() == 0; }
 
-      const_reverse_iterator crend() const {
-        return const_reverse_iterator(cbegin());
-      }
+    const_pointer data() const { return _data; }
 
-      bool empty() const {
-        return size() == 0;
-      }
+    size_type size() const { return _size; }
 
-      const_pointer data() const {
-        return _data;
-      }
+    size_type size_bytes() const { return size() * sizeof(value_type); }
 
-      size_type size() const {
-        return _size;
-      }
+    const_reference operator[](size_type index) const { return _data[index]; }
 
-      size_type size_bytes() const {
-        return size() * sizeof(value_type);
-      }
+  private:
+    const_pointer _data = nullptr;
+    size_type _size = 0;
+  };
 
-      const_reference operator[](size_type index) const {
-        return _data[index];
-      }
+  inline bool operator==(const SerializedATNView &lhs, const SerializedATNView &rhs) {
+    return (lhs.data() == rhs.data() && lhs.size() == rhs.size()) ||
+           (lhs.size() == rhs.size() && std::memcmp(lhs.data(), rhs.data(), lhs.size_bytes()) == 0);
+  }
 
-      void print() const {
-        std::cout << "[" << _data[0] << ", " << _data[4] << ", " << _size << ")" << std::endl;
-      }
+  inline bool operator!=(const SerializedATNView &lhs, const SerializedATNView &rhs) {
+    return !operator==(lhs, rhs);
+  }
 
-    private:
-      const_pointer _data = nullptr;
-      size_type _size = 0;
+  inline bool operator<(const SerializedATNView &lhs, const SerializedATNView &rhs) {
+    int diff = std::memcmp(lhs.data(), rhs.data(), std::min(lhs.size_bytes(), rhs.size_bytes()));
+    return diff < 0 || (diff == 0 && lhs.size() < rhs.size());
+  }
 
-#ifdef EMSCRIPTEN
-      std::vector<int32_t> _vector;
-#endif
-    };
-
-    inline bool operator==(const SerializedATNView &lhs, const SerializedATNView &rhs) {
-      return (lhs.data() == rhs.data() && lhs.size() == rhs.size()) ||
-             (lhs.size() == rhs.size() && std::memcmp(lhs.data(), rhs.data(), lhs.size_bytes()) == 0);
-    }
-
-    inline bool operator!=(const SerializedATNView &lhs, const SerializedATNView &rhs) {
-      return !operator==(lhs, rhs);
-    }
-
-    inline bool operator<(const SerializedATNView &lhs, const SerializedATNView &rhs) {
-      int diff = std::memcmp(lhs.data(), rhs.data(), std::min(lhs.size_bytes(), rhs.size_bytes()));
-      return diff < 0 || (diff == 0 && lhs.size() < rhs.size());
-    }
-
-  } // namespace atn
-} // namespace antlr4
+}  // namespace atn
+}  // namespace antlr4
 
 namespace std {
 
@@ -152,4 +98,4 @@ namespace std {
     }
   };
 
-} // namespace std
+}  // namespace std

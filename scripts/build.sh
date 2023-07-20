@@ -15,6 +15,7 @@ em++ \
     -o wasm/antlr4-runtime-wasm.js\
     -s EXPORT_ES6=1\
     -s WASM=1\
+    -s WASM_BIGINT\
     -s ALLOW_MEMORY_GROWTH=1
 
 # -s TOTAL_MEMORY=1024MB

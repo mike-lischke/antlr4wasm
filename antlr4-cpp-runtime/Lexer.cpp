@@ -54,7 +54,7 @@ std::unique_ptr<Token> Lexer::nextToken() {
   // guaranteed at least have text of current token
   ssize_t tokenStartMarker = _input->mark();
 
-  auto onExit = finally([this, tokenStartMarker] {
+  auto onExit = finally([this, tokenStartMarker]{
     // make sure we release marker after match or
     // unbuffered char stream will keep buffering
     _input->release(tokenStartMarker);
@@ -77,10 +77,8 @@ std::unique_ptr<Token> Lexer::nextToken() {
       type = Token::INVALID_TYPE;
       size_t ttype;
       try {
-        std::cout << "interpreter match()" << std::endl;
         ttype = getInterpreter<atn::LexerATNSimulator>()->match(_input, mode);
       } catch (LexerNoViableAltException &e) {
-        std::cout << "match() exception" << std::endl;
         notifyListeners(e); // report error
         recover(e);
         ttype = SKIP;
@@ -98,7 +96,6 @@ std::unique_ptr<Token> Lexer::nextToken() {
     if (token == nullptr) {
       emit();
     }
-    std::cout << "finish nextToken()" << std::endl;
     return std::move(token);
   }
 }
@@ -117,7 +114,7 @@ void Lexer::setMode(size_t m) {
 
 void Lexer::pushMode(size_t m) {
 #if DEBUG_LEXER == 1
-  std::cout << "pushMode " << m << std::endl;
+    std::cout << "pushMode " << m << std::endl;
 #endif
 
   modeStack.push_back(mode);
@@ -129,7 +126,7 @@ size_t Lexer::popMode() {
     throw EmptyStackException();
   }
 #if DEBUG_LEXER == 1
-  std::cout << std::string("popMode back to ") << modeStack.back() << std::endl;
+    std::cout << std::string("popMode back to ") << modeStack.back() << std::endl;
 #endif
 
   setMode(modeStack.back());
@@ -137,20 +134,21 @@ size_t Lexer::popMode() {
   return mode;
 }
 
-TokenFactory<CommonToken> *Lexer::getTokenFactory() const {
+
+TokenFactory<CommonToken>* Lexer::getTokenFactory() {
   return _factory;
 }
 
 void Lexer::setInputStream(IntStream *input) {
   reset();
-  _input = dynamic_cast<CharStream *>(input);
+  _input = dynamic_cast<CharStream*>(input);
 }
 
-std::string Lexer::getSourceName() const {
+std::string Lexer::getSourceName() {
   return _input->getSourceName();
 }
 
-CharStream *Lexer::getInputStream() const {
+CharStream* Lexer::getInputStream() {
   return _input;
 }
 
@@ -158,17 +156,16 @@ void Lexer::emit(std::unique_ptr<Token> newToken) {
   token = std::move(newToken);
 }
 
-Token *Lexer::emit() {
-  emit(_factory->create({ this, _input }, type, _text, channel, tokenStartCharIndex, getCharIndex() - 1, tokenStartLine,
-                        tokenStartCharPositionInLine));
+Token* Lexer::emit() {
+  emit(_factory->create({ this, _input }, type, _text, channel,
+    tokenStartCharIndex, getCharIndex() - 1, tokenStartLine, tokenStartCharPositionInLine));
   return token.get();
 }
 
-Token *Lexer::emitEOF() {
+Token* Lexer::emitEOF() {
   size_t cpos = getCharPositionInLine();
   size_t line = getLine();
-  emit(_factory->create({ this, _input }, EOF, "", Token::DEFAULT_CHANNEL, _input->index(), _input->index() - 1, line,
-                        cpos));
+  emit(_factory->create({ this, _input }, EOF, "", Token::DEFAULT_CHANNEL, _input->index(), _input->index() - 1, line, cpos));
   return token.get();
 }
 
@@ -176,7 +173,7 @@ size_t Lexer::getLine() const {
   return getInterpreter<atn::LexerATNSimulator>()->getLine();
 }
 
-size_t Lexer::getCharPositionInLine() const {
+size_t Lexer::getCharPositionInLine() {
   return getInterpreter<atn::LexerATNSimulator>()->getCharPositionInLine();
 }
 
@@ -215,7 +212,7 @@ void Lexer::setType(size_t ttype) {
   type = ttype;
 }
 
-size_t Lexer::getType() const {
+size_t Lexer::getType() {
   return type;
 }
 
@@ -223,7 +220,7 @@ void Lexer::setChannel(size_t newChannel) {
   channel = newChannel;
 }
 
-size_t Lexer::getChannel() const {
+size_t Lexer::getChannel() {
   return channel;
 }
 
@@ -237,7 +234,7 @@ std::vector<std::unique_ptr<Token>> Lexer::getAllTokens() {
   return tokens;
 }
 
-void Lexer::recover(const LexerNoViableAltException & /*e*/) {
+void Lexer::recover(const LexerNoViableAltException &/*e*/) {
   if (_input->LA(1) != EOF) {
     // skip a char and try again
     getInterpreter<atn::LexerATNSimulator>()->consume(_input);
@@ -257,18 +254,18 @@ std::string Lexer::getErrorDisplay(const std::string &s) {
   std::stringstream ss;
   for (auto c : s) {
     switch (c) {
-      case '\n':
-        ss << "\\n";
-        break;
-      case '\t':
-        ss << "\\t";
-        break;
-      case '\r':
-        ss << "\\r";
-        break;
-      default:
-        ss << c;
-        break;
+    case '\n':
+      ss << "\\n";
+      break;
+    case '\t':
+      ss << "\\t";
+      break;
+    case '\r':
+      ss << "\\r";
+      break;
+    default:
+      ss << c;
+      break;
     }
   }
   return ss.str();

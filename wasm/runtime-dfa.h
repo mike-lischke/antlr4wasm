@@ -27,21 +27,35 @@ dfa::Vocabulary *createVocabulary(val literal, val symbolic, val display) {
   return new dfa::Vocabulary(literalNames, symbolicNames, displayNames);
 }
 
+class DFAHelper : public dfa::DFA {
+public:
+  explicit DFAHelper(atn::DecisionState *atnStartState) : dfa::DFA(atnStartState) {
+  }
+
+  DFAHelper(atn::DecisionState *atnStartState, size_t decision) : dfa::DFA(atnStartState, decision) {
+  }
+
+  GETTER(atn::DecisionState *, atnStartState)
+  GETTER(dfa::DFAState *, s0)
+};
+
 EMSCRIPTEN_BINDINGS(dfa) {
-  class_<dfa::DFA>("DFA")
+  class_<dfa::DFA>("DFA$Internal");
+
+  class_<DFAHelper, base<dfa::DFA>>("DFA")
     .constructor<atn::DecisionState *>()
     .constructor<atn::DecisionState *, size_t>()
 
-    .property("decision", &dfa::DFA::decision)
+    //.property("decision", &dfa::DFA::decision)
 
+    .function("atnStartState", &DFAHelper::atnStartStateGet, allow_raw_pointers())
+    .function("s0", &DFAHelper::s0Get, allow_raw_pointers())
     .function("isPrecedenceDfa", &dfa::DFA::isPrecedenceDfa)
     .function("getPrecedenceStartState", &dfa::DFA::getPrecedenceStartState, allow_raw_pointers())
     .function("setPrecedenceStartState", &dfa::DFA::setPrecedenceStartState, allow_raw_pointers())
     .function("getStates", &dfa::DFA::getStates, allow_raw_pointers())
     .function("toString", &dfa::DFA::toString)
-    .function("toLexerString", &dfa::DFA::toLexerString)
-    .function("getAtnStartState", &dfa::DFA::getAtnStartState, allow_raw_pointers())
-    .function("getS0", &dfa::DFA::getS0, allow_raw_pointers());
+    .function("toLexerString", &dfa::DFA::toLexerString);
 
   class_<dfa::DFAState>("DFAState")
     .constructor<>()

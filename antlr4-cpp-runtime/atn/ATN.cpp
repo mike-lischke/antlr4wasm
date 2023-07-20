@@ -13,7 +13,6 @@
 #include "atn/ATNType.h"
 #include "Exceptions.h"
 #include "support/CPPUtils.h"
-#include "dfa/DFA.h"
 
 #include "atn/ATN.h"
 
@@ -22,11 +21,9 @@ using namespace antlr4::atn;
 using namespace antlr4::internal;
 using namespace antlrcpp;
 
-ATN::ATN() : ATN(ATNType::LEXER, 0) {
-}
+ATN::ATN() : ATN(ATNType::LEXER, 0) {}
 
-ATN::ATN(ATNType grammarType_, size_t maxTokenType_) : grammarType(grammarType_), maxTokenType(maxTokenType_) {
-}
+ATN::ATN(ATNType grammarType_, size_t maxTokenType_) : grammarType(grammarType_), maxTokenType(maxTokenType_) {}
 
 ATN::~ATN() {
   for (ATNState *state : states) {
@@ -34,12 +31,13 @@ ATN::~ATN() {
   }
 }
 
-misc::IntervalSet const ATN::nextTokens(ATNState *s, RuleContext *ctx) const {
+misc::IntervalSet ATN::nextTokens(ATNState *s, RuleContext *ctx) const {
   LL1Analyzer analyzer(*this);
   return analyzer.LOOK(s, ctx);
+
 }
 
-misc::IntervalSet const &ATN::nextTokens(ATNState *s) const {
+misc::IntervalSet const& ATN::nextTokens(ATNState *s) const {
   if (!s->_nextTokenUpdated) {
     UniqueLock<Mutex> lock(_mutex);
     if (!s->_nextTokenUpdated) {
@@ -52,7 +50,7 @@ misc::IntervalSet const &ATN::nextTokens(ATNState *s) const {
 
 void ATN::addState(ATNState *state) {
   if (state != nullptr) {
-    // state->atn = this;
+    //state->atn = this;
     state->stateNumber = static_cast<int>(states.size());
   }
 
@@ -60,7 +58,7 @@ void ATN::addState(ATNState *state) {
 }
 
 void ATN::removeState(ATNState *state) {
-  delete states.at(state->stateNumber); // just free mem, don't shift states in list
+  delete states.at(state->stateNumber);// just free mem, don't shift states in list
   states.at(state->stateNumber) = nullptr;
 }
 
@@ -98,7 +96,7 @@ misc::IntervalSet ATN::getExpectedTokens(size_t stateNumber, RuleContext *contex
   expected.remove(Token::EPSILON);
   while (ctx && ctx->invokingState != ATNState::INVALID_STATE_NUMBER && following.contains(Token::EPSILON)) {
     ATNState *invokingState = states.at(ctx->invokingState);
-    const RuleTransition *rt = static_cast<const RuleTransition *>(invokingState->transitions[0].get());
+    const RuleTransition *rt = static_cast<const RuleTransition*>(invokingState->transitions[0].get());
     following = nextTokens(rt->followState);
     expected.addAll(following);
     expected.remove(Token::EPSILON);
@@ -158,3 +156,4 @@ std::string ATN::toString() const {
 
   return ss.str();
 }
+

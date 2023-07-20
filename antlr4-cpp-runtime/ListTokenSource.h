@@ -40,7 +40,7 @@ namespace antlr4 {
   private:
     /// This is the backing field for <seealso cref="#getTokenFactory"/> and
     /// <seealso cref="setTokenFactory"/>.
-    TokenFactory<CommonToken>* _factory = CommonTokenFactory::DEFAULT.get();
+    TokenFactory<CommonToken> *_factory = CommonTokenFactory::DEFAULT.get();
 
   public:
     /// Constructs a new <seealso cref="ListTokenSource"/> instance from the specified
@@ -52,7 +52,7 @@ namespace antlr4 {
     ListTokenSource(std::vector<std::unique_ptr<Token>> tokens);
     ListTokenSource(const ListTokenSource& other) = delete;
 
-    ListTokenSource& operator=(const ListTokenSource& other) = delete;
+    ListTokenSource& operator = (const ListTokenSource& other) = delete;
 
     /// <summary>
     /// Constructs a new <seealso cref="ListTokenSource"/> instance from the specified
@@ -66,19 +66,20 @@ namespace antlr4 {
     /// been reached).
     /// </param>
     /// <exception cref="NullPointerException"> if {@code tokens} is {@code null} </exception>
-    ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_, const std::string& sourceName_);
+    ListTokenSource(std::vector<std::unique_ptr<Token>> tokens_, const std::string &sourceName_);
 
-    virtual size_t getCharPositionInLine() const override;
+    virtual size_t getCharPositionInLine() override;
     virtual std::unique_ptr<Token> nextToken() override;
     virtual size_t getLine() const override;
-    virtual CharStream* getInputStream() const override;
-    virtual std::string getSourceName() const override;
+    virtual CharStream* getInputStream() override;
+    virtual std::string getSourceName() override;
 
-    virtual void setTokenFactory(TokenFactory<CommonToken>* factory) override {
+    template<typename T1>
+    void setTokenFactory(TokenFactory<T1> *factory) {
       this->_factory = factory;
     }
 
-    virtual TokenFactory<CommonToken>* getTokenFactory() const override;
+    virtual TokenFactory<CommonToken>* getTokenFactory() override;
 
   private:
     void InitializeInstanceFields();

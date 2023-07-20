@@ -80,7 +80,7 @@ std::string RuleContext::toStringTree(Parser *recog, bool pretty) {
   return tree::Trees::toStringTree(this, recog, pretty);
 }
 
-std::string RuleContext::toStringTree(const std::vector<std::string> &ruleNames, bool pretty) {
+std::string RuleContext::toStringTree(std::vector<std::string> &ruleNames, bool pretty) {
   return tree::Trees::toStringTree(this, ruleNames, pretty);
 }
 
@@ -132,8 +132,8 @@ std::string RuleContext::toString(Recognizer *recog) {
 
 std::string RuleContext::toString(Recognizer *recog, RuleContext *stop) {
   if (recog == nullptr)
-    // Don't use an initializer {} here or we end up calling ourselves recursively.
-    return toString(std::vector<std::string>(), stop);
+    return toString(std::vector<std::string>(),
+                    stop); // Don't use an initializer {} here or we end up calling ourselves recursively.
   return toString(recog->getRuleNames(), stop);
 }
 

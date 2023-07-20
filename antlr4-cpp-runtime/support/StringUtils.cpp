@@ -15,8 +15,8 @@ namespace antlrcpp {
   }
 
   std::string& escapeWhitespace(std::string& out, std::string_view in) {
-    out.reserve(in.size()); // Best case, no escaping.
-    for (const auto& c : in) {
+    out.reserve(in.size());  // Best case, no escaping.
+    for (const auto &c : in) {
       switch (c) {
         case '\t':
           out.append("\\t");
@@ -35,4 +35,4 @@ namespace antlrcpp {
     return out;
   }
 
-} // namespace antlrcpp
+} // namespace antrlcpp

@@ -1,6 +1,7 @@
 /*
  * Copyright (c) Mike Lischke. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
+ * Licensed under the MIT License. See License.txt in the project root for
+ * license information.
  */
 
 #pragma once
@@ -173,14 +174,6 @@ public:
   }
 
   GETTER_UNIQUE_PTR(Token, token)
-  GETTER_SETTER(size_t, tokenStartCharIndex)
-  GETTER_SETTER(size_t, tokenStartLine)
-  GETTER_SETTER(size_t, tokenStartCharPositionInLine)
-  GETTER_SETTER(bool, hitEOF)
-  GETTER_SETTER(size_t, channel)
-  GETTER_SETTER(size_t, type)
-  GETTER_SETTER(std::vector<size_t>, modeStack)
-  GETTER_SETTER(size_t, mode)
 
   virtual const std::vector<std::string> &getChannelNames() const override {
     return _empty;
@@ -210,23 +203,16 @@ public:
     return 0;
   }
 
-  virtual size_t getCharPositionInLine() const override {
+  virtual size_t getCharPositionInLine() override {
     return 0;
   }
 
-  virtual CharStream *getInputStream() const override {
+  virtual CharStream *getInputStream() override {
     return nullptr;
   }
 
-  virtual std::string getSourceName() const override {
+  virtual std::string getSourceName() override {
     return "";
-  }
-
-  virtual TokenFactory<CommonToken> *getTokenFactory() const override {
-    return nullptr;
-  }
-
-  virtual void setTokenFactory(TokenFactory<CommonToken> *input) override {
   }
 
 private:
@@ -270,7 +256,7 @@ public:
     return call<std::unique_ptr<Token>>("nextToken");
   }
 
-  virtual size_t getCharPositionInLine() const override {
+  virtual size_t getCharPositionInLine() override {
     return call<size_t>("getCharPositionInLine");
   }
 
@@ -278,20 +264,12 @@ public:
     call<void>("setInputStream", input);
   }
 
-  virtual CharStream *getInputStream() const override {
+  virtual CharStream *getInputStream() override {
     return nullptr; // call<CharStream *>("getInputStream");
   }
 
-  virtual std::string getSourceName() const override {
+  virtual std::string getSourceName() override {
     return call<std::string>("getSourceName");
-  }
-
-  virtual TokenFactory<CommonToken> *getTokenFactory() const override {
-    return nullptr; // call<TokenFactory<CommonToken> *>("getTokenFactory");
-  }
-
-  virtual void setTokenFactory(TokenFactory<CommonToken> *factory) override {
-    call<void>("setTokenFactory", factory);
   }
 };
 
@@ -319,7 +297,42 @@ public:
   }
 };
 
-class RecognizerWrapper : public wrapper<Recognizer> {
+class RecognizerHelper : public Recognizer {
+public:
+  virtual std::vector<std::string> const &getRuleNames() const override {
+    return _empty;
+  }
+
+  virtual dfa::Vocabulary const &getVocabulary() const override {
+    return _vocabulary;
+  }
+
+  virtual std::string getGrammarFileName() const override {
+    return "";
+  }
+
+  virtual const atn::ATN &getATN() const override {
+    return _atn;
+  }
+
+  virtual IntStream *getInputStream() override {
+    return nullptr;
+  }
+
+  virtual void setInputStream(IntStream *input) override {
+  }
+
+  virtual TokenFactory<CommonToken> *getTokenFactory() override {
+    return nullptr;
+  }
+
+private:
+  std::vector<std::string> _empty;
+  dfa::Vocabulary _vocabulary;
+  atn::ATN _atn;
+};
+
+class RecognizerWrapper : public wrapper<RecognizerHelper> {
 public:
   EMSCRIPTEN_WRAPPER(RecognizerWrapper);
 
@@ -342,7 +355,7 @@ public:
     return call<const atn::ATN &>("getATN");
   }
 
-  virtual IntStream *getInputStream() const override {
+  virtual IntStream *getInputStream() override {
     return nullptr; // call<IntStream *>("getInputStream");
   }
 
@@ -350,21 +363,8 @@ public:
     call<void>("setInputStream", input);
   }
 
-  virtual TokenFactory<CommonToken> *getTokenFactory() const override {
-    return nullptr; // call<TokenFactory<CommonToken> *>("getTokenFactory");
-  }
-
-  virtual void setTokenFactory(TokenFactory<CommonToken> *input) override {
-    call<void>("setTokenFactory", input);
-  }
-
   virtual atn::SerializedATNView getSerializedATN() const override {
-    // JS API returns an Int32Array.
-    const auto data = call<val>("getSerializedATN");
-    int32_t *ptr = data["byteOffset"].as<int32_t *>(allow_raw_pointers());
-    size_t length = data["byteLength"].as<size_t>() / sizeof(int32_t);
-
-    return atn::SerializedATNView(ptr, length);
+    return call<atn::SerializedATNView>("getSerializedATN");
   }
 };
 
@@ -402,24 +402,16 @@ public:
     return call<size_t>("getLine");
   }
 
-  virtual size_t getCharPositionInLine() const override {
+  virtual size_t getCharPositionInLine() override {
     return call<size_t>("getCharPositionInLine");
   }
 
-  virtual CharStream *getInputStream() const override {
+  virtual CharStream *getInputStream() override {
     return nullptr; // call<CharStream *>("getInputStream");
   }
 
-  virtual std::string getSourceName() const override {
+  virtual std::string getSourceName() override {
     return call<std::string>("getSourceName");
-  }
-
-  void setTokenFactory(TokenFactory<CommonToken> *factory) override {
-    call<void>("setTokenFactory", factory);
-  }
-
-  virtual TokenFactory<CommonToken> *getTokenFactory() const override {
-    return nullptr; // call<TokenFactory<CommonToken> *>("getTokenFactory");
   }
 };
 
@@ -699,7 +691,8 @@ EMSCRIPTEN_BINDINGS(main) {
     .constructor<size_t>()
     .constructor<std::pair<TokenSource *, CharStream *>, size_t, size_t, size_t, size_t>()
     .constructor<size_t, std::string>()
-    //.constructor<Token *>() Constructor overloads with the same number of arguments are not supported currently.
+    //.constructor<Token *>() Constructor overloads with the same number of
+    // arguments are not supported currently.
 
     .function("getType", &CommonToken::getType)
     .function("setText", &CommonToken::setText)
@@ -727,8 +720,9 @@ EMSCRIPTEN_BINDINGS(main) {
     .constructor<>()
     .constructor<bool>()
 
-    // Gives error: call to implicitly-deleted copy constructor of 'std::unique_ptr<TokenFactory<CommonToken>>'
-    // .class_property("DEFAULT", &CommonTokenFactory::DEFAULT)
+    // Gives error: call to implicitly-deleted copy constructor of
+    // 'std::unique_ptr<TokenFactory<CommonToken>>' .class_property("DEFAULT",
+    // &CommonTokenFactory::DEFAULT)
     .function(
       "create",
       select_overload<std::unique_ptr<CommonToken>(std::pair<TokenSource *, CharStream *>, size_t, const std::string &,
@@ -815,62 +809,15 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getSourceName", &IntStream::getSourceName, pure_virtual())
     .allow_subclass<IntStreamWrapper>("IntStreamWrapper");
 
-  class_<Lexer, base<Recognizer>>("Lexer$Internal");
-  /* .class_property("DEFAULT_MODE", &Lexer::DEFAULT_MODE)
-   .class_property("MORE", &Lexer::MORE)
-   .class_property("SKIP", &Lexer::SKIP)
-   .class_property("DEFAULT_TOKEN_CHANNEL", &Lexer::DEFAULT_TOKEN_CHANNEL)
-   .class_property("HIDDEN", &Lexer::HIDDEN)
-   .class_property("MIN_CHAR_VALUE", &Lexer::MIN_CHAR_VALUE)
-   .class_property("MAX_CHAR_VALUE", &Lexer::MAX_CHAR_VALUE)
-
-   //.property("_input", &Lexer::_input)
-   // .property("token", &Lexer::token)
-
-   .property("tokenStartCharIndex", &Lexer::tokenStartCharIndex)
-   .property("tokenStartLine", &Lexer::tokenStartLine)
-   .property("tokenStartCharPositionInLine", &Lexer::tokenStartCharPositionInLine)
-   .property("hitEOF", &Lexer::hitEOF)
-   .property("channel", &Lexer::channel)
-   .property("type", &Lexer::type)
-   .property("modeStack", &Lexer::modeStack)
-   .property("mode", &Lexer::mode)
-
-   .function("reset", &Lexer::reset)
-   .function("nextToken", optional_override([](Lexer &self) { return self.Lexer::nextToken(); }))
-   .function("skip", &Lexer::skip)
-   .function("more", &Lexer::more)
-   .function("setMode", &Lexer::setMode)
-   .function("pushMode", &Lexer::pushMode)
-   .function("popMode", &Lexer::popMode)
-   .function("setTokenFactory", &Lexer::setTokenFactory, allow_raw_pointers())
-   .function("getTokenFactory", &Lexer::getTokenFactory, allow_raw_pointers())
-   .function("setInputStream", &Lexer::setInputStream, allow_raw_pointers())
-   .function("getSourceName", &Lexer::getSourceName)
-   .function("getInputStream", &Lexer::getInputStream, allow_raw_pointers())
-   .function("emit", select_overload<void(std::unique_ptr<Token>)>(&Lexer::emit))
-   .function("emit", select_overload<Token *()>(&Lexer::emit), allow_raw_pointers())
-   .function("emitEOF", &Lexer::emitEOF, allow_raw_pointers())
-   .function("getLine", &Lexer::getLine)
-   .function("getCharPositionInLine", &Lexer::getCharPositionInLine)
-   .function("setLine", &Lexer::setLine)
-   .function("setCharPositionInLine", &Lexer::setCharPositionInLine)
-   .function("getCharIndex", &Lexer::getCharIndex)
-   .function("getText", &Lexer::getText)
-   .function("setText", &Lexer::setText)
-   .function("getToken", &Lexer::getToken)
-   .function("setToken", &Lexer::setToken)
-   .function("setType", &Lexer::setType)
-   .function("getType", &Lexer::getType)
-   .function("setChannel", &Lexer::setChannel)
-   .function("getChannel", &Lexer::getChannel)
-   .function("getChannelNames", &Lexer::getChannelNames, pure_virtual())
-   .function("getModeNames", &Lexer::getModeNames, pure_virtual())
-   .function("recover", select_overload<void(const LexerNoViableAltException &)>(&Lexer::recover))
-   .function("recover", select_overload<void(RecognitionException *)>(&Lexer::recover), allow_raw_pointers())
-   .function("notifyListeners", &Lexer::notifyListeners)
-   .function("getErrorDisplay", &Lexer::getErrorDisplay)
-   .function("getNumberOfSyntaxErrors", &Lexer::getNumberOfSyntaxErrors);*/
+  class_<Lexer, base<Recognizer>>("Lexer$Internal")
+    .property("tokenStartCharIndex", &Lexer::tokenStartCharIndex)
+    .property("tokenStartLine", &Lexer::tokenStartLine)
+    .property("tokenStartCharPositionInLine", &Lexer::tokenStartCharPositionInLine)
+    .property("hitEOF", &Lexer::hitEOF)
+    .property("channel", &Lexer::channel)
+    .property("type", &Lexer::type)
+    .property("modeStack", &Lexer::modeStack)
+    .property("mode", &Lexer::mode);
 
   class_<LexerHelper, base<Lexer>>("Lexer")
     .class_property("DEFAULT_MODE", &Lexer::DEFAULT_MODE)
@@ -885,16 +832,6 @@ EMSCRIPTEN_BINDINGS(main) {
 
     //.property("_input", &Lexer::_input)
     //.property("token", &LexerHelper::tokenGet)
-
-    .property("tokenStartCharIndex", &LexerHelper::tokenStartCharIndexGet, &LexerHelper::tokenStartCharIndexSet)
-    .property("tokenStartLine", &LexerHelper::tokenStartLineGet, &LexerHelper::tokenStartLineSet)
-    .property("tokenStartCharPositionInLine", &LexerHelper::tokenStartCharPositionInLineGet,
-              &LexerHelper::tokenStartCharPositionInLineSet)
-    .property("hitEOF", &LexerHelper::hitEOFGet, &LexerHelper::hitEOFSet)
-    .property("channel", &LexerHelper::channelGet, &LexerHelper::channelSet)
-    .property("type", &LexerHelper::typeGet, &LexerHelper::typeSet)
-    .property("modeStack", &LexerHelper::modeStackGet, &LexerHelper::modeStackSet)
-    .property("mode", &LexerHelper::modeGet, &LexerHelper::modeSet)
 
     .function("getChannelNames",
               optional_override([](LexerHelper &self) { return self.LexerHelper::getChannelNames(); }))
@@ -914,13 +851,6 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getInputStream", optional_override([](LexerHelper &self) { return self.LexerHelper::getInputStream(); }),
               allow_raw_pointers())
     .function("getSourceName", optional_override([](LexerHelper &self) { return self.LexerHelper::getSourceName(); }))
-    .function("getTokenFactory",
-              optional_override([](LexerHelper &self) { return self.LexerHelper::getTokenFactory(); }),
-              allow_raw_pointers())
-    .function("setTokenFactory", optional_override([](LexerHelper &self, TokenFactory<CommonToken> *factory) {
-                return self.LexerHelper::setTokenFactory(factory);
-              }),
-              allow_raw_pointers())
     .allow_subclass<LexerWrapper>("LexerWrapper", constructor<CharStream *>());
 
   class_<LexerInterpreter, base<Lexer>>("LexerInterpreter")
@@ -949,9 +879,7 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("nextToken", &ListTokenSource::nextToken)
     .function("getLine", &ListTokenSource::getLine)
     .function("getInputStream", &ListTokenSource::getInputStream, allow_raw_pointers())
-    .function("getSourceName", &ListTokenSource::getSourceName)
-    .function("setTokenFactory", &ListTokenSource::setTokenFactory, allow_raw_pointers())
-    .function("getTokenFactory", &ListTokenSource::getTokenFactory, allow_raw_pointers());
+    .function("getSourceName", &ListTokenSource::getSourceName);
 
   class_<NoViableAltException, base<RecognitionException>>("NoViableAltException")
     .constructor<Parser *>()
@@ -988,8 +916,6 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("triggerEnterRuleEvent", &Parser::triggerEnterRuleEvent)
     .function("triggerExitRuleEvent", &Parser::triggerExitRuleEvent)
     .function("getNumberOfSyntaxErrors", &Parser::getNumberOfSyntaxErrors)
-    .function("getTokenFactory", &Parser::getTokenFactory, allow_raw_pointers())
-    .function("setTokenFactory", &Parser::setTokenFactory, allow_raw_pointers())
     //.function("getATNWithBypassAlts", &Parser::getATNWithBypassAlts)
     .function(
       "compileParseTreePattern",
@@ -1066,7 +992,8 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getRootContext", &ParserInterpreter::getRootContext, allow_raw_pointers());
 
   class_<ParserRuleContext, base<RuleContext>>("ParserRuleContext")
-    // .class_property("EMPTY", &ParserRuleContext::EMPTY) copy constructor is deleted
+    // .class_property("EMPTY", &ParserRuleContext::EMPTY) copy constructor is
+    // deleted
 
     // .property("start", &ParserRuleContext::start)
     // .property("stop", &ParserRuleContext::stop)
@@ -1111,15 +1038,16 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getOffendingToken", &RecognitionException::getOffendingToken, allow_raw_pointers())
     .function("getRecognizer", &RecognitionException::getRecognizer, allow_raw_pointers());
 
-  class_<Recognizer>("Recognizer")
-    // Cannot create Recognizer directly.
-    // .constructor<>()
+  class_<Recognizer>("Recognizer$Internal");
+
+  class_<RecognizerHelper, base<Recognizer>>("Recognizer")
+    .constructor<>()
+
     .function("getRuleNames", &Recognizer::getRuleNames, pure_virtual())
     .function("getVocabulary", &Recognizer::getVocabulary, pure_virtual())
     .function("getTokenTypeMap", &Recognizer::getTokenTypeMap)
     .function("getRuleIndexMap", &Recognizer::getRuleIndexMap)
     .function("getTokenType", &Recognizer::getTokenType)
-    //.function("getSerializedATN", &Recognizer::getSerializedATN)
     .function("getSerializedATN",
               optional_override([](RecognizerWrapper &self) { return self.RecognizerWrapper::getSerializedATN(); }))
 
@@ -1140,8 +1068,6 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("setState", &Recognizer::setState)
     .function("getInputStream", &Recognizer::getInputStream, pure_virtual(), allow_raw_pointers())
     .function("setInputStream", &Recognizer::setInputStream, pure_virtual(), allow_raw_pointers())
-    .function("getTokenFactory", &Recognizer::getTokenFactory, pure_virtual(), allow_raw_pointers())
-    .function("setTokenFactory", &Recognizer::setTokenFactory, pure_virtual(), allow_raw_pointers())
     .allow_subclass<RecognizerWrapper>("RecognizerWrapper");
 
   class_<RuleContextWithAltNum, base<tree::ParseTree>>("RuleContextWithAltNum")
@@ -1173,7 +1099,7 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("toStringTree", select_overload<std::string(Parser *, bool)>(&RuleContext::toStringTree),
               allow_raw_pointers())
     .function("toStringTree",
-              select_overload<std::string(const std::vector<std::string> &, bool)>(&RuleContext::toStringTree))
+              select_overload<std::string(std::vector<std::string> &, bool)>(&RuleContext::toStringTree))
     .function("toStringTree", select_overload<std::string(bool)>(&RuleContext::toStringTree))
     .function("toString", select_overload<std::string()>(&RuleContext::toString))
     .function("toString", select_overload<std::string(Recognizer *)>(&RuleContext::toString), allow_raw_pointers())
@@ -1235,10 +1161,7 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getLine", &TokenSource::getLine, pure_virtual())
     .function("getCharPositionInLine", &TokenSource::getCharPositionInLine, pure_virtual())
     .function("getInputStream", &TokenSource::getInputStream, pure_virtual(), allow_raw_pointers())
-    .function("getSourceName", &TokenSource::getSourceName, pure_virtual())
-    .function("setTokenFactory", &TokenSource::setTokenFactory, pure_virtual(), allow_raw_pointers())
-    .function("getTokenFactory", &TokenSource::getTokenFactory, pure_virtual(), allow_raw_pointers())
-    .allow_subclass<TokenSourceWrapper>("TokenSourceWrapper");
+    .function("getSourceName", &TokenSource::getSourceName, pure_virtual());
 
   class_<TokenStream, base<IntStream>>("TokenStream")
     .function("LT", &TokenStream::LT, pure_virtual(), allow_raw_pointers())

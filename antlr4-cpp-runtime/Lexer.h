@@ -77,8 +77,7 @@ namespace antlr4 {
 
     Lexer();
     Lexer(CharStream *input);
-    virtual ~Lexer() {
-    }
+    virtual ~Lexer() {}
 
     virtual void reset();
 
@@ -96,18 +95,19 @@ namespace antlr4 {
     virtual void pushMode(size_t m);
     virtual size_t popMode();
 
-    virtual void setTokenFactory(TokenFactory<CommonToken> *factory) override {
+    template<typename T1>
+    void setTokenFactory(TokenFactory<T1> *factory)  {
       this->_factory = factory;
     }
 
-    virtual TokenFactory<CommonToken> *getTokenFactory() const override;
+    virtual TokenFactory<CommonToken>* getTokenFactory() override;
 
     /// Set the char stream and reset the lexer
     virtual void setInputStream(IntStream *input) override;
 
-    virtual std::string getSourceName() const override;
+    virtual std::string getSourceName() override;
 
-    virtual CharStream *getInputStream() const override;
+    virtual CharStream* getInputStream() override;
 
     /// By default does not support multiple emits per nextToken invocation
     /// for efficiency reasons. Subclasses can override this method, nextToken,
@@ -120,13 +120,13 @@ namespace antlr4 {
     /// char buffer start..stop.  If there is a text override in 'text',
     /// use that to set the token's text.  Override this method to emit
     /// custom Token objects or provide a new factory.
-    virtual Token *emit();
+    virtual Token* emit();
 
-    virtual Token *emitEOF();
+    virtual Token* emitEOF();
 
     virtual size_t getLine() const override;
 
-    virtual size_t getCharPositionInLine() const override;
+    virtual size_t getCharPositionInLine() override;
 
     virtual void setLine(size_t line);
 
@@ -150,15 +150,15 @@ namespace antlr4 {
 
     virtual void setType(size_t ttype);
 
-    virtual size_t getType() const;
+    virtual size_t getType();
 
     virtual void setChannel(size_t newChannel);
 
-    virtual size_t getChannel() const;
+    virtual size_t getChannel();
 
-    virtual const std::vector<std::string> &getChannelNames() const = 0;
+    virtual const std::vector<std::string>& getChannelNames() const = 0;
 
-    virtual const std::vector<std::string> &getModeNames() const = 0;
+    virtual const std::vector<std::string>& getModeNames() const = 0;
 
     /// Return a list of all Token objects in input char stream.
     /// Forces load of all tokens. Does not include EOF token.

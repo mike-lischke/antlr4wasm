@@ -48,7 +48,7 @@ namespace antlr4 {
     /// </summary>
     /// <returns> The line number for the current position in the input stream, or
     /// (sze_t)-1 if the current token source does not track character positions. </returns>
-    virtual size_t getCharPositionInLine() const = 0;
+    virtual size_t getCharPositionInLine() = 0;
 
     /// <summary>
     /// Get the <seealso cref="CharStream"/> from which this token source is currently
@@ -57,28 +57,29 @@ namespace antlr4 {
     /// <returns> The <seealso cref="CharStream"/> associated with the current position in
     /// the input, or {@code null} if no input stream is available for the token
     /// source. </returns>
-    virtual CharStream* getInputStream() const = 0;
+    virtual CharStream* getInputStream() = 0;
 
     /// <summary>
     /// Gets the name of the underlying input source. This method returns a
     /// non-null, non-empty string. If such a name is not known, this method
     /// returns <seealso cref="IntStream#UNKNOWN_SOURCE_NAME"/>.
     /// </summary>
-    virtual std::string getSourceName() const = 0;
+    virtual std::string getSourceName() = 0;
 
     /// <summary>
     /// Set the <seealso cref="TokenFactory"/> this token source should use for creating
     /// <seealso cref="Token"/> objects from the input.
     /// </summary>
     /// <param name="factory"> The <seealso cref="TokenFactory"/> to use for creating tokens. </param>
-    virtual void setTokenFactory(TokenFactory<CommonToken>* factory) = 0;
+    template<typename T1>
+    void setTokenFactory(TokenFactory<T1> * /*factory*/) {}
 
     /// <summary>
     /// Gets the <seealso cref="TokenFactory"/> this token source is currently using for
     /// creating <seealso cref="Token"/> objects from the input.
     /// </summary>
     /// <returns> The <seealso cref="TokenFactory"/> currently used by this token source. </returns>
-    virtual TokenFactory<CommonToken>* getTokenFactory() const = 0;
+    virtual TokenFactory<CommonToken>* getTokenFactory() = 0;
   };
 
 } // namespace antlr4

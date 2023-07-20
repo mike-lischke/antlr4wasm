@@ -5,7 +5,17 @@
 
 #pragma once
 
-class ParseTreeWrapper : public wrapper<tree::ParseTree> {
+class ParseTreeHelper : public tree::ParseTree {
+public:
+  GETTER(std::vector<tree::ParseTree *>, children)
+  GETTER(tree::ParseTree *, parent)
+
+protected:
+  explicit ParseTreeHelper(tree::ParseTreeType treeType) : tree::ParseTree(treeType) {
+  }
+};
+
+class ParseTreeWrapper : public wrapper<ParseTreeHelper> {
 public:
   EMSCRIPTEN_WRAPPER(ParseTreeWrapper);
 
@@ -106,9 +116,13 @@ EMSCRIPTEN_BINDINGS(tree) {
     .class_function("is", select_overload<bool(const tree::ParseTree &)>(&tree::ErrorNode::is))
     .class_function("is", select_overload<bool(const tree::ParseTree *)>(&tree::ErrorNode::is), allow_raw_pointers());
 
-  class_<tree::ParseTree>("ParseTree")
-    .function("getChildren", &tree::ParseTree::getChildren, allow_raw_pointers())
-    .function("getParent", &tree::ParseTree::getParent, allow_raw_pointers())
+  class_<tree::ParseTree>("ParseTree$Internal");
+
+  class_<ParseTreeHelper, base<tree::ParseTree>>("ParseTree")
+    .property("children", &ParseTreeHelper::childrenGet)
+
+    .function("parent", &ParseTreeHelper::parentGet, allow_raw_pointers())
+
     .function("toStringTree", select_overload<std::string(bool)>(&tree::ParseTree::toStringTree), pure_virtual())
     .function("toStringTree", select_overload<std::string(Parser *, bool)>(&tree::ParseTree::toStringTree),
               allow_raw_pointers(), pure_virtual())

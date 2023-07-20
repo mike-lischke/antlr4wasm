@@ -21,30 +21,37 @@ atn::LexerATNSimulator *createLexerATNSimulator(val param1, val param2, val para
   Lexer *recognizer = param1.as<LexerHelper *>(allow_raw_pointers());
   const atn::ATN *atn = param2.as<const atn::ATN *>(allow_raw_pointers());
 
-  /*size_t length = param3["length"].as<size_t>();
-  std::vector<dfa::DFA *> decisionToDFA;
-  for (int i = 0; i < length; i++) {
-    auto element = param3[i].as<dfa::DFA *>(allow_raw_pointers());
-    decisionToDFA.push_back(element);
-  }*/
-
   const size_t l = param3["length"].as<size_t>();
   std::vector<dfa::DFA> decisionToDFA;
   for (size_t i = 0; i < l; i++) {
     auto element = param3[i].as<dfa::DFA *>(allow_raw_pointers());
     decisionToDFA.push_back(std::move(*element));
   }
-  /*auto source = param3.as<std::vector<dfa::DFA *>>();
-  for (auto element : source) {
-    decisionToDFA.push_back(std::move(*element));
-  }*/
 
   atn::PredictionContextCache *sharedContextCache = param4.as<atn::PredictionContextCache *>(allow_raw_pointers());
 
   return new atn::LexerATNSimulator(recognizer, *atn, decisionToDFA, *sharedContextCache);
 }
 
-class ATNSimulatorWrapper : public wrapper<atn::ATNSimulator> {
+class ATNSimulatorHelper : public atn::ATNSimulator {
+public:
+  ATNSimulatorHelper(const atn::ATN &atn, atn::PredictionContextCache &sharedContextCache)
+    : atn::ATNSimulator(atn, sharedContextCache) {
+  }
+
+  void reset() override {
+  }
+
+  const atn::ATN *atnGet() const {
+    return &atn;
+  }
+
+  const atn::PredictionContextCache *getSharedContextCache() const {
+    return &_sharedContextCache;
+  }
+};
+
+class ATNSimulatorWrapper : public wrapper<ATNSimulatorHelper> {
 public:
   EMSCRIPTEN_WRAPPER(ATNSimulatorWrapper);
 
@@ -54,6 +61,40 @@ public:
   void reset() override {
     return call<void>("reset");
   }
+};
+
+class ATNStateHelper : public atn::ATNState {
+public:
+  std::vector<const atn::Transition *> transitionsGet() const {
+    std::vector<const atn::Transition *> result;
+    result.reserve(transitions.size());
+
+    for (auto &ptr : transitions) {
+      result.emplace_back(ptr.get());
+    }
+
+    return result;
+  }
+};
+
+class BlockStartStateHelper : public atn::BlockStartState {
+public:
+  GETTER(atn::ATNState *, endState)
+};
+
+class DecisionEventInfoHelper : public atn::DecisionEventInfo {
+public:
+  DecisionEventInfoHelper(size_t decision, atn::ATNConfigSet *configs, TokenStream *input, size_t startIndex,
+                          size_t stopIndex, bool fullCtx)
+    : atn::DecisionEventInfo(decision, configs, input, startIndex, stopIndex, fullCtx) {
+  }
+
+  GETTER(const atn::ATNConfigSet *, configs) GETTER(const TokenStream *, input)
+};
+
+class RuleStartStateHelper : public atn::RuleStartState {
+public:
+  GETTER(const atn::ATNState *, stopState)
 };
 
 class SemanticContextWrapper : public wrapper<atn::SemanticContext> {
@@ -78,6 +119,11 @@ public:
   virtual std::string toString() const override {
     return call<std::string>("toString");
   }
+};
+
+class TransitionHelper : public atn::Transition {
+public:
+  GETTER(atn::ATNState *, target)
 };
 
 EMSCRIPTEN_BINDINGS(atn) {
@@ -138,7 +184,7 @@ EMSCRIPTEN_BINDINGS(atn) {
     .constructor<atn::ATNType, size_t>()
 
     .function("nextTokens",
-              select_overload<misc::IntervalSet const(atn::ATNState *, RuleContext *) const>(&atn::ATN::nextTokens),
+              select_overload<misc::IntervalSet(atn::ATNState *, RuleContext *) const>(&atn::ATN::nextTokens),
               allow_raw_pointers())
     .function("nextTokens", select_overload<misc::IntervalSet const &(atn::ATNState *) const>(&atn::ATN::nextTokens),
               allow_raw_pointers())
@@ -228,31 +274,34 @@ EMSCRIPTEN_BINDINGS(atn) {
     .function("isGenerateRuleBypassTransitions", &atn::ATNDeserializationOptions::isGenerateRuleBypassTransitions)
     .function("setGenerateRuleBypassTransitions", &atn::ATNDeserializationOptions::setGenerateRuleBypassTransitions);
 
-  class_<atn::ATNSimulator>("ATNSimulator")
+  class_<atn::ATNSimulator>("ATNSimulator$Internal");
+
+  class_<ATNSimulatorHelper, base<atn::ATNSimulator>>("ATNSimulator")
     .class_property("ERROR", &atn::ATNSimulator::ERROR)
 
-    // Cannot be instantiated directly.
-    // .constructor<const atn::ATN &, atn::PredictionContextCache &>()
+    .constructor<const atn::ATN &, atn::PredictionContextCache &>()
 
-    .function("reset", &atn::ATNSimulator::reset, pure_virtual())
+    //.property("atn", &ATNSimulatorHelper::atnGet)
+
+    .function("reset", optional_override([](ATNSimulatorHelper &self) { return self.reset(); }))
     .function("clearDFA", &atn::ATNSimulator::clearDFA)
-    // .function("getSharedContextCache", &atn::ATNSimulator::getSharedContextCache)
+    .function("getSharedContextCache", &ATNSimulatorHelper::getSharedContextCache, allow_raw_pointers())
     .function("getCachedContext", &atn::ATNSimulator::getCachedContext)
-    .function("getATN", &atn::ATNSimulator::getATN, allow_raw_pointers())
 
     .allow_subclass<ATNSimulatorWrapper>("ATNSimulatorWrapper",
                                          constructor<const atn::ATN &, atn::PredictionContextCache &>());
   ;
 
-  class_<atn::ATNState>("ATNState")
+  class_<atn::ATNState>("ATNState$Internal")
+    .property("stateNumber", &atn::ATNState::stateNumber)
+    .property("ruleIndex", &atn::ATNState::ruleIndex)
+    .property("epsilonOnlyTransitions", &atn::ATNState::epsilonOnlyTransitions);
+
+  class_<ATNStateHelper, base<atn::ATNState>>("ATNState")
     .class_property("INITIAL_NUM_TRANSITIONS", &atn::ATNState::INITIAL_NUM_TRANSITIONS)
     .class_property("INVALID_STATE_NUMBER", &atn::ATNState::INVALID_STATE_NUMBER)
 
-    .property("stateNumber", &atn::ATNState::stateNumber)
-    .property("ruleIndex", &atn::ATNState::ruleIndex)
-    .property("epsilonOnlyTransitions", &atn::ATNState::epsilonOnlyTransitions)
-
-    .function("getTransitions", &atn::ATNState::getTransitions)
+    .property("transitions", &ATNStateHelper::transitionsGet)
 
     .function("addTransition", select_overload<void(atn::ConstTransitionPtr)>(&atn::ATNState::addTransition))
     .function("addTransition", select_overload<void(size_t, atn::ConstTransitionPtr)>(&atn::ATNState::addTransition))
@@ -281,7 +330,7 @@ EMSCRIPTEN_BINDINGS(atn) {
   function("atnStateTypeName", &atn::atnStateTypeName);
 
   enum_<atn::ATNType>("ATNType")
-    // Comment to avoid auto wrapping
+    // Comment to avoid wrong wrapping.
     .value("LEXER", atn::ATNType::LEXER)
     .value("PARSER", atn::ATNType::PARSER);
 
@@ -301,28 +350,30 @@ EMSCRIPTEN_BINDINGS(atn) {
     .class_function("is", select_overload<bool(const atn::ATNState &)>(&atn::BasicState::is))
     .class_function("is", select_overload<bool(const atn::ATNState *)>(&atn::BasicState::is), allow_raw_pointers());
 
-  class_<atn::BlockStartState, base<atn::DecisionState>>("BlockStartState")
+  class_<atn::BlockStartState, base<atn::DecisionState>>("BlockStartState$Internal");
+
+  class_<BlockStartStateHelper, base<atn::BlockStartState>>("BlockStartState")
     .class_function("is", select_overload<bool(const atn::ATNState &)>(&atn::BlockStartState::is))
     .class_function("is", select_overload<bool(const atn::ATNState *)>(&atn::BlockStartState::is), allow_raw_pointers())
 
-    .function("endState", &atn::BlockStartState::getEndState, allow_raw_pointers());
+    //.property("endState", &BlockStartStateHelper::endStateGet)
+    ;
 
   class_<atn::ContextSensitivityInfo>("ContextSensitivityInfo")
-    // Comment to avoid auto wrapping.
     .constructor<size_t, atn::ATNConfigSet *, TokenStream *, size_t, size_t>();
 
-  class_<atn::DecisionEventInfo>("DecisionEventInfo")
-    .property("decision", &atn::DecisionEventInfo::decision)
-    .property("startIndex", &atn::DecisionEventInfo::startIndex)
-    .property("stopIndex", &atn::DecisionEventInfo::stopIndex)
-    .property("fullCtx", &atn::DecisionEventInfo::fullCtx)
+  class_<atn::DecisionEventInfo>("DecisionEventInfo$Internal");
 
+  class_<DecisionEventInfoHelper, base<atn::DecisionEventInfo>>("DecisionEventInfo")
     .constructor<size_t, atn::ATNConfigSet *, TokenStream *, size_t, size_t, bool>()
 
-    .function("configs", &atn::DecisionEventInfo::getConfigs, allow_raw_pointers())
-    .function("input", &atn::DecisionEventInfo::getInput, allow_raw_pointers());
-
-  // register_vector<atn::AmbiguityInfo>("AmbiguityInfoVector");
+    //.property("decision", &atn::DecisionEventInfo::decision)
+    //.property("startIndex", &atn::DecisionEventInfo::startIndex)
+    //.property("stopIndex", &atn::DecisionEventInfo::stopIndex)
+    //.property("fullCtx", &atn::DecisionEventInfo::fullCtx)
+    //.property("configs", &DecisionEventInfoHelper::configsGet)
+    //.property("input", &DecisionEventInfoHelper::inputGet)
+    ;
 
   class_<atn::DecisionInfo>("DecisionInfo")
     .property("decision", &atn::DecisionInfo::decision)
@@ -336,7 +387,7 @@ EMSCRIPTEN_BINDINGS(atn) {
     .property("LL_MinLook", &atn::DecisionInfo::LL_MinLook)
     .property("LL_MaxLook", &atn::DecisionInfo::LL_MaxLook)
     .property("LL_MaxLookEvent", &atn::DecisionInfo::LL_MaxLookEvent)
-    // .property("contextSensitivities", &atn::DecisionInfo::contextSensitivities)
+    //.property("contextSensitivities", &atn::DecisionInfo::contextSensitivities)
     // .property("errors", &atn::DecisionInfo::errors)
     //.property("ambiguities", &atn::DecisionInfo::ambiguities)
     //.property("predicateEvals", &atn::DecisionInfo::predicateEvals)
@@ -541,11 +592,11 @@ EMSCRIPTEN_BINDINGS(atn) {
   class_<atn::ParserATNSimulator, base<atn::ATNSimulator>>("ParserATNSimulator")
     .class_property("TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT", &atn::ParserATNSimulator::TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT)
 
-    // .constructor<Parser *, const ATN &, std::vector<dfa::DFA> &, PredictionContextCache &>()
+    // .constructor<Parser *, const atn::ATN &, std::vector<dfa::DFA> &, atn::PredictionContextCache &>()
     // .constructor<Parser *, const ATN &, std::vector<dfa::DFA> &,PredictionContextCache &, const
     // ParserATNSimulatorOptions &>()
 
-    // .property("decisionToDFA", &atn::ParserATNSimulator::decisionToDFA)
+    //.property("decisionToDFA", &atn::ParserATNSimulator::decisionToDFA)
 
     .function("reset", &atn::ParserATNSimulator::reset)
     .function("clearDFA", &atn::ParserATNSimulator::clearDFA)
@@ -625,14 +676,16 @@ EMSCRIPTEN_BINDINGS(atn) {
     .value("LL", atn::PredictionMode::LL)
     .value("LL_EXACT_AMBIG_DETECTION", atn::PredictionMode::LL_EXACT_AMBIG_DETECTION);
 
-  class_<atn::RuleStartState, base<atn::ATNState>>("RuleStartState")
+  class_<atn::RuleStartState, base<atn::ATNState>>("RuleStartState$Internal")
+    .property("isLeftRecursiveRule", &atn::RuleStartState::isLeftRecursiveRule)
+
+    .function("stopState", &RuleStartStateHelper::stopStateGet, allow_raw_pointers());
+
+  class_<RuleStartStateHelper, base<atn::RuleStartState>>("RuleStartState")
     .class_function("is", select_overload<bool(const atn::ATNState &)>(&atn::RuleStartState::is))
     .class_function("is", select_overload<bool(const atn::ATNState *)>(&atn::RuleStartState::is), allow_raw_pointers())
 
-    .constructor<>()
-
-    .property("isLeftRecursiveRule", &atn::RuleStartState::isLeftRecursiveRule)
-    .function("stopState", &atn::RuleStartState::getStopState, allow_raw_pointers());
+    .constructor<>();
 
   class_<atn::RuleStopState, base<atn::ATNState>>("RuleStopState")
     .class_function("is", select_overload<bool(const atn::ATNState &)>(&atn::RuleStopState::is))
@@ -664,8 +717,7 @@ EMSCRIPTEN_BINDINGS(atn) {
     .constructor<>(&createSerializedATNView)
 
     .function("empty", &atn::SerializedATNView::empty)
-    .function("size", &atn::SerializedATNView::size)
-    .function("print", &atn::SerializedATNView::print);
+    .function("size", &atn::SerializedATNView::size);
 
   class_<atn::TokensStartState, base<atn::DecisionState>>("TokensStartState")
     .class_function("is", select_overload<bool(const atn::ATNState &)>(&atn::TokensStartState::is))
@@ -674,13 +726,15 @@ EMSCRIPTEN_BINDINGS(atn) {
 
     .constructor<>();
 
-  class_<atn::Transition>("Transition")
+  class_<atn::Transition>("Transition$Internal");
+
+  class_<TransitionHelper, base<atn::Transition>>("Transition")
+    .function("target", &TransitionHelper::targetGet, allow_raw_pointers())
     .function("getTransitionType", &atn::Transition::getTransitionType)
     .function("isEpsilon", &atn::Transition::isEpsilon)
     .function("label", &atn::Transition::label)
     .function("matches", &atn::Transition::matches)
-    .function("toString", &atn::Transition::toString)
-    .function("getTarget", &atn::Transition::getTarget, allow_raw_pointers());
+    .function("toString", &atn::Transition::toString);
 
   enum_<atn::TransitionType>("TransitionType")
     .value("EPSILON", atn::TransitionType::EPSILON)
