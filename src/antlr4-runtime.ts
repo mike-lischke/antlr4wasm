@@ -28,6 +28,9 @@ const ANTLRErrorStrategy = antlr4.ANTLRErrorStrategy;
 type ANTLRInputStream = InstanceType<typeof antlr4.ANTLRInputStream>;
 const ANTLRInputStream = antlr4.ANTLRInputStream;
 
+type BufferedTokenStream = InstanceType<typeof antlr4.BufferedTokenStream>;
+const BufferedTokenStream = antlr4.BufferedTokenStream;
+
 const CancellationException = antlr4.CancellationException;
 
 type CharStream = InstanceType<typeof antlr4.CharStream>;
@@ -35,6 +38,9 @@ const CharStream = antlr4.CharStream;
 
 type CommonToken = InstanceType<typeof antlr4.CommonToken>;
 const CommonToken = antlr4.CommonToken;
+
+type CommonTokenStream = InstanceType<typeof antlr4.CommonTokenStream>;
+const CommonTokenStream = antlr4.CommonTokenStream;
 
 type IntStream = InstanceType<typeof antlr4.IntStream>;
 const IntStream = antlr4.IntStream;
@@ -208,9 +214,11 @@ export {
     ANTLRErrorListener,
     ANTLRErrorStrategy,
     ANTLRInputStream,
+    BufferedTokenStream,
     CancellationException,
     CharStream,
     CommonToken,
+    CommonTokenStream,
     IntStream,
     LexerATNSimulator,
     LexerNoViableAltException,

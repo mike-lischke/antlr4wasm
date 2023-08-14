@@ -19,6 +19,8 @@ EMSCRIPTEN_BINDINGS(default) {
   register_vector<size_t>("SizeTVector");
   register_vector<std::string>("StringVector");
 
+  register_vector<Token *>("TokenVector");
+
   register_vector<atn::DecisionState *>("DecisionStateVector");
   register_vector<atn::ATNState *>("ATNStateVector");
 

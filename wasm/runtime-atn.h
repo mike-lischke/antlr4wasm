@@ -5,32 +5,67 @@
 
 #pragma once
 
-atn::SerializedATNView *createSerializedATNView(val value) {
-  int length = value["length"].as<int>();
+class SerializedATNViewHelper : public atn::SerializedATNView {
+public:
+  SerializedATNViewHelper(val value) : atn::SerializedATNView() {
+    createVector(value);
 
-  std::vector<int32_t> data;
-  for (int i = 0; i < length; i++) {
-    int element = value[i].as<int>();
-    data.push_back(element);
+    _data = _values.data();
+    _size = _values.size();
   }
 
-  return new atn::SerializedATNView(data);
+private:
+  // Have to keep the data sent from JS alive.
+  std::vector<int32_t> _values;
+
+  std::vector<int32_t> createVector(val value) {
+    int length = value["length"].as<int>();
+
+    for (int i = 0; i < length; i++) {
+      int element = value[i].as<int>();
+      _values.push_back(element);
+    }
+
+    return _values;
+  }
+};
+
+atn::SerializedATNView *createSerializedATNView(val value) {
+  return new SerializedATNViewHelper(value);
 }
 
-atn::LexerATNSimulator *createLexerATNSimulator(val param1, val param2, val param3, val param4) {
-  Lexer *recognizer = param1.as<LexerHelper *>(allow_raw_pointers());
-  const atn::ATN *atn = param2.as<const atn::ATN *>(allow_raw_pointers());
+std::vector<dfa::DFA> decisionToDFA;
 
-  const size_t l = param3["length"].as<size_t>();
-  std::vector<dfa::DFA> decisionToDFA;
-  for (size_t i = 0; i < l; i++) {
-    auto element = param3[i].as<dfa::DFA *>(allow_raw_pointers());
-    decisionToDFA.push_back(std::move(*element));
+/**
+ * This class is a wrapper around the C++ LexerATNSimulator class. It is needed because the base class
+ * does not keep the DFA vector around, but only a reference to them.
+ * Additionally, we have to convert the JS array to a C++ vector.
+ */
+class LexerATNSimulatorHelper : public atn::LexerATNSimulator {
+public:
+  LexerATNSimulatorHelper(val param1, val param2, val param3, val param4)
+    : atn::LexerATNSimulator(param1.as<Lexer *>(allow_raw_pointers()), *param2.as<atn::ATN *>(allow_raw_pointers()),
+                             decisionToDFAHolder, *param4.as<atn::PredictionContextCache *>(allow_raw_pointers())) {
+    // Fill the data holder with the DFA instances sent from JS.
+    fillVector(param3);
   }
 
-  atn::PredictionContextCache *sharedContextCache = param4.as<atn::PredictionContextCache *>(allow_raw_pointers());
+private:
+  // Have to keep the data here, because the base class only stores a reference.
+  std::vector<dfa::DFA> decisionToDFAHolder;
 
-  return new atn::LexerATNSimulator(recognizer, *atn, decisionToDFA, *sharedContextCache);
+  void fillVector(val value) {
+    int length = value["length"].as<int>();
+
+    for (int i = 0; i < length; i++) {
+      auto element = value[i].as<dfa::DFA *>(allow_raw_pointers());
+      decisionToDFAHolder.push_back(std::move(*element));
+    }
+  }
+};
+
+atn::LexerATNSimulator *createLexerATNSimulator(val param1, val param2, val param3, val param4) {
+  return new LexerATNSimulatorHelper(param1, param2, param3, param4);
 }
 
 class ATNSimulatorHelper : public atn::ATNSimulator {

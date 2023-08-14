@@ -4,28 +4,24 @@
  */
 
 import {
-    ANTLRInputStream, std$$exception, Token
+    ANTLRInputStream, CommonTokenStream, std$$exception, Token
 } from "../src/antlr4-runtime.js";
 import WhiteboxLexer from "./generated/TypeScript/WhiteboxLexer.js";
 
 try {
     const stream = new ANTLRInputStream();
-    stream.load("LO", true);
-
-    while (true) {
-        const t = stream.LA(1);
-        console.log(t);
-        if (t == Token.EOF) {
-            break;
-        }
-        stream.consume();
-    };
-    stream.reset();
+    stream.load("LOREM DOLOR SIT SIT SIT AMET CONSECTETUR ADIPISCING ADIPISCING1", true);
 
     const lexer = new WhiteboxLexer(stream);
-    const token = lexer.nextToken();
-    console.log(token.toString());
+    const tokenStream = new CommonTokenStream(lexer);
+    tokenStream.fill();
+    const tokens = tokenStream.getTokens();
 
+    for (let i = 0; i < tokens.size(); ++i) {
+        console.log(tokens.get(i).toString());
+    }
+
+    tokens.delete();
     lexer.delete();
     stream.delete();
 } catch (e) {

@@ -11,14 +11,21 @@ em++ \
     antlr4-cpp-runtime/tree/xpath/*.cpp\
     -O0\
     -std=c++17 -lembind -Iantlr4-cpp-runtime/ \
-    -fwasm-exceptions\
     -o wasm/antlr4-runtime-wasm.js\
     -s EXPORT_ES6=1\
     -s WASM=1\
-    -s WASM_BIGINT\
-    -s ALLOW_MEMORY_GROWTH=1
+    -s WASM_BIGINT=1\
+    -s ALLOW_MEMORY_GROWTH=1\
+    -s DEMANGLE_SUPPORT=1\
+    -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\
+    -fwasm-exceptions\
+    -fsanitize=address\
+    -g
 
+# -- memoryProfiler
 # -s TOTAL_MEMORY=1024MB
-# -s LINKABLE=1 -s EXPORT_ALL=1
+# -s LINKABLE=1
+# -s EXPORT_ALL=1
 # -s BUILD_AS_WORKER=1
 # --embind-emit-tsd wasm/test.d.ts\
+# -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\

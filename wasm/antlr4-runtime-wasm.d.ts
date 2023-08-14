@@ -3,17 +3,20 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
+export declare class Deletable {
+    public delete(): void;
+}
+
 /** Some of the functionality of the C++ std::vector class. */
-export declare interface Vector<T> {
+export declare class Vector<T> extends Deletable {
     size(): number;
     push_back(value: T): void;
     resize(size: number): void;
     get(index: number): T;
     set(index: number, value: T): void;
-}
 
-export declare class Deletable {
-    public delete(): void;
+    // Disallow indexed access.
+    [key: number]: never;
 }
 
 type Constructor<T> = new (...args: unknown[]) => T;
@@ -190,6 +193,38 @@ export abstract class CharStream extends IntStream {
     public abstract toString(): string;
 }
 
+export declare class BufferedTokenStream extends TokenStream {
+    constructor(source: TokenSource);
+
+    public getTokenSource(): TokenSource;
+    public index(): number;
+    public mark(): number;
+    public release(): void;
+    public reset(): void;
+    public seek(): void;
+    public size(): number;
+    public consume(): void;
+    public get(i: number): Token;
+    public get(start: number, stop: number): Vector<Token>;
+    public LA(k: number): number;
+    public LT(i: number): Token;
+    public setTokenSource(source: TokenSource): void;
+    public getTokens(): Vector<Token>;
+    public getTokens(start: number, stop: number): Vector<Token>;
+    public getTokens(start: number, stop: number, types: Vector<number>): Vector<Token>;
+    public getTokens(start: number, stop: number, type: number): Vector<Token>;
+    public getHiddenTokensToRight(tokenIndex: number, channel: number): Vector<Token>;
+    public getHiddenTokensToRight(tokenIndex: number): Vector<Token>;
+    public getHiddenTokensToLeft(tokenIndex: number, channel: number): Vector<Token>;
+    public getHiddenTokensToLeft(tokenIndex: number): Vector<Token>;
+    public getSourceName(): string;
+    public getText(): string;
+    public getText(interval: Interval): string;
+    public getText(ctx: RuleContext): string;
+    public getText(tokenStart: Token, tokenStop: Token): string;
+    public fill(): void;
+}
+
 export declare class CommonToken implements WritableToken {
     public constructor(type: number);
     public constructor(source: [TokenSource, CharStream], type: number, channel: number, start: number, stop: number);
@@ -214,6 +249,13 @@ export declare class CommonToken implements WritableToken {
     public getTokenSource(): TokenSource;
     public getInputStream(): CharStream;
     public toString(recognizer?: Recognizer<ATNSimulator>): string;
+}
+
+export declare class CommonTokenStream extends BufferedTokenStream {
+    public constructor(tokenSource: TokenSource, channel?: number);
+
+    public LT(k: number): Token;
+    public getNumberOfOnChannelTokens(): number;
 }
 
 /**
@@ -1196,45 +1238,25 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
     public readonly modeStack: Vector<number>;
     public mode: number;
 
-    public constructor();
     public constructor(input: CharStream);
 
     public getInterpreter(): LexerATNSimulator;
     public setInterpreter(interpreter: LexerATNSimulator): void;
 
-    public reset(): void;
-    public nextToken(): Token;
-    public skip(): void;
-    public more(): void;
-    public setMode(mode: number): void;
-    public pushMode(mode: number): void;
-    public popMode(): number;
-    public setInputStream(input: CharStream): void;
-    public getSourceName(): string;
-    public getInputStream(): CharStream;
-    public emit(token: Token): void;
-    public emit(): Token;
-    public emitEOF(): Token;
     public getLine(): number;
-    public getCharPositionInLine(): number;
-    public setLine(line: number): void;
-    public setCharPositionInLine(charPositionInLine: number): void;
-    public getCharIndex(): number;
-    public getText(): string;
-    public setText(text: string): void;
-    public getToken(): Token;
-    public setToken(token: Token): void;
-    public setType(type: number): void;
-    public getType(): number;
-    public setChannel(channel: number): void;
-    public getChannel(): number;
-    public abstract getATN(): ATN;
+
     public abstract getChannelNames(): string[];
     public abstract getModeNames(): string[];
-    public getAllTokens(): Token[];
-    public recover(re: RecognitionException): void;
-    public recover(re: LexerNoViableAltException): void;
-    public notifyListeners(e: LexerNoViableAltException): void;
+    public abstract getRuleNames(): string[];
+    public abstract getVocabulary(): Vocabulary;
+    public abstract getGrammarFileName(): string;
+    public abstract getATN(): ATN;
+
+    public nextToken(): Token;
+    public getCharPositionInLine(): number;
+    public setInputStream(input: CharStream): void;
+    public getInputStream(): CharStream;
+    public getSourceName(): string;
     public getErrorDisplay(s: string): string;
     public getNumberOfSyntaxErrors(): number;
 }
@@ -2352,9 +2374,11 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     ANTLRErrorListener: typeof ANTLRErrorListener;
     ANTLRErrorStrategy: typeof ANTLRErrorStrategy;
     ANTLRInputStream: typeof ANTLRInputStream;
+    BufferedTokenStream: typeof BufferedTokenStream;
     CancellationException: typeof CancellationException;
     CharStream: typeof CharStream;
     CommonToken: typeof CommonToken;
+    CommonTokenStream: typeof CommonTokenStream;
     IntStream: typeof IntStream;
     LexerNoViableAltException: typeof LexerNoViableAltException;
     Parser: typeof Parser;

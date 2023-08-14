@@ -568,7 +568,7 @@ public:
   }
 };
 
-EMSCRIPTEN_BINDINGS(main) {
+EMSCRIPTEN_BINDINGS(main1) {
   // Exception support.
   class_<std::exception>("std::exception").function("what", &std::exception::what, allow_raw_pointers());
   emscripten::function("getExceptionMessage", &getExceptionMessage);
@@ -680,7 +680,9 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("fill", &BufferedTokenStream::fill);
 
   class_<CancellationException, base<RuntimeException>>("CancellationException").constructor<std::string>();
+}
 
+EMSCRIPTEN_BINDINGS(main2) {
   class_<CharStream, base<IntStream>>("CharStream")
     .function("getText", &CharStream::getText, pure_virtual())
     .function("toString", &CharStream::toString, pure_virtual())
@@ -732,8 +734,10 @@ EMSCRIPTEN_BINDINGS(main) {
                           &CommonTokenFactory::create));
 
   class_<CommonTokenStream, base<BufferedTokenStream>>("CommonTokenStream")
-    .constructor<TokenSource *>()
-    .constructor<TokenSource *, size_t>()
+    // The library code expects a TokenSource* here, but we can't pass a Lexer* in JS, because it uses multiple
+    // inheritance, which we cannot model in emscripten.
+    .constructor<Lexer *>()
+    .constructor<Lexer *, size_t>()
 
     .function("LT", &CommonTokenStream::LT, allow_raw_pointers())
     .function("getNumberOfOnChannelTokens", &CommonTokenStream::getNumberOfOnChannelTokens);
@@ -794,7 +798,9 @@ EMSCRIPTEN_BINDINGS(main) {
     .constructor<ParserRuleContext *, size_t, size_t>()
 
     .function("getRuleIndex", &InterpreterRuleContext::getRuleIndex);
+}
 
+EMSCRIPTEN_BINDINGS(main3) {
   class_<IntStream>("IntStream")
     .class_property("EOF", &IntStream::EOF)
     .class_property("UNKNOWN_SOURCE_NAME", &IntStream::UNKNOWN_SOURCE_NAME)
@@ -842,6 +848,7 @@ EMSCRIPTEN_BINDINGS(main) {
               optional_override([](LexerHelper &self) { return self.LexerHelper::getGrammarFileName(); }))
     .function("getATN", optional_override([](LexerHelper &self) { return std::cref(self.LexerHelper::getATN()); }))
     .function("nextToken", optional_override([](LexerHelper &self) { return self.LexerHelper::nextToken(); }))
+    .function("getLine", &Lexer::getLine)
     .function("getCharPositionInLine",
               optional_override([](LexerHelper &self) { return self.LexerHelper::getCharPositionInLine(); }))
     .function("setInputStream", optional_override([](LexerHelper &self, CharStream *input) {
@@ -851,6 +858,8 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("getInputStream", optional_override([](LexerHelper &self) { return self.LexerHelper::getInputStream(); }),
               allow_raw_pointers())
     .function("getSourceName", optional_override([](LexerHelper &self) { return self.LexerHelper::getSourceName(); }))
+    .function("getErrorDisplay", &Lexer::getErrorDisplay)
+    .function("getNumberOfSyntaxErrors", &Lexer::getNumberOfSyntaxErrors)
     .allow_subclass<LexerWrapper>("LexerWrapper", constructor<CharStream *>());
 
   class_<LexerInterpreter, base<Lexer>>("LexerInterpreter")
@@ -891,7 +900,9 @@ EMSCRIPTEN_BINDINGS(main) {
   class_<NullPointerException, base<RuntimeException>>("NullPointerException").constructor<std::string>();
 
   class_<ParseCancellationException, base<RuntimeException>>("ParseCancellationException").constructor<std::string>();
+}
 
+EMSCRIPTEN_BINDINGS(main4) {
   class_<Parser, base<Recognizer>>("Parser")
     // Cannot create Parser directly.
     //.constructor<TokenStream *>()
@@ -1026,7 +1037,9 @@ EMSCRIPTEN_BINDINGS(main) {
     .function("reportAmbiguity", &ProxyErrorListener::reportAmbiguity, allow_raw_pointers())
     .function("reportAttemptingFullContext", &ProxyErrorListener::reportAttemptingFullContext, allow_raw_pointers())
     .function("reportContextSensitivity", &ProxyErrorListener::reportContextSensitivity, allow_raw_pointers());
+}
 
+EMSCRIPTEN_BINDINGS(main5) {
   class_<RecognitionException, base<RuntimeException>>("RecognitionException")
     .constructor<Recognizer *, IntStream *, ParserRuleContext *, Token *>()
     .constructor<const std::string &, Recognizer *, IntStream *, ParserRuleContext *, Token *>()
@@ -1155,7 +1168,9 @@ EMSCRIPTEN_BINDINGS(main) {
       "create",
       select_overload<std::unique_ptr<CommonToken>(size_t, const std::string &)>(&TokenFactory<CommonToken>::create),
       pure_virtual(), allow_raw_pointers());
+}
 
+EMSCRIPTEN_BINDINGS(main6) {
   class_<TokenSource>("TokenSource")
     .function("nextToken", &TokenSource::nextToken, pure_virtual())
     .function("getLine", &TokenSource::getLine, pure_virtual())
