@@ -17,7 +17,7 @@
 namespace antlr4 {
 namespace atn {
 
-  class ANTLR4CPP_PUBLIC SerializedATNView final {
+  class ANTLR4CPP_PUBLIC SerializedATNView {
   public:
     using value_type = int32_t;
     using size_type = size_t;
@@ -67,7 +67,7 @@ namespace atn {
 
     const_reference operator[](size_type index) const { return _data[index]; }
 
-  private:
+  protected:
     const_pointer _data = nullptr;
     size_type _size = 0;
   };

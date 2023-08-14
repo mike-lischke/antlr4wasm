@@ -37,7 +37,7 @@ emscripten::val convertVectorToJSArray(const std::vector<T> &vector) {
   auto result = emscripten::val::array();
 
   for (const auto &element : vector) {
-    val obj = val::object();
+    emscripten::val obj = emscripten::val::object();
     obj.set("value", element);
     result.call<void>("push", obj);
   }
