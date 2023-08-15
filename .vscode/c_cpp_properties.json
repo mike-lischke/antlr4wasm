@@ -4,9 +4,11 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/homebrew/Cellar/emscripten/3.1.43/libexec/system/include"
+                "/opt/homebrew/Cellar/emscripten/3.1.44/libexec/system/include"
             ],
-            "defines": [],
+            "defines": [
+                "__EMSCRIPTEN__"
+            ],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
             ],

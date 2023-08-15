@@ -36,38 +36,6 @@ atn::SerializedATNView *createSerializedATNView(val value) {
 
 std::vector<dfa::DFA> decisionToDFA;
 
-/**
- * This class is a wrapper around the C++ LexerATNSimulator class. It is needed because the base class
- * does not keep the DFA vector around, but only a reference to them.
- * Additionally, we have to convert the JS array to a C++ vector.
- */
-class LexerATNSimulatorHelper : public atn::LexerATNSimulator {
-public:
-  LexerATNSimulatorHelper(val param1, val param2, val param3, val param4)
-    : atn::LexerATNSimulator(param1.as<Lexer *>(allow_raw_pointers()), *param2.as<atn::ATN *>(allow_raw_pointers()),
-                             decisionToDFAHolder, *param4.as<atn::PredictionContextCache *>(allow_raw_pointers())) {
-    // Fill the data holder with the DFA instances sent from JS.
-    fillVector(param3);
-  }
-
-private:
-  // Have to keep the data here, because the base class only stores a reference.
-  std::vector<dfa::DFA> decisionToDFAHolder;
-
-  void fillVector(val value) {
-    int length = value["length"].as<int>();
-
-    for (int i = 0; i < length; i++) {
-      auto element = value[i].as<dfa::DFA *>(allow_raw_pointers());
-      decisionToDFAHolder.push_back(std::move(*element));
-    }
-  }
-};
-
-atn::LexerATNSimulator *createLexerATNSimulator(val param1, val param2, val param3, val param4) {
-  return new LexerATNSimulatorHelper(param1, param2, param3, param4);
-}
-
 class ATNSimulatorHelper : public atn::ATNSimulator {
 public:
   ATNSimulatorHelper(const atn::ATN &atn, atn::PredictionContextCache &sharedContextCache)
@@ -127,6 +95,82 @@ public:
   GETTER(const atn::ATNConfigSet *, configs) GETTER(const TokenStream *, input)
 };
 
+/**
+ * This class is a wrapper around the C++ LexerATNSimulator class. It is needed because the base class
+ * does not keep the DFA vector around, but only a reference to them.
+ * Additionally, we have to convert the JS array to a C++ vector.
+ */
+class LexerATNSimulatorHelper : public atn::LexerATNSimulator {
+public:
+  LexerATNSimulatorHelper(val param1, val param2, val param3, val param4)
+    : atn::LexerATNSimulator(param1.as<Lexer *>(allow_raw_pointers()), *param2.as<atn::ATN *>(allow_raw_pointers()),
+                             decisionToDFAHolder, *param4.as<atn::PredictionContextCache *>(allow_raw_pointers())) {
+    // Fill the data holder with the DFA instances sent from JS.
+    fillVector(param3);
+  }
+
+private:
+  // Have to keep the data here, because the base class only stores a reference.
+  std::vector<dfa::DFA> decisionToDFAHolder;
+
+  void fillVector(val value) {
+    int length = value["length"].as<int>();
+
+    for (int i = 0; i < length; i++) {
+      auto element = value[i].as<dfa::DFA *>(allow_raw_pointers());
+      decisionToDFAHolder.push_back(std::move(*element));
+    }
+  }
+};
+
+atn::LexerATNSimulator *createLexerATNSimulator(val param1, val param2, val param3, val param4) {
+  return new LexerATNSimulatorHelper(param1, param2, param3, param4);
+}
+
+/**
+ * This class is a wrapper around the C++ LexerATNSimulator class. It is needed because the base class
+ * does not keep the DFA vector around, but only a reference to them.
+ * Additionally, we have to convert the JS array to a C++ vector.
+ */
+class ParserATNSimulatorHelper : public atn::ParserATNSimulator {
+public:
+  ParserATNSimulatorHelper(val param1, val param2, val param3, val param4)
+    : atn::ParserATNSimulator(param1.as<Parser *>(allow_raw_pointers()), *param2.as<atn::ATN *>(allow_raw_pointers()),
+                              decisionToDFAHolder, *param4.as<atn::PredictionContextCache *>(allow_raw_pointers())) {
+    // Fill the data holder with the DFA instances sent from JS.
+    fillVector(param3);
+  }
+
+  ParserATNSimulatorHelper(val param1, val param2, val param3, val param4, val param5)
+    : atn::ParserATNSimulator(param1.as<Parser *>(allow_raw_pointers()), *param2.as<atn::ATN *>(allow_raw_pointers()),
+                              decisionToDFAHolder, *param4.as<atn::PredictionContextCache *>(allow_raw_pointers()),
+                              *param5.as<atn::ParserATNSimulatorOptions *>(allow_raw_pointers())) {
+    // Fill the data holder with the DFA instances sent from JS.
+    fillVector(param3);
+  }
+
+private:
+  // Have to keep the data here, because the base class only stores a reference.
+  std::vector<dfa::DFA> decisionToDFAHolder;
+
+  void fillVector(val value) {
+    int length = value["length"].as<int>();
+
+    for (int i = 0; i < length; i++) {
+      auto element = value[i].as<dfa::DFA *>(allow_raw_pointers());
+      decisionToDFAHolder.push_back(std::move(*element));
+    }
+  }
+};
+
+atn::ParserATNSimulator *createParserATNSimulator1(val param1, val param2, val param3, val param4) {
+  return new ParserATNSimulatorHelper(param1, param2, param3, param4);
+}
+
+atn::ParserATNSimulator *createParserATNSimulator2(val param1, val param2, val param3, val param4, val param5) {
+  return new ParserATNSimulatorHelper(param1, param2, param3, param4, param5);
+}
+
 class RuleStartStateHelper : public atn::RuleStartState {
 public:
   GETTER(const atn::ATNState *, stopState)
@@ -161,7 +205,7 @@ public:
   GETTER(atn::ATNState *, target)
 };
 
-EMSCRIPTEN_BINDINGS(atn) {
+EMSCRIPTEN_BINDINGS(atn1) {
   class_<atn::ActionTransition, base<atn::Transition>>("ActionTransition")
     .class_function("is", select_overload<bool(const atn::Transition &)>(&atn::ActionTransition::is))
     .class_function("is", select_overload<bool(const atn::Transition *)>(&atn::ActionTransition::is),
@@ -623,13 +667,20 @@ EMSCRIPTEN_BINDINGS(atn) {
     .function("execute", &atn::LexerTypeAction::execute, allow_raw_pointers())
     .function("equals", &atn::LexerTypeAction::equals)
     .function("toString", &atn::LexerTypeAction::toString);
+}
+
+EMSCRIPTEN_BINDINGS(atn2) {
+  class_<atn::ParserATNSimulatorOptions>("ParserATNSimulatorOptions")
+    .function("setPredictionContextMergeCacheOptions",
+              &atn::ParserATNSimulatorOptions::setPredictionContextMergeCacheOptions)
+    .function("getPredictionContextMergeCacheOptions",
+              &atn::ParserATNSimulatorOptions::getPredictionContextMergeCacheOptions);
 
   class_<atn::ParserATNSimulator, base<atn::ATNSimulator>>("ParserATNSimulator")
     .class_property("TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT", &atn::ParserATNSimulator::TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT)
 
-    // .constructor<Parser *, const atn::ATN &, std::vector<dfa::DFA> &, atn::PredictionContextCache &>()
-    // .constructor<Parser *, const ATN &, std::vector<dfa::DFA> &,PredictionContextCache &, const
-    // ParserATNSimulatorOptions &>()
+    .constructor<>(&createParserATNSimulator1)
+    .constructor<>(&createParserATNSimulator2)
 
     //.property("decisionToDFA", &atn::ParserATNSimulator::decisionToDFA)
 

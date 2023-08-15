@@ -19,6 +19,7 @@ em++ \
     -s DEMANGLE_SUPPORT=1\
     -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\
     -fwasm-exceptions\
+    -fsanitize=undefined\
     -fsanitize=address\
     -g
 

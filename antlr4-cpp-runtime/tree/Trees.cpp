@@ -137,7 +137,7 @@ std::vector<ParseTree *> Trees::getAncestors(ParseTree *t) {
   return ancestors;
 }
 
-template<typename T>
+template <typename T>
 static void _findAllNodes(ParseTree *t, size_t index, bool findTokens, std::vector<T> &nodes) {
   // check this node (the root) first
   if (findTokens && is<TerminalNode *>(t)) {
@@ -190,9 +190,9 @@ std::vector<ParseTree *> Trees::getDescendants(ParseTree *t) {
   std::vector<ParseTree *> nodes;
   nodes.push_back(t);
   std::size_t n = t->children.size();
-  for (size_t i = 0 ; i < n ; i++) {
+  for (size_t i = 0; i < n; i++) {
     auto descentants = getDescendants(t->children[i]);
-    for (auto *entry: descentants) {
+    for (auto *entry : descentants) {
       nodes.push_back(entry);
     }
   }
@@ -203,7 +203,7 @@ std::vector<ParseTree *> Trees::descendants(ParseTree *t) {
   return getDescendants(t);
 }
 
-ParserRuleContext* Trees::getRootOfSubtreeEnclosingRegion(ParseTree *t, size_t startTokenIndex, size_t stopTokenIndex) {
+ParserRuleContext *Trees::getRootOfSubtreeEnclosingRegion(ParseTree *t, size_t startTokenIndex, size_t stopTokenIndex) {
   size_t n = t->children.size();
   for (size_t i = 0; i < n; i++) {
     ParserRuleContext *r = getRootOfSubtreeEnclosingRegion(t->children[i], startTokenIndex, stopTokenIndex);
@@ -223,13 +223,13 @@ ParserRuleContext* Trees::getRootOfSubtreeEnclosingRegion(ParseTree *t, size_t s
   return nullptr;
 }
 
-ParseTree * Trees::findNodeSuchThat(ParseTree *t, Ref<Predicate> const& pred) {
+ParseTree *Trees::findNodeSuchThat(ParseTree *t, Ref<Predicate> const &pred) {
   if (pred->test(t)) {
     return t;
   }
 
   size_t n = t->children.size();
-  for (size_t i = 0 ; i < n ; ++i) {
+  for (size_t i = 0; i < n; ++i) {
     ParseTree *u = findNodeSuchThat(t->children[i], pred);
     if (u != nullptr) {
       return u;
@@ -238,4 +238,3 @@ ParseTree * Trees::findNodeSuchThat(ParseTree *t, Ref<Predicate> const& pred) {
 
   return nullptr;
 }
-

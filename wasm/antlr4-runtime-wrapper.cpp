@@ -36,5 +36,6 @@ EMSCRIPTEN_BINDINGS(default) {
 
   register_vector<dfa::DFA *>("DFAVector");
 
+  register_vector<tree::TerminalNode *>("TerminalNodeVector");
   register_vector<tree::ParseTree *>("ParseTreeVector");
 };

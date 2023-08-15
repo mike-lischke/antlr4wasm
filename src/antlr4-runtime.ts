@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-import Module, { ANTLR4Wasm } from "../wasm/antlr4-runtime-wasm.js";
+import Module, { ANTLR4Wasm, Vector } from "../wasm/antlr4-runtime-wasm.js";
 
 let antlr4: ANTLR4Wasm;
 try {
@@ -13,6 +13,12 @@ try {
 }
 
 const std$$exception = antlr4["std$$exception"];
+
+type StringVector = InstanceType<typeof antlr4.StringVector>;
+const StringVector = antlr4.StringVector;
+
+type TerminalNodeVector = InstanceType<typeof antlr4.TerminalNodeVector>;
+const TerminalNodeVector = antlr4.TerminalNodeVector;
 
 const ANTLRCPP_VERSION_MAJOR = antlr4.ANTLRCPP_VERSION_MAJOR;
 const ANTLRCPP_VERSION_MINOR = antlr4.ANTLRCPP_VERSION_MINOR;
@@ -42,6 +48,9 @@ const CommonToken = antlr4.CommonToken;
 type CommonTokenStream = InstanceType<typeof antlr4.CommonTokenStream>;
 const CommonTokenStream = antlr4.CommonTokenStream;
 
+type FailedPredicateException = InstanceType<typeof antlr4.FailedPredicateException>;
+const FailedPredicateException = antlr4.FailedPredicateException;
+
 type IntStream = InstanceType<typeof antlr4.IntStream>;
 const IntStream = antlr4.IntStream;
 
@@ -60,7 +69,7 @@ const ParserRuleContext = antlr4.ParserRuleContext;
 type RecognitionException = InstanceType<typeof antlr4.RecognitionException>;
 const RecognitionException = antlr4.RecognitionException;
 
-type Recognizer = InstanceType<typeof antlr4.Recognizer>;
+type Recognizer<T extends ATNSimulator> = InstanceType<typeof antlr4.Recognizer<T>>;
 const Recognizer = antlr4.Recognizer;
 
 type RuleContext = InstanceType<typeof antlr4.RuleContext>;
@@ -117,6 +126,9 @@ const LexerActionType = antlr4.LexerActionType;
 
 type LexerActionExecutor = InstanceType<typeof antlr4.LexerActionExecutor>;
 const LexerActionExecutor = antlr4.LexerActionExecutor;
+
+type ParserATNSimulator = InstanceType<typeof antlr4.ParserATNSimulator>;
+const ParserATNSimulator = antlr4.ParserATNSimulator;
 
 type RuleStartState = InstanceType<typeof antlr4.RuleStartState>;
 const RuleStartState = antlr4.RuleStartState;
@@ -204,7 +216,11 @@ type TerminalNode = InstanceType<typeof antlr4.TerminalNode>;
 const TerminalNode = antlr4.TerminalNode;
 
 export {
+    type Vector,
+
     std$$exception,
+    StringVector,
+    TerminalNodeVector,
 
     ANTLRCPP_VERSION_MAJOR,
     ANTLRCPP_VERSION_MINOR,
@@ -219,6 +235,7 @@ export {
     CharStream,
     CommonToken,
     CommonTokenStream,
+    FailedPredicateException,
     IntStream,
     LexerATNSimulator,
     LexerNoViableAltException,
@@ -246,6 +263,7 @@ export {
     LexerAction,
     LexerActionType,
     LexerActionExecutor,
+    ParserATNSimulator,
     RuleStartState,
     RuleStopState,
     RuntimeException,

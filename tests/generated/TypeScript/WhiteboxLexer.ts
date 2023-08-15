@@ -3,7 +3,7 @@
 
 import {
     ATN, CharStream, DFA, Lexer, PredictionContextCache, Token, Vocabulary, LexerATNSimulator,
-    ATNDeserializer, SerializedATNView,
+    ATNDeserializer, SerializedATNView, StringVector,
 } from "../../../src/antlr4-runtime.js";
 
 const LexerExtender = Lexer.extend<Lexer>("Lexer", {});
@@ -55,7 +55,12 @@ export default class WhiteboxLexer extends LexerExtender {
 
     public getLiteralNames(): (string | null)[] { return WhiteboxLexer.literalNames; }
     public getSymbolicNames(): (string | null)[] { return WhiteboxLexer.symbolicNames; }
-    public getRuleNames(): string[] { return WhiteboxLexer.ruleNames; }
+    public override getRuleNames(): StringVector {
+        const result = new StringVector();
+        WhiteboxLexer.ruleNames.forEach((ruleName) => { result.push_back(ruleName); });
+
+        return result;
+    }
 
     public get serializedATN(): SerializedATNView { return WhiteboxLexer._serializedATN; }
 

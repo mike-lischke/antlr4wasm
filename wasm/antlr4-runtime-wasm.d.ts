@@ -3,17 +3,44 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 
-export declare class Deletable {
-    public delete(): void;
-}
-
-/** Some of the functionality of the C++ std::vector class. */
-export declare class Vector<T> extends Deletable {
+/**
+ * Some of the functionality of the C++ std::vector class, declared as interface. There's no way to bind a generic
+ * class with emscripten. Instead use the concrete classes below.
+ */
+export declare interface Vector<T> {
     size(): number;
     push_back(value: T): void;
     resize(size: number): void;
     get(index: number): T;
     set(index: number, value: T): void;
+
+    delete(): void;
+
+    // Disallow indexed access.
+    [key: number]: never;
+}
+
+export declare class Deletable {
+    public delete(): void;
+}
+
+export declare class StringVector extends Deletable implements Vector<string>{
+    size(): number;
+    push_back(value: string): void;
+    resize(size: number): void;
+    get(index: number): string;
+    set(index: number, value: string): void;
+
+    // Disallow indexed access.
+    [key: number]: never;
+}
+
+export declare class TerminalNodeVector extends Deletable implements Vector<TerminalNode>{
+    size(): number;
+    push_back(value: TerminalNode): void;
+    resize(size: number): void;
+    get(index: number): TerminalNode;
+    set(index: number, value: TerminalNode): void;
 
     // Disallow indexed access.
     [key: number]: never;
@@ -52,7 +79,7 @@ export declare abstract class ANTLRErrorListener {
     ): void;
 }
 
-export declare abstract class ANTLRErrorStrategy {
+export declare abstract class ANTLRErrorStrategy extends Deletable {
     /**
      * Reset the error handler state for the specified `recognizer`.
      *
@@ -256,6 +283,21 @@ export declare class CommonTokenStream extends BufferedTokenStream {
 
     public LT(k: number): Token;
     public getNumberOfOnChannelTokens(): number;
+}
+
+/**
+ * A semantic predicate failed during validation.  Validation of predicates
+ * occurs when normally parsing the alternative just like matching a token.
+ * Disambiguating predicate evaluation occurs when we test a predicate during
+ * prediction.
+ */
+export declare class FailedPredicateException extends RecognitionException {
+    public constructor(recognizer: Parser);
+    public constructor(recognizer: Parser, predicate?: string, message?: string);
+
+    public getRuleIndex(): number;
+    public getPredicateIndex(): number;
+    public getPredicate(): string;
 }
 
 /**
@@ -476,6 +518,12 @@ export declare class NoViableAltException extends RecognitionException {
 }
 
 export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
+    public constructor(input: TokenStream);
+
+    public ctx(): ParserRuleContext | null;
+    public errHandler(): ANTLRErrorStrategy;
+    public input(): TokenStream;
+
     public reset(): void;
     public match(tokenType: number): Token;
     public matchWildcard(): Token;
@@ -483,7 +531,7 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getBuildParseTree(): boolean;
     public setTrimParseTree(trimParseTrees: boolean): void;
     public getTrimParseTree(): boolean;
-    public getParseListeners(): ParseTreeListener[];
+    public getParseListeners(): Vector<ParseTreeListener>;
     public addParseListener(listener: ParseTreeListener): void;
     public removeParseListener(listener: ParseTreeListener): void;
     public removeParseListeners(): void;
@@ -520,7 +568,7 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getExpectedTokensWithinCurrentRule(): IntervalSet;
     public getRuleIndexMap(): Map<string, number>;
     public getRuleContext(): ParserRuleContext;
-    public getRuleInvocationStack(p?: RuleContext): string[];
+    public getRuleInvocationStack(p?: RuleContext): Vector<string>;
     public unrollRecursionContexts(parentCtx: ParserRuleContext): void;
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
     public getContext(): ParserRuleContext;
@@ -533,8 +581,8 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getExpectedTokensWithinCurrentRule(): IntervalSet;
     public getRuleIndexMap(): Map<string, number>;
     public getRuleContext(): ParserRuleContext;
-    public getRuleInvocationStack(p?: RuleContext): string[];
-    public getDFAStrings(): string[];
+    public getRuleInvocationStack(p?: RuleContext): Vector<string>;
+    public getDFAStrings(): Vector<string>;
     public dumpDFA(): void;
     public getSourceName(): string;
     public getParseInfo(): string;
@@ -547,7 +595,12 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
 
 export declare class ParserRuleContext extends RuleContext {
     public constructor();
-    public constructor(parent: ParserRuleContext, invokingStateNumber: number);
+    public constructor(parent: ParserRuleContext | null, invokingStateNumber: number);
+
+    /**
+     * Triggers capturing the last thrown exception in C++. It should be called only in a catch block.
+     */
+    public captureException(): void;
 
     public copyFrom(ctx: ParserRuleContext): void;
     public enterRule(listener: ParseTreeListener): void;
@@ -556,9 +609,22 @@ export declare class ParserRuleContext extends RuleContext {
     public addChild(ruleInvocation: RuleContext): RuleContext;
     public removeLastChild(): void;
     public getToken(tokenType: number, i: number): TerminalNode | null;
-    public getTokens(tokenType: number): TerminalNode[];
-    public getRuleContext(ruleIndex: number, i: number): RuleContext | null;
-    public getRuleContexts(ruleIndex: number): RuleContext[];
+    public getTokens(tokenType: number): Vector<TerminalNode>;
+
+    /**
+     * Returns the ith ParserRuleContext which matches the specified rule index.
+     *
+     * @param ruleIndex The index of the rule whose ParserRuleContext we are interested in.
+     * @param i The ith value of the specific rule in the child list.
+     */
+    public getRuleContext(ruleIndex: number, i: number): ParserRuleContext | null;
+
+    /**
+     * Returns a list of ParserRuleContext objects matching the specified rule index.
+     * @param ruleIndex The rule whose ParserRuleContext objects we are interested in.
+     */
+    public getRuleContexts(ruleIndex: number): Vector<ParserRuleContext>;
+
     public getSourceInterval(): Interval;
     public getStart(): Token;
     public getStop(): Token;
@@ -580,7 +646,7 @@ export declare class RecognitionException extends RuntimeException {
 }
 
 export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> extends Extendable {
-    public abstract getRuleNames(): string[];
+    public abstract getRuleNames(): Vector<string>;
 
     /**
      * Get the vocabulary used by the recognizer.
@@ -631,7 +697,7 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public addErrorListener(listener: ANTLRErrorListener): void;
     public removeErrorListener(listener: ANTLRErrorListener): void;
     public removeErrorListeners(): void;
-    public getErrorListenersDispatch(): ANTLRErrorListener[];
+    public getErrorListenersDispatch(): Vector<ANTLRErrorListener>;
     public sempred(localctx: RuleContext, ruleIndex: number, actionIndex: number): boolean;
     public precpred(localctx: RuleContext, precedence: number): boolean;
     public action(localctx: RuleContext, ruleIndex: number, actionIndex: number): void;
@@ -641,7 +707,7 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public setInputStream(input: IntStream): void;
 }
 
-export declare class RuleContext extends Deletable {
+export declare class RuleContext extends Extendable {
     public static is(tree: ParseTree): boolean;
 
     public readonly invokingState: number;
@@ -660,8 +726,8 @@ export declare class RuleContext extends Deletable {
 
     public accept<T>(visitor: ParseTreeVisitor<T>): T;
 
-    public toStringTree(recognizer: Recognizer<ATNSimulator>, pretty: boolean): string;
-    public toStringTree(ruleNames: string[], pretty: boolean): string;
+    public toStringTree(recognizer: Parser, pretty: boolean): string;
+    public toStringTree(ruleNames: Vector<string>, pretty: boolean): string;
     public toStringTree(pretty: boolean): string;
 
     public toString(ruleNames?: string[]): string;
@@ -973,7 +1039,7 @@ export declare class ATN extends Deletable {
     public lexerActions: Vector<LexerAction>;
 
     public readonly modeToStartState: Vector<TokensStartState>;
-    public readonly modeToDFA: DFA[];
+    public readonly modeToDFA: Vector<DFA>;
 
     /** Compute the set of valid tokens that can occur starting in state `s`.
      *  If `ctx` is {@link PredictionContext#EMPTY_LOCAL}, the set of tokens will not include what can follow
@@ -1054,7 +1120,7 @@ export declare class ATNConfig extends Deletable {
 }
 
 export declare class ATNConfigSet extends Deletable {
-    public readonly configs: ATNConfig[];
+    public readonly configs: Vector<ATNConfig>;
     public readonly uniqueAlt: number;
     //public readonly conflictingAlts: BitSet;
     public readonly hasSemanticContext: boolean;
@@ -1066,9 +1132,9 @@ export declare class ATNConfigSet extends Deletable {
 
     public add(config: ATNConfig, mergeCache?: Map<PredictionContext, PredictionContext>): boolean;
     public addAll(other: ATNConfigSet): boolean;
-    public getStates(): ATNState[];
+    public getStates(): Vector<ATNState>;
     // public getAlts(): BitSet;
-    public getPredicates(): SemanticContext[];
+    public getPredicates(): Vector<SemanticContext>;
     public get(i: number): ATNConfig;
     public optimizeConfigs(interpreter: ATNSimulator): void;
     public size(): number;
@@ -1176,7 +1242,7 @@ export declare class ATNState extends Deletable {
     public readonly ruleIndex: number;
     public readonly epsilonOnlyTransitions: boolean;
 
-    public getTransitions(): Transition[];
+    public getTransitions(): Vector<Transition>;
     public addTransition(e: Transition): void;
     public addTransition(index: number, e: Transition): void;
     public removeTransition(index: number): Transition;
@@ -1247,7 +1313,7 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
 
     public abstract getChannelNames(): string[];
     public abstract getModeNames(): string[];
-    public abstract getRuleNames(): string[];
+    public abstract getRuleNames(): Vector<string>;
     public abstract getVocabulary(): Vocabulary;
     public abstract getGrammarFileName(): string;
     public abstract getATN(): ATN;
@@ -1282,11 +1348,11 @@ export declare enum LexerActionType {
 }
 
 export declare class LexerActionExecutor extends Deletable {
-    public constructor(lexerActions: LexerAction[]);
+    public constructor(lexerActions: Vector<LexerAction>);
 
     public append(lexerActionExecutor: LexerActionExecutor, lexerAction: LexerAction): LexerActionExecutor;
     public fixOffsetBeforeMatch(offset: number): void;
-    public getLexerActions(): LexerAction[];
+    public getLexerActions(): Vector<LexerAction>;
     public execute(lexer: Lexer, input: string, startIndex: number): number;
     public hashCode(): number;
     public equals(o: unknown): boolean;
@@ -1316,11 +1382,17 @@ export declare class LexerATNSimulator extends ATNSimulator {
     public getTokenName(t: number): string;
 }
 
+export declare class ParserATNSimulatorOptions {
+    public setPredictionContextMergeCacheOptions(predictionContextMergeCacheOptions: PredictionContextMergeCacheOptions): void;
+    public getPredictionContextMergeCacheOptions(): PredictionContextMergeCacheOptions;
+}
+
 export declare class ParserATNSimulator extends ATNSimulator {
     public static readonly TURN_OFF_LR_LOOP_ENTRY_BRANCH_OPT: boolean;
 
-    // TODO: needs fix in bindings.
-    //public constructor(parser: Parser, atn: ATN, decisionToDFA: DFA[], sharedContextCache: PredictionContextCache);
+    public constructor(parser: Parser, atn: ATN, decisionToDFA: DFA[], sharedContextCache: PredictionContextCache);
+    public constructor(parser: Parser, atn: ATN, decisionToDFA: DFA[], sharedContextCache: PredictionContextCache,
+        options: ParserATNSimulatorOptions);
 
     public override reset(): void;
     public override clearDFA(): number;
@@ -1448,7 +1520,7 @@ export declare class TokensStartState extends DecisionState {
  *  ATN transitions.
  */
 export declare abstract class Transition extends Deletable {
-    static readonly serializationNames: string[];
+    static readonly serializationNames: Vector<string>;
 
     /** The target of this transition. */
     target(): ATNState;
@@ -1509,8 +1581,8 @@ export declare class PredictionContext extends Deletable {
     public hashCode(): number;
     public equals(o: unknown): boolean;
     public toString(): string;
-    public toStrings(recognizer: Recognizer<ATNSimulator>, currentState: number): string[];
-    public toStrings(recognizer: Recognizer<ATNSimulator>, currentState: number, stop: PredictionContext): string[];
+    public toStrings(recognizer: Recognizer<ATNSimulator>, currentState: number): Vector<string>;
+    public toStrings(recognizer: Recognizer<ATNSimulator>, currentState: number, stop: PredictionContext): Vector<string>;
 }
 
 export declare class PredictionContextCache extends Deletable {
@@ -1549,7 +1621,6 @@ export declare abstract class SemanticContext extends Deletable {
     public abstract hashCode(): number;
     public abstract equals(o: unknown): boolean;
     public abstract toString(): string;
-
 }
 
 export declare enum SemanticContextType {
@@ -1596,7 +1667,7 @@ export declare class DFA extends Deletable {
      */
     public getPrecedenceStartState(precedence: number): DFAState;
     public setPrecedenceStartState(precedence: number, startState: DFAState): void;
-    public getStates(precedence: number): DFAState[];
+    public getStates(precedence: number): Vector<DFAState>;
     public toString(vocabulary: Vocabulary): string;
     public toLexerString(): string;
     public atnStartState(): DecisionState;
@@ -1608,7 +1679,7 @@ export declare class DFAState extends Deletable {
     public readonly edges: Map<number, DFAState>;
     public readonly prediction: number;
     public readonly lexerActionExecutor: LexerActionExecutor | undefined;
-    // public readonly predicates: PredPrediction[];
+    // public readonly predicates: Vector<PredPrediction>;
     public readonly stateNumber: number;
     public readonly isAcceptState: boolean;
     public readonly requiresFullContext: boolean;
@@ -1873,7 +1944,7 @@ export declare class IntervalSet extends Deletable {
     public getMinElement(): number;
 
     /** Return a list of Interval objects. */
-    public getIntervals(): Interval[];
+    public getIntervals(): Vector<Interval>;
     public hashCode(): number;
 
     /** Are two IntervalSets equal?  Because all intervals are sorted
@@ -1946,7 +2017,7 @@ export declare abstract class ErrorNode extends TerminalNode {
  * The payload is either a {@link Token} or a {@link RuleContext} object.
  */
 export declare abstract class ParseTree extends Deletable {
-    public children(): ParseTree[];
+    public children(): Vector<ParseTree>;
     public parent(): ParseTree | undefined;
 
     public abstract toStringTree(pretty: boolean): string;
@@ -2039,7 +2110,7 @@ export declare class ParseTreeMatch {
      * the specified `label`. If no nodes matched the label, an empty list
      * is returned.
      */
-    public getAll(label: string): ParseTree[];
+    public getAll(label: string): Vector<ParseTree>;
 
     /**
      * Return a mapping from label -> [list of nodes].
@@ -2134,7 +2205,7 @@ export declare class ParseTreePattern {
      * describing the successful matches. Unsuccessful matches are omitted from the result,
      * regardless of the reason for the failure.
      */
-    public findAll(tree: ParseTree, xpath: string): ParseTreeMatch[];
+    public findAll(tree: ParseTree, xpath: string): Vector<ParseTreeMatch>;
 
     /**
      * Get the {@link ParseTreePatternMatcher} which created this tree pattern.
@@ -2365,6 +2436,9 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     std$$exception: typeof std$$exception;
     getExceptionMessage(e: number): string;
 
+    StringVector: typeof StringVector;
+    TerminalNodeVector: typeof TerminalNodeVector;
+
     // ===== main =====
     readonly ANTLRCPP_VERSION_MAJOR: number;
     readonly ANTLRCPP_VERSION_MINOR: number;
@@ -2379,6 +2453,7 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     CharStream: typeof CharStream;
     CommonToken: typeof CommonToken;
     CommonTokenStream: typeof CommonTokenStream;
+    FailedPredicateException: typeof FailedPredicateException;
     IntStream: typeof IntStream;
     LexerNoViableAltException: typeof LexerNoViableAltException;
     Parser: typeof Parser;
@@ -2407,6 +2482,7 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     LexerAction: typeof LexerAction;
     LexerActionType: typeof LexerActionType;
     LexerActionExecutor: typeof LexerActionExecutor;
+    ParserATNSimulator: typeof ParserATNSimulator;
     RuleStartState: typeof RuleStartState;
     RuleStopState: typeof RuleStopState;
     RuntimeException: typeof RuntimeException;

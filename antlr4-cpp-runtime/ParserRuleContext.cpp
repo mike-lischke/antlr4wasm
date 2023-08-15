@@ -21,12 +21,11 @@ using namespace antlrcpp;
 
 ParserRuleContext ParserRuleContext::EMPTY;
 
-ParserRuleContext::ParserRuleContext()
-  : start(nullptr), stop(nullptr) {
+ParserRuleContext::ParserRuleContext() : start(nullptr), stop(nullptr) {
 }
 
 ParserRuleContext::ParserRuleContext(ParserRuleContext *parent, size_t invokingStateNumber)
-: RuleContext(parent, invokingStateNumber), start(nullptr), stop(nullptr) {
+  : RuleContext(parent, invokingStateNumber), start(nullptr), stop(nullptr) {
 }
 
 void ParserRuleContext::copyFrom(ParserRuleContext *ctx) {
@@ -41,15 +40,17 @@ void ParserRuleContext::copyFrom(ParserRuleContext *ctx) {
   if (!ctx->children.empty()) {
     for (auto *child : ctx->children) {
       if (ErrorNode::is(child)) {
-        downCast<ErrorNode*>(child)->setParent(this);
+        downCast<ErrorNode *>(child)->setParent(this);
         children.push_back(child);
       }
     }
 
     // Remove the just reparented error nodes from the source context.
-    ctx->children.erase(std::remove_if(ctx->children.begin(), ctx->children.end(), [this](tree::ParseTree *e) -> bool {
-      return std::find(children.begin(), children.end(), e) != children.end();
-    }), ctx->children.end());
+    ctx->children.erase(std::remove_if(ctx->children.begin(), ctx->children.end(),
+                                       [this](tree::ParseTree *e) -> bool {
+                                         return std::find(children.begin(), children.end(), e) != children.end();
+                                       }),
+                        ctx->children.end());
   }
 }
 
@@ -59,13 +60,13 @@ void ParserRuleContext::enterRule(tree::ParseTreeListener * /*listener*/) {
 void ParserRuleContext::exitRule(tree::ParseTreeListener * /*listener*/) {
 }
 
-tree::TerminalNode* ParserRuleContext::addChild(tree::TerminalNode *t) {
+tree::TerminalNode *ParserRuleContext::addChild(tree::TerminalNode *t) {
   t->setParent(this);
   children.push_back(t);
   return t;
 }
 
-RuleContext* ParserRuleContext::addChild(RuleContext *ruleInvocation) {
+RuleContext *ParserRuleContext::addChild(RuleContext *ruleInvocation) {
   children.push_back(ruleInvocation);
   return ruleInvocation;
 }
@@ -76,14 +77,14 @@ void ParserRuleContext::removeLastChild() {
   }
 }
 
-tree::TerminalNode* ParserRuleContext::getToken(size_t ttype, size_t i) const {
+tree::TerminalNode *ParserRuleContext::getToken(size_t ttype, size_t i) const {
   if (i >= children.size()) {
     return nullptr;
   }
   size_t j = 0; // what token with ttype have we found?
   for (auto *child : children) {
     if (TerminalNode::is(child)) {
-      tree::TerminalNode *typedChild = downCast<tree::TerminalNode*>(child);
+      tree::TerminalNode *typedChild = downCast<tree::TerminalNode *>(child);
       Token *symbol = typedChild->getSymbol();
       if (symbol->getType() == ttype) {
         if (j++ == i) {
@@ -96,10 +97,10 @@ tree::TerminalNode* ParserRuleContext::getToken(size_t ttype, size_t i) const {
 }
 
 std::vector<tree::TerminalNode *> ParserRuleContext::getTokens(size_t ttype) const {
-  std::vector<tree::TerminalNode*> tokens;
+  std::vector<tree::TerminalNode *> tokens;
   for (auto *child : children) {
     if (TerminalNode::is(child)) {
-      tree::TerminalNode *typedChild = downCast<tree::TerminalNode*>(child);
+      tree::TerminalNode *typedChild = downCast<tree::TerminalNode *>(child);
       Token *symbol = typedChild->getSymbol();
       if (symbol->getType() == ttype) {
         tokens.push_back(typedChild);
@@ -108,6 +109,42 @@ std::vector<tree::TerminalNode *> ParserRuleContext::getTokens(size_t ttype) con
   }
   return tokens;
 }
+
+#ifdef __EMSCRIPTEN__
+ParserRuleContext *ParserRuleContext::getContext(size_t ruleIndex, size_t i) const {
+  if (i >= children.size()) {
+    return nullptr;
+  }
+
+  size_t j = 0;
+  for (auto *child : children) {
+    if (ParserRuleContext::is(child)) {
+      ParserRuleContext *typedChild = downCast<ParserRuleContext *>(child);
+      if (typedChild->getRuleIndex() == ruleIndex) {
+        if (j++ == i) {
+          return typedChild;
+        }
+      }
+    }
+  }
+
+  return nullptr;
+}
+
+std::vector<ParserRuleContext *> ParserRuleContext::getContexts(size_t ruleIndex) const {
+  std::vector<ParserRuleContext *> contexts;
+  for (auto *child : children) {
+    if (ParserRuleContext::is(child)) {
+      ParserRuleContext *typedChild = downCast<ParserRuleContext *>(child);
+      if (typedChild->getRuleIndex() == ruleIndex) {
+        contexts.push_back(typedChild);
+      }
+    }
+  }
+  return contexts;
+}
+
+#endif
 
 misc::Interval ParserRuleContext::getSourceInterval() {
   if (start == nullptr) {
@@ -120,11 +157,11 @@ misc::Interval ParserRuleContext::getSourceInterval() {
   return misc::Interval(start->getTokenIndex(), stop->getTokenIndex());
 }
 
-Token* ParserRuleContext::getStart() const {
+Token *ParserRuleContext::getStart() const {
   return start;
 }
 
-Token* ParserRuleContext::getStop() const {
+Token *ParserRuleContext::getStop() const {
   return stop;
 }
 
@@ -132,7 +169,6 @@ std::string ParserRuleContext::toInfoString(Parser *recognizer) {
   std::vector<std::string> rules = recognizer->getRuleInvocationStack(this);
   std::reverse(rules.begin(), rules.end());
   std::string rulesStr = antlrcpp::arrayToString(rules);
-  return "ParserRuleContext" + rulesStr + "{start=" + std::to_string(start->getTokenIndex()) + ", stop=" +
-    std::to_string(stop->getTokenIndex()) + '}';
+  return "ParserRuleContext" + rulesStr + "{start=" + std::to_string(start->getTokenIndex()) +
+         ", stop=" + std::to_string(stop->getTokenIndex()) + '}';
 }
-
