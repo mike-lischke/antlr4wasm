@@ -21,7 +21,7 @@
         "build-wasm-debug": "./scripts/build-debug.sh",
         "build-wasm-release": "./scripts/build-release.sh",
         "build-ts": "tsc -w",
-        "generate-parser": "./scripts/generate.sh"
+        "generate-test-parser": "./scripts/generate.sh"
     },
     "devDependencies": {
         "@tsconfig/node-lts-strictest-esm": "18.12.1",
