@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "moduleResolution": "node",
         "target": "ES2022",
         "module": "ES2022",
         "outDir": "./lib",
-        "declaration": true,
+        "declaration": false,
         "sourceMap": true,
         "esModuleInterop": true,
         "isolatedModules": true,
@@ -27,6 +28,5 @@
         "node_modules/**/*.*",
         "lib/**/*.*",
         "tests/**/*.*",
-        "simple/**/*.*",
     ],
 }

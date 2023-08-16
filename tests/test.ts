@@ -29,6 +29,7 @@ try {
 
     const names = parser.getRuleNames();
     console.log(tree.toStringTree(names, true));
+    //console.log(tree.toStringTree(parser, true));
     names.delete();
 
     tree.delete();
