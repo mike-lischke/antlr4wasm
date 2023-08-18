@@ -38,4 +38,5 @@ EMSCRIPTEN_BINDINGS(default) {
 
   register_vector<tree::TerminalNode *>("TerminalNodeVector");
   register_vector<tree::ParseTree *>("ParseTreeVector");
+  register_vector<tree::ParseTreeListener *>("ParseTreeListenerVector");
 };

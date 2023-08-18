@@ -81,7 +81,7 @@ export default class WhiteboxParser extends ParserExtender {
 
     // @RuleVersion(0)
     public test1(): Test1Context {
-        let localctx: Test1Context = new Test1Context(this.ctx(), this.getState());
+        let localctx: Test1Context = new Test1Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 0, WhiteboxParser.RULE_test1);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -95,8 +95,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -108,7 +108,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule1(): Rule1Context {
-        let localctx: Rule1Context = new Rule1Context(this.ctx(), this.getState());
+        let localctx: Rule1Context = new Rule1Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 2, WhiteboxParser.RULE_rule1);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -122,8 +122,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -135,7 +135,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule2(): Rule2Context {
-        let localctx: Rule2Context = new Rule2Context(this.ctx(), this.getState());
+        let localctx: Rule2Context = new Rule2Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 4, WhiteboxParser.RULE_rule2);
         let _la: number;
         try {
@@ -148,7 +148,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(36);
                 this.rule5();
                 this.setState(40);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 while (_la === 4) {
                     {
@@ -158,11 +158,11 @@ export default class WhiteboxParser extends ParserExtender {
                         }
                     }
                     this.setState(42);
-                    this.errHandler().sync(this);
+                    this.getErrorHandler().sync(this);
                     _la = this.input().LA(1);
                 }
                 this.setState(44);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 5) {
                     {
@@ -176,8 +176,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -189,7 +189,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule3(): Rule3Context {
-        let localctx: Rule3Context = new Rule3Context(this.ctx(), this.getState());
+        let localctx: Rule3Context = new Rule3Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 6, WhiteboxParser.RULE_rule3);
         let _la: number;
         try {
@@ -198,7 +198,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(46);
                 this.rule4();
                 this.setState(48);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 3) {
                     {
@@ -212,8 +212,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -225,14 +225,14 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule4(): Rule4Context {
-        let localctx: Rule4Context = new Rule4Context(this.ctx(), this.getState());
+        let localctx: Rule4Context = new Rule4Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 8, WhiteboxParser.RULE_rule4);
         let _la: number;
         try {
             this.enterOuterAlt(localctx, 1);
             {
                 this.setState(51);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 2) {
                     {
@@ -246,8 +246,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -259,7 +259,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule5(): Rule5Context {
-        let localctx: Rule5Context = new Rule5Context(this.ctx(), this.getState());
+        let localctx: Rule5Context = new Rule5Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 10, WhiteboxParser.RULE_rule5);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -270,8 +270,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -283,7 +283,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public test2(): Test2Context {
-        let localctx: Test2Context = new Test2Context(this.ctx(), this.getState());
+        let localctx: Test2Context = new Test2Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 12, WhiteboxParser.RULE_test2);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -297,8 +297,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -310,7 +310,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule7(): Rule7Context {
-        let localctx: Rule7Context = new Rule7Context(this.ctx(), this.getState());
+        let localctx: Rule7Context = new Rule7Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 14, WhiteboxParser.RULE_rule7);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -324,8 +324,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -337,7 +337,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule8(): Rule8Context {
-        let localctx: Rule8Context = new Rule8Context(this.ctx(), this.getState());
+        let localctx: Rule8Context = new Rule8Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 16, WhiteboxParser.RULE_rule8);
         let _la: number;
         try {
@@ -350,7 +350,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(63);
                 this.rule9();
                 this.setState(67);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 while (_la === 4) {
                     {
@@ -360,11 +360,11 @@ export default class WhiteboxParser extends ParserExtender {
                         }
                     }
                     this.setState(69);
-                    this.errHandler().sync(this);
+                    this.getErrorHandler().sync(this);
                     _la = this.input().LA(1);
                 }
                 this.setState(71);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 5) {
                     {
@@ -378,8 +378,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -391,7 +391,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule9(): Rule9Context {
-        let localctx: Rule9Context = new Rule9Context(this.ctx(), this.getState());
+        let localctx: Rule9Context = new Rule9Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 18, WhiteboxParser.RULE_rule9);
         let _la: number;
         try {
@@ -400,7 +400,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(73);
                 this.rule10();
                 this.setState(75);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 3) {
                     {
@@ -414,8 +414,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -427,14 +427,14 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule10(): Rule10Context {
-        let localctx: Rule10Context = new Rule10Context(this.ctx(), this.getState());
+        let localctx: Rule10Context = new Rule10Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 20, WhiteboxParser.RULE_rule10);
         let _la: number;
         try {
             this.enterOuterAlt(localctx, 1);
             {
                 this.setState(78);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 2) {
                     {
@@ -448,8 +448,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -461,7 +461,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule11(): Rule11Context {
-        let localctx: Rule11Context = new Rule11Context(this.ctx(), this.getState());
+        let localctx: Rule11Context = new Rule11Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 22, WhiteboxParser.RULE_rule11);
         try {
             this.enterOuterAlt(localctx, 1);
@@ -472,8 +472,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -485,7 +485,7 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public test3(): Test3Context {
-        let localctx: Test3Context = new Test3Context(this.ctx(), this.getState());
+        let localctx: Test3Context = new Test3Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 24, WhiteboxParser.RULE_test3);
         let _la: number;
         try {
@@ -494,7 +494,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(82);
                 this.match(WhiteboxParser.LOREM);
                 this.setState(84);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 if (_la === 2) {
                     {
@@ -506,7 +506,7 @@ export default class WhiteboxParser extends ParserExtender {
                 this.setState(86);
                 this.rule13();
                 this.setState(88);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 do {
                     {
@@ -516,7 +516,7 @@ export default class WhiteboxParser extends ParserExtender {
                         }
                     }
                     this.setState(90);
-                    this.errHandler().sync(this);
+                    this.getErrorHandler().sync(this);
                     _la = this.input().LA(1);
                 } while (_la === 5);
                 this.setState(92);
@@ -526,8 +526,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }
@@ -539,14 +539,14 @@ export default class WhiteboxParser extends ParserExtender {
     }
     // @RuleVersion(0)
     public rule13(): Rule13Context {
-        let localctx: Rule13Context = new Rule13Context(this.ctx(), this.getState());
+        let localctx: Rule13Context = new Rule13Context(this.getCtx(), this.getState());
         this.enterRule(localctx, 26, WhiteboxParser.RULE_rule13);
         let _la: number;
         try {
             this.enterOuterAlt(localctx, 1);
             {
                 this.setState(97);
-                this.errHandler().sync(this);
+                this.getErrorHandler().sync(this);
                 _la = this.input().LA(1);
                 while (_la === 3 || _la === 4) {
                     {
@@ -554,16 +554,16 @@ export default class WhiteboxParser extends ParserExtender {
                             this.setState(94);
                             _la = this.input().LA(1);
                             if (!(_la === 3 || _la === 4)) {
-                                this.errHandler().recoverInline(this);
+                                this.getErrorHandler().recoverInline(this);
                             }
                             else {
-                                this.errHandler().reportMatch(this);
+                                this.getErrorHandler().reportMatch(this);
                                 this.consume();
                             }
                         }
                     }
                     this.setState(99);
-                    this.errHandler().sync(this);
+                    this.getErrorHandler().sync(this);
                     _la = this.input().LA(1);
                 }
             }
@@ -571,8 +571,8 @@ export default class WhiteboxParser extends ParserExtender {
         catch (re) {
             if (re instanceof RecognitionException) {
                 localctx.captureException();
-                this.errHandler().reportError(this, re);
-                this.errHandler().recover(this, re);
+                this.getErrorHandler().reportError(this, re);
+                this.getErrorHandler().recover(this, re);
             } else {
                 throw re;
             }

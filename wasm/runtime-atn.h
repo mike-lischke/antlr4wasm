@@ -92,7 +92,8 @@ public:
     : atn::DecisionEventInfo(decision, configs, input, startIndex, stopIndex, fullCtx) {
   }
 
-  GETTER(const atn::ATNConfigSet *, configs) GETTER(const TokenStream *, input)
+  GETTER(const atn::ATNConfigSet *, configs)
+  GETTER(const TokenStream *, input)
 };
 
 /**

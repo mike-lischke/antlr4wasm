@@ -21,11 +21,13 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-import { Parser } from "antlr4ts/Parser";
+import { Parser } from "../../src/antlr4-runtime.js";
 
-import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon";
+import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
 
-export abstract class MySQLBaseRecognizer extends Parser implements IMySQLRecognizerCommon {
+const ParserExtender = Parser.extend<Parser>("Parser", {});
+
+export abstract class MySQLBaseRecognizer extends ParserExtender implements IMySQLRecognizerCommon {
 
     // To parameterize the parsing process.
     public serverVersion = 0;
@@ -42,8 +44,7 @@ export abstract class MySQLBaseRecognizer extends Parser implements IMySQLRecogn
         return this.sqlModes.has(mode);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public sqlModeFromString(modes: string): void {
+    public sqlModeFromString(_modes: string): void {
         throw new Error("sqlModeFromString not implemented");
     }
 

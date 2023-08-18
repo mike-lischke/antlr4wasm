@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include "helpers.h"
+
 std::string getExceptionMessage(intptr_t exceptionPtr) {
   return std::string(reinterpret_cast<std::exception *>(exceptionPtr)->what());
 }
@@ -171,7 +173,7 @@ public:
   virtual ~LexerHelper() noexcept override {
   }
 
-  GETTER_UNIQUE_PTR(Token, token)
+  // GETTER_UNIQUE_PTR(Token, token)
 
   virtual const std::vector<std::string> &getChannelNames() const override {
     return _empty;
@@ -254,20 +256,16 @@ public:
     return call<std::unique_ptr<Token>>("nextToken");
   }
 
-  virtual size_t getCharPositionInLine() override {
-    return call<size_t>("getCharPositionInLine");
+  virtual bool sempred(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    return call<bool>("sempred", localctx, ruleIndex, actionIndex);
   }
 
-  virtual void setInputStream(IntStream *input) override {
-    call<void>("setInputStream", input);
+  virtual bool precpred(RuleContext *localctx, int precedence) override {
+    return call<bool>("precpred", localctx, precedence);
   }
 
-  virtual CharStream *getInputStream() override {
-    return nullptr; // call<CharStream *>("getInputStream");
-  }
-
-  virtual std::string getSourceName() override {
-    return call<std::string>("getSourceName");
+  virtual void action(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    call<void>("action", localctx, ruleIndex, actionIndex);
   }
 };
 
@@ -278,6 +276,8 @@ public:
 
   virtual ~ParserHelper() noexcept override {
   }
+
+  GETTER_SETTER(ParserRuleContext *, _ctx);
 
   virtual std::vector<std::string> const &getRuleNames() const override {
     return _empty;
@@ -295,22 +295,14 @@ public:
     return _atn;
   }
 
-  virtual IntStream *getInputStream() override {
-    return _input;
+  /**
+   * Cannot pass a strategy instance allocated in JS to `setErrorHandler`, as that expects a shared pointer.
+   */
+  void setErrorHandlerRaw(ANTLRErrorStrategy *newHandler) {
+    _errHandler = std::shared_ptr<ANTLRErrorStrategy>(newHandler);
   }
 
-  virtual void setInputStream(IntStream *input) override {
-  }
-
-  virtual TokenFactory<CommonToken> *getTokenFactory() override {
-    return nullptr;
-  }
-
-  ParserRuleContext *ctx() {
-    return _ctx;
-  }
-
-  ANTLRErrorStrategy *errHandler() {
+  ANTLRErrorStrategy *getErrorHandlerRaw() {
     return _errHandler.get();
   }
 
@@ -356,6 +348,9 @@ public:
   ParserRuleContextHelper(ParserRuleContext *parent, size_t invokingStateNumber)
     : ParserRuleContext(parent, invokingStateNumber) {
   }
+
+  GETTER(std::vector<tree::ParseTree *>, children)
+  GETTER(tree::ParseTree *, parent)
 
   void captureException() {
     exception = std::current_exception();
@@ -443,9 +438,33 @@ public:
   virtual atn::SerializedATNView getSerializedATN() const override {
     return call<atn::SerializedATNView>("getSerializedATN");
   }
+
+  virtual bool sempred(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    return call<bool>("sempred", localctx, ruleIndex, actionIndex);
+  }
+
+  virtual bool precpred(RuleContext *localctx, int precedence) override {
+    return call<bool>("precpred", localctx, precedence);
+  }
+
+  virtual void action(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    call<void>("action", localctx, ruleIndex, actionIndex);
+  }
 };
 
-class RuleContextWrapper : public wrapper<RuleContext> {
+class RuleContextHelper : public RuleContext {
+public:
+  RuleContextHelper() : RuleContext() {
+  }
+
+  RuleContextHelper(RuleContext *parent, size_t invokingState) : RuleContext(parent, invokingState) {
+  }
+
+  GETTER(std::vector<tree::ParseTree *>, children)
+  GETTER(tree::ParseTree *, parent)
+};
+
+class RuleContextWrapper : public wrapper<RuleContextHelper> {
 public:
   EMSCRIPTEN_WRAPPER(RuleContextWrapper);
 
@@ -715,6 +734,8 @@ EMSCRIPTEN_BINDINGS(main1) {
     .function("toString", &ANTLRInputStream::toString);
 
   class_<BailErrorStrategy, base<DefaultErrorStrategy>>("BailErrorStrategy")
+    .constructor<>()
+
     .function("recover", &BailErrorStrategy::recover, allow_raw_pointers())
     .function("recoverInline", &BailErrorStrategy::recoverInline, allow_raw_pointers(), allow_raw_pointer<Token *>())
     .function("sync", &BailErrorStrategy::sync, allow_raw_pointers());
@@ -813,9 +834,9 @@ EMSCRIPTEN_BINDINGS(main2) {
     .constructor<>()
     .constructor<bool>()
 
-    // Gives error: call to implicitly-deleted copy constructor of
-    // 'std::unique_ptr<TokenFactory<CommonToken>>' .class_property("DEFAULT",
-    // &CommonTokenFactory::DEFAULT)
+    // Gives error: call to implicitly-deleted copy constructor of 'std::unique_ptr<TokenFactory<CommonToken>>'
+    // .class_property("DEFAULT", &CommonTokenFactory::DEFAULT)
+
     .function(
       "create",
       select_overload<std::unique_ptr<CommonToken>(std::pair<TokenSource *, CharStream *>, size_t, const std::string &,
@@ -927,8 +948,31 @@ EMSCRIPTEN_BINDINGS(main3) {
 
     .constructor<CharStream *>()
 
-    //.property("_input", &Lexer::_input)
-    //.property("token", &LexerHelper::tokenGet)
+    .function("reset", &Lexer::reset)
+    .function("nextToken", optional_override([](LexerHelper &self) { return self.LexerHelper::nextToken(); }))
+
+    .function("skip", &Lexer::skip)
+    .function("more", &Lexer::more)
+    .function("setMode", &Lexer::setMode)
+    .function("pushMode", &Lexer::pushMode)
+    .function("popMode", &Lexer::popMode)
+
+    .function("getTokenFactory", &Lexer::getTokenFactory, allow_raw_pointers())
+
+    .function("setInputStream", &Lexer::setInputStream, allow_raw_pointers())
+    .function("getSourceName", &Lexer::getSourceName)
+    .function("getInputStream", &Lexer::getInputStream, allow_raw_pointers())
+    .function("getLine", &Lexer::getLine)
+    .function("getCharPositionInLine", &Lexer::getCharPositionInLine)
+    .function("setLine", &Lexer::setLine)
+    .function("setCharPositionInLine", &Lexer::setCharPositionInLine)
+    .function("getCharIndex", &Lexer::getCharIndex)
+    .function("getText", &Lexer::getText)
+    .function("setText", &Lexer::setText)
+    .function("setType", &Lexer::setType)
+    .function("getType", &Lexer::getType)
+    .function("setChannel", &Lexer::setChannel)
+    .function("getChannel", &Lexer::getChannel)
 
     .function("getChannelNames",
               optional_override([](LexerHelper &self) { return self.LexerHelper::getChannelNames(); }))
@@ -938,19 +982,27 @@ EMSCRIPTEN_BINDINGS(main3) {
     .function("getGrammarFileName",
               optional_override([](LexerHelper &self) { return self.LexerHelper::getGrammarFileName(); }))
     .function("getATN", optional_override([](LexerHelper &self) { return std::cref(self.LexerHelper::getATN()); }))
-    .function("nextToken", optional_override([](LexerHelper &self) { return self.LexerHelper::nextToken(); }))
-    .function("getLine", &Lexer::getLine)
-    .function("getCharPositionInLine",
-              optional_override([](LexerHelper &self) { return self.LexerHelper::getCharPositionInLine(); }))
-    .function("setInputStream", optional_override([](LexerHelper &self, CharStream *input) {
-                return self.LexerHelper::setInputStream(input);
+
+    .function("sempred",
+              optional_override([](LexerHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+                return self.LexerHelper::sempred(localctx, ruleIndex, actionIndex);
               }),
               allow_raw_pointers())
-    .function("getInputStream", optional_override([](LexerHelper &self) { return self.LexerHelper::getInputStream(); }),
+    .function("precpred", optional_override([](LexerHelper &self, RuleContext *localctx, int precedence) {
+                return self.LexerHelper::precpred(localctx, precedence);
+              }),
               allow_raw_pointers())
-    .function("getSourceName", optional_override([](LexerHelper &self) { return self.LexerHelper::getSourceName(); }))
+    .function("action",
+              optional_override([](LexerHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+                self.LexerHelper::action(localctx, ruleIndex, actionIndex);
+              }),
+              allow_raw_pointers())
+
     .function("getErrorDisplay", &Lexer::getErrorDisplay)
     .function("getNumberOfSyntaxErrors", &Lexer::getNumberOfSyntaxErrors)
+
+    .function("createToken", &Lexer::createToken, allow_raw_pointers())
+
     .allow_subclass<LexerWrapper>("LexerWrapper", constructor<CharStream *>());
 
   class_<LexerInterpreter, base<Lexer>>("LexerInterpreter")
@@ -1005,8 +1057,9 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("getGrammarFileName", select_overload<std::string() const>(&Parser::getGrammarFileName))
     //.function("getATN", &Parser::getATN, select_overload<const atn::ATN &() const>(&Parser::getATN))
 
-    .function("ctx", &ParserHelper::ctx, allow_raw_pointers())
-    .function("errHandler", &ParserHelper::errHandler, allow_raw_pointers())
+    .function("getCtx", &ParserHelper::_ctxGet, allow_raw_pointers())
+    .function("setCtx", &ParserHelper::_ctxSet, allow_raw_pointers())
+
     .function("input", &ParserHelper::input, allow_raw_pointers())
 
     .function("reset", &Parser::reset)
@@ -1032,8 +1085,8 @@ EMSCRIPTEN_BINDINGS(main4) {
               select_overload<tree::pattern::ParseTreePattern(const std::string &, int, Lexer *)>(
                 &Parser::compileParseTreePattern),
               allow_raw_pointers())
-    .function("getErrorHandler", &Parser::getErrorHandler)
-    .function("setErrorHandler", &Parser::setErrorHandler, allow_raw_pointers())
+    .function("getErrorHandler", &ParserHelper::getErrorHandlerRaw, allow_raw_pointers())
+    .function("setErrorHandler", &ParserHelper::setErrorHandlerRaw, allow_raw_pointers())
     .function("getInputStream", &Parser::getInputStream, allow_raw_pointers())
     .function("setInputStream", &Parser::setInputStream, allow_raw_pointers())
     .function("getTokenStream", &Parser::getTokenStream, allow_raw_pointers())
@@ -1048,8 +1101,8 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("exitRule", &Parser::exitRule)
     .function("enterOuterAlt", &Parser::enterOuterAlt, allow_raw_pointers())
     .function("getPrecedence", &Parser::getPrecedence)
-    .function("enterRecursionRule", select_overload<void(ParserRuleContext *, size_t)>(&Parser::enterRecursionRule),
-              allow_raw_pointers())
+    /*.function("enterRecursionRule", select_overload<void(ParserRuleContext *, size_t)>(&Parser::enterRecursionRule),
+              allow_raw_pointers())*/
     .function("enterRecursionRule",
               select_overload<void(ParserRuleContext *, size_t, size_t, int)>(&Parser::enterRecursionRule),
               allow_raw_pointers())
@@ -1058,7 +1111,22 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("getInvokingContext", &Parser::getInvokingContext, allow_raw_pointers())
     .function("getContext", &Parser::getContext, allow_raw_pointers())
     .function("setContext", &Parser::setContext, allow_raw_pointers())
-    .function("precpred", &Parser::precpred, allow_raw_pointers())
+
+    .function("sempred",
+              optional_override([](ParserHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+                return self.ParserHelper::sempred(localctx, ruleIndex, actionIndex);
+              }),
+              allow_raw_pointers())
+    .function("precpred", optional_override([](ParserHelper &self, RuleContext *localctx, int precedence) {
+                return self.ParserHelper::precpred(localctx, precedence);
+              }),
+              allow_raw_pointers())
+    .function("action",
+              optional_override([](ParserHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+                self.ParserHelper::action(localctx, ruleIndex, actionIndex);
+              }),
+              allow_raw_pointers())
+
     .function("inContext", &Parser::inContext)
     .function("isExpectedToken", &Parser::isExpectedToken)
     .function("isMatchedEOF", &Parser::isMatchedEOF)
@@ -1110,6 +1178,8 @@ EMSCRIPTEN_BINDINGS(main4) {
     .constructor<ParserRuleContext *, size_t>()
 
     .function("captureException", &ParserRuleContextHelper::captureException)
+    .function("getChildren", &ParserRuleContextHelper::childrenGet, allow_raw_pointers())
+    .function("getParent", &ParserRuleContextHelper::parentGet, allow_raw_pointers())
 
     .function("copyFrom", &ParserRuleContext::copyFrom, allow_raw_pointers())
     .function("enterRule", &ParserRuleContext::enterRule, allow_raw_pointers())
@@ -1124,8 +1194,13 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("getRuleContext", &ParserRuleContext::getContext, allow_raw_pointers())
     .function("getRuleContexts", &ParserRuleContext::getContexts, allow_raw_pointers())
     .function("getSourceInterval", &ParserRuleContext::getSourceInterval)
+
     .function("getStart", &ParserRuleContext::getStart, allow_raw_pointers())
+    .function("setStart", &ParserRuleContext::setStart, allow_raw_pointers())
+
     .function("getStop", &ParserRuleContext::getStop, allow_raw_pointers())
+    .function("setStop", &ParserRuleContext::setStop, allow_raw_pointers())
+
     .function("toInfoString", &ParserRuleContext::toInfoString, allow_raw_pointers())
 
     //.allow_subclass<ParserRuleContextWrapper>("ParserRuleContextWrapper", constructor<>())
@@ -1167,7 +1242,7 @@ EMSCRIPTEN_BINDINGS(main5) {
               optional_override([](RecognizerWrapper &self) { return self.RecognizerWrapper::getSerializedATN(); }))
 
     .function("getGrammarFileName", &Recognizer::getGrammarFileName, pure_virtual())
-    .function("getInterpreter", &Recognizer::getInterpreter<atn::ATNSimulator>, allow_raw_pointers())
+    .function("getInterpreter", &Recognizer::getInterpreter<atn::ParserATNSimulator>, allow_raw_pointers())
     .function("setInterpreter", &Recognizer::setInterpreter, allow_raw_pointers())
     .function("getErrorHeader", &Recognizer::getErrorHeader, allow_raw_pointers())
     .function("getTokenErrorDisplay", &Recognizer::getTokenErrorDisplay, allow_raw_pointers())
@@ -1175,9 +1250,24 @@ EMSCRIPTEN_BINDINGS(main5) {
     .function("removeErrorListener", &Recognizer::removeErrorListener, allow_raw_pointers())
     .function("removeErrorListeners", &Recognizer::removeErrorListeners)
     .function("getErrorListenerDispatch", &Recognizer::getErrorListenerDispatch, allow_raw_pointers())
-    .function("sempred", &Recognizer::sempred, allow_raw_pointers())
-    .function("precpred", &Recognizer::precpred, allow_raw_pointers())
-    .function("action", &Recognizer::action, allow_raw_pointers())
+
+    .function(
+      "sempred",
+      optional_override([](RecognizerHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+        return self.RecognizerHelper::sempred(localctx, ruleIndex, actionIndex);
+      }),
+      allow_raw_pointers())
+    .function("precpred", optional_override([](RecognizerHelper &self, RuleContext *localctx, int precedence) {
+                return self.RecognizerHelper::precpred(localctx, precedence);
+              }),
+              allow_raw_pointers())
+    .function(
+      "action",
+      optional_override([](RecognizerHelper &self, RuleContext *localctx, size_t ruleIndex, size_t actionIndex) {
+        self.RecognizerHelper::action(localctx, ruleIndex, actionIndex);
+      }),
+      allow_raw_pointers())
+
     .function("getState", &Recognizer::getState)
     //.function("getATN", &Recognizer::getATN, pure_virtual())
     .function("setState", &Recognizer::setState)
@@ -1194,14 +1284,18 @@ EMSCRIPTEN_BINDINGS(main5) {
     .function("getAltNumber", &RuleContextWithAltNum::getAltNumber)
     .function("setAltNumber", &RuleContextWithAltNum::setAltNumber);
 
-  class_<RuleContext, base<tree::ParseTree>>("RuleContext")
+  class_<RuleContext, base<tree::ParseTree>>("RuleContext$Internal")
+    .property("invokingState", &RuleContext::invokingState);
+
+  class_<RuleContextHelper, base<RuleContext>>("RuleContext")
     .class_function("is", select_overload<bool(const tree::ParseTree &)>(&RuleContext::is))
     .class_function("is", select_overload<bool(const tree::ParseTree *)>(&RuleContext::is), allow_raw_pointers())
 
-    .property("invokingState", &RuleContext::invokingState)
-
     .constructor<>()
     .constructor<RuleContext *, size_t>()
+
+    .function("getChildren", &RuleContextHelper::childrenGet, allow_raw_pointers())
+    .function("getParent", &RuleContextHelper::parentGet, allow_raw_pointers())
 
     .function("depth", &RuleContext::depth)
     .function("isEmpty", &RuleContext::isEmpty)
@@ -1213,8 +1307,8 @@ EMSCRIPTEN_BINDINGS(main5) {
     .function("accept", &RuleContext::accept, allow_raw_pointers())
     .function("toStringTree", select_overload<std::string(Parser *, bool)>(&RuleContext::toStringTree),
               allow_raw_pointers())
-    .function("toStringTree",
-              select_overload<std::string(std::vector<std::string> &, bool)>(&RuleContext::toStringTree))
+    /*.function("toStringTree",
+              select_overload<std::string(std::vector<std::string> &, bool)>(&RuleContext::toStringTree))*/
     .function("toStringTree", select_overload<std::string(bool)>(&RuleContext::toStringTree))
     .function("toString", select_overload<std::string()>(&RuleContext::toString))
     .function("toString", select_overload<std::string(Recognizer *)>(&RuleContext::toString), allow_raw_pointers())

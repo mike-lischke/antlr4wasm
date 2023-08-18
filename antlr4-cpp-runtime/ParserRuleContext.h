@@ -15,7 +15,7 @@ namespace antlr4 {
   ///
   ///  Contains all of the information about the current rule not stored in the
   ///  RuleContext. It handles parse tree children list, Any ATN state
-  ///  tracing, and the default values available for rule invocatons:
+  ///  tracing, and the default values available for rule invocations:
   ///  start, stop, rule index, current alt number.
   ///
   ///  Subclasses made for each rule and grammar track the parameters,
@@ -135,6 +135,9 @@ namespace antlr4 {
      * (for example, zero length or error productions) this token may exceed stop.
      */
     Token *getStart() const;
+    void setStart(Token *start) {
+      this->start = start;
+    }
 
     /**
      * Get the final token in this context.
@@ -142,6 +145,9 @@ namespace antlr4 {
      * (for example, zero length or error productions) this token may precede start.
      */
     Token *getStop() const;
+    void setStop(Token *start) {
+      this->stop = start;
+    }
 
     /// <summary>
     /// Used for rule context info debugging during parse-time, not so much for ATN debugging </summary>

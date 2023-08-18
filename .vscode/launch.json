@@ -17,6 +17,20 @@
                 "ts-node/esm",
                 "tests/test.ts",
             ],
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch MySQL Benchmarks",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeArgs": [
+                "--no-warnings=ExperimentalWarning",
+                "--loader",
+                "ts-node/esm",
+                "benchmarks/mysql/run-benchmarks.ts",
+            ],
         }
     ]
 }

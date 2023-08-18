@@ -20,6 +20,7 @@
     },
     "include": [
         "src/**/*.ts",
+        "benchmarks/**/*.ts",
         "wasm/**/*.js",
         "wasm/antlr4-runtime-wasm.d.ts",
         "tests/test.ts"

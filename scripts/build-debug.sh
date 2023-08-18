@@ -16,14 +16,16 @@ em++ \
     -s WASM=1\
     -s WASM_BIGINT=1\
     -s ALLOW_MEMORY_GROWTH=1\
-    -s DEMANGLE_SUPPORT=1\
-    -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\
+    -s STACK_SIZE=1000000\
+    -s ASSERTIONS=2\
     -fwasm-exceptions\
-    -fsanitize=undefined\
-    -fsanitize=address\
     -g
 
 # -- memoryProfiler
 # -s TOTAL_MEMORY=1024MB
 # -s BUILD_AS_WORKER=1
 # --embind-emit-tsd wasm/test.d.ts\
+# -fsanitize=undefined\
+# -fsanitize=address\
+# -s ASSERTIONS=2\
+# -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\

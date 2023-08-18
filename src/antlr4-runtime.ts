@@ -34,6 +34,9 @@ const ANTLRErrorStrategy = antlr4.ANTLRErrorStrategy;
 type ANTLRInputStream = InstanceType<typeof antlr4.ANTLRInputStream>;
 const ANTLRInputStream = antlr4.ANTLRInputStream;
 
+type BailErrorStrategy = InstanceType<typeof antlr4.BailErrorStrategy>;
+const BailErrorStrategy = antlr4.BailErrorStrategy;
+
 type BufferedTokenStream = InstanceType<typeof antlr4.BufferedTokenStream>;
 const BufferedTokenStream = antlr4.BufferedTokenStream;
 
@@ -48,6 +51,9 @@ const CommonToken = antlr4.CommonToken;
 type CommonTokenStream = InstanceType<typeof antlr4.CommonTokenStream>;
 const CommonTokenStream = antlr4.CommonTokenStream;
 
+type DefaultErrorStrategy = InstanceType<typeof antlr4.DefaultErrorStrategy>;
+const DefaultErrorStrategy = antlr4.DefaultErrorStrategy;
+
 type FailedPredicateException = InstanceType<typeof antlr4.FailedPredicateException>;
 const FailedPredicateException = antlr4.FailedPredicateException;
 
@@ -59,6 +65,9 @@ const LexerATNSimulator = antlr4.LexerATNSimulator;
 
 type LexerNoViableAltException = InstanceType<typeof antlr4.LexerNoViableAltException>;
 const LexerNoViableAltException = antlr4.LexerNoViableAltException;
+
+type NoViableAltException = InstanceType<typeof antlr4.NoViableAltException>;
+const NoViableAltException = antlr4.NoViableAltException;
 
 type Parser = InstanceType<typeof antlr4.Parser>;
 const Parser = antlr4.Parser;
@@ -129,6 +138,8 @@ const LexerActionExecutor = antlr4.LexerActionExecutor;
 
 type ParserATNSimulator = InstanceType<typeof antlr4.ParserATNSimulator>;
 const ParserATNSimulator = antlr4.ParserATNSimulator;
+
+const PredictionMode = antlr4.PredictionMode;
 
 type RuleStartState = InstanceType<typeof antlr4.RuleStartState>;
 const RuleStartState = antlr4.RuleStartState;
@@ -230,15 +241,18 @@ export {
     ANTLRErrorListener,
     ANTLRErrorStrategy,
     ANTLRInputStream,
+    BailErrorStrategy,
     BufferedTokenStream,
     CancellationException,
     CharStream,
     CommonToken,
     CommonTokenStream,
+    DefaultErrorStrategy,
     FailedPredicateException,
     IntStream,
     LexerATNSimulator,
     LexerNoViableAltException,
+    NoViableAltException,
     Parser,
     ParserRuleContext,
     RecognitionException,
@@ -264,6 +278,7 @@ export {
     LexerActionType,
     LexerActionExecutor,
     ParserATNSimulator,
+    PredictionMode,
     RuleStartState,
     RuleStopState,
     RuntimeException,

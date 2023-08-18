@@ -22,18 +22,22 @@
  */
 
 /* eslint-disable no-underscore-dangle */
+/* cspell: ignore ULONGLONG, MULT, MAXDB */
 
-import { MySQLLexer } from "./generated/MySQLLexer";
-import {
-    IMySQLRecognizerCommon, SqlMode, isReservedKeyword, numberToVersion, isKeyword,
-} from "./MySQLRecognizerCommon";
+import { Lexer, Token } from "../../src/antlr4-runtime.js";
+
+import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
+
+import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
+
+const LexerExtender = Lexer.extend<Lexer>("Lexer", {});
 
 // The base lexer class provides a number of functions needed in actions in the lexer (grammar).
-export abstract class MySQLBaseLexer extends Lexer implements IMySQLRecognizerCommon {
+export abstract class MySQLBaseLexer extends LexerExtender implements IMySQLRecognizerCommon {
     public serverVersion = 0;
     public sqlModes = new Set<SqlMode>();
 
-    public readonly charsets: Set<string> = new Set(); // Used to check repertoires.
+    public readonly charSets: Set<string> = new Set(); // Used to check repertoires.
     protected inVersionComment = false;
 
     private pendingTokens: Token[] = [];
@@ -245,72 +249,9 @@ export abstract class MySQLBaseLexer extends Lexer implements IMySQLRecognizerCo
     /**
      * Resets the lexer by setting initial values to transient member, resetting the input stream position etc.
      */
-    public reset(): void {
+    public override reset(): void {
         this.inVersionComment = false;
-        super.reset(true);
-    }
-
-    /**
-     * Returns true if the given token is an identifier. This includes all those keywords that are
-     * allowed as identifiers when unquoted (non-reserved keywords).
-     *
-     * @param type The token type to check.
-     *
-     * @returns True if the given type is an identifier, which depends also on the current SQL mode.
-     */
-    public isIdentifier(type: number): boolean {
-        if (type === MySQLLexer.EOF) {
-            return false;
-        }
-
-        if ((type === MySQLLexer.IDENTIFIER) || (type === MySQLLexer.BACK_TICK_QUOTED_ID)) {
-            return true;
-        }
-
-        // Double quoted text represents identifiers only if the ANSI QUOTES sql mode is active.
-        if (type === MySQLLexer.DOUBLE_QUOTED_TEXT) {
-            return this.sqlModes.has(SqlMode.AnsiQuotes);
-        }
-
-        const symbol = this.vocabulary.getSymbolicName(type);
-        if (symbol && symbol.endsWith("_SYMBOL")) {
-            if (!isReservedKeyword(symbol.substring(0, symbol.length - "_SYMBOL".length),
-                numberToVersion(this.serverVersion))) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Converts a string to a keyword token type, if it represents a keyword.
-     *
-     * @param name The text to parse.
-     *
-     * @returns The type of the token in name (if valid) or -2, if not (-1 is reserved for EOF).
-     */
-    public keywordFromText(name: string): number {
-        // (My)SQL only uses ASCII chars for keywords so we can do a simple case conversion here for comparison.
-        name = name.toUpperCase();
-
-        if (!isKeyword(name, numberToVersion(this.serverVersion))) {
-            return -2; // -1 can be interpreted as EOF.
-        }
-
-        // Generate string -> enum value map, if not yet done.
-        if (this.symbols.size === 0) {
-            const max = this.vocabulary.maxTokenType;
-            for (let i = 0; i <= max; ++i) {
-                const symbolName = this.vocabulary.getSymbolicName(i);
-                if (symbolName && symbolName.endsWith("_SYMBOL")) {
-                    this.symbols.set(symbolName.substring(0, symbolName.length - "_SYMBOL".length).toUpperCase(), i);
-                }
-            }
-        }
-
-        // Here we know for sure we got a keyword.
-        return this.symbols.get(name) ?? -2;
+        super.reset();
     }
 
     /**
@@ -319,7 +260,7 @@ export abstract class MySQLBaseLexer extends Lexer implements IMySQLRecognizerCo
      *
      * @returns The next token in the token stream.
      */
-    public nextToken(): Token {
+    public override nextToken(): Token {
         // First respond with pending tokens to the next token request, if there are any.
         let pending = this.pendingTokens.shift();
         if (pending) {
@@ -372,13 +313,13 @@ export abstract class MySQLBaseLexer extends Lexer implements IMySQLRecognizerCo
     protected determineFunction(proposed: number): number {
         // Skip any whitespace character if the sql mode says they should be ignored,
         // before actually trying to match the open parenthesis.
-        let input = String.fromCharCode(this._input.LA(1));
+        let input = String.fromCharCode(this.getInputStream().LA(1));
         if (this.isSqlModeActive(SqlMode.IgnoreSpace)) {
             while (input === " " || input === "\t" || input === "\r" || input === "\n") {
-                this.interpreter.consume(this._input);
+                this.getInterpreter().consume(this.getInputStream());
                 this.channel = Lexer.HIDDEN;
                 this.type = MySQLLexer.WHITESPACE;
-                input = String.fromCharCode(this._input.LA(1));
+                input = String.fromCharCode(this.getInputStream().LA(1));
             }
         }
 
@@ -486,84 +427,16 @@ export abstract class MySQLBaseLexer extends Lexer implements IMySQLRecognizerCo
      * @returns UNDERSCORE_CHARSET if so, otherwise IDENTIFIER.
      */
     protected checkCharset(text: string): number {
-        return this.charsets.has(text) ? MySQLLexer.UNDERSCORE_CHARSET : MySQLLexer.IDENTIFIER;
+        return this.charSets.has(text) ? MySQLLexer.UNDERSCORE_CHARSET : MySQLLexer.IDENTIFIER;
     }
 
     /**
      * Creates a DOT token in the token stream.
      */
     protected emitDot(): void {
-        this.pendingTokens.push(this._factory.create({ source: this, stream: this._input }, MySQLLexer.DOT_SYMBOL,
-            this._text, this.channel, this._tokenStartCharIndex, this._tokenStartCharIndex, this._tokenStartLine,
-            this._tokenStartCharPositionInLine,
-        ));
+        this.pendingTokens.push(this.createToken(MySQLLexer.DOT_SYMBOL, "."));
 
-        ++this._tokenStartCharIndex;
-        ++this._tokenStartCharPositionInLine;
-    }
-
-    // eslint-disable-next-line jsdoc/require-returns-check
-    /**
-     * @returns the next token in the token stream that is on the default channel (not a hidden or other one).
-     */
-    private nextDefaultChannelToken(): Token {
-        do {
-            const token = this.nextToken();
-            if (token.channel === Token.DEFAULT_CHANNEL) {
-                return token;
-            }
-
-        } while (true);
-    }
-
-    /**
-     * Skips over a definer clause if possible. Returns true if it was successful and points to the
-     * token after the last definer part.
-     * On entry the DEFINER symbol has been consumed already.
-     *
-     * @returns If the syntax is wrong false is returned and the token source state is undetermined.
-     */
-    private skipDefiner(): boolean {
-        let token = this.nextDefaultChannelToken();
-        if (token.type !== MySQLLexer.EQUAL_OPERATOR) {
-            return false;
-        }
-
-        token = this.nextDefaultChannelToken();
-        if (token.type === MySQLLexer.CURRENT_USER_SYMBOL) {
-            token = this.nextDefaultChannelToken();
-            if (token.type === MySQLLexer.OPEN_PAR_SYMBOL) {
-                token = this.nextDefaultChannelToken();
-                if (token.type !== MySQLLexer.CLOSE_PAR_SYMBOL) { return false; }
-                token = this.nextDefaultChannelToken();
-                if (token.type === Token.EOF) { return false; }
-            }
-
-            return true;
-        }
-
-        if (token.type === MySQLLexer.SINGLE_QUOTED_TEXT || this.isIdentifier(token.type)) {
-            // First part of the user definition (mandatory).
-            token = this.nextDefaultChannelToken();
-            if (token.type === MySQLLexer.AT_SIGN_SYMBOL || token.type === MySQLLexer.AT_TEXT_SUFFIX) {
-                // Second part of the user definition (optional).
-                const needIdentifier = token.type === MySQLLexer.AT_SIGN_SYMBOL;
-                token = this.nextDefaultChannelToken();
-                if (needIdentifier) {
-                    if (!this.isIdentifier(token.type) && token.type !== MySQLLexer.SINGLE_QUOTED_TEXT) {
-                        return false;
-                    }
-
-                    token = this.nextDefaultChannelToken();
-                    if (token.type === Token.EOF) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        return false;
+        ++this.tokenStartCharIndex;
+        ++this.tokenStartCharPositionInLine;
     }
 }

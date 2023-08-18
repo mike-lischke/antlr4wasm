@@ -21,9 +21,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-import { ErrorNode, ParseTree, ParserRuleContext, RuleContext, TerminalNode, Token, Vocabulary } from "../../src/antlr4-runtime";
+import {
+    ErrorNode, Interval, ParseTree, ParserRuleContext, RuleContext, TerminalNode, Token, Vocabulary
+} from "../../src/antlr4-runtime.js";
 
-import { TextLiteralContext, MySQLParser } from "./generated/MySQLParser";
+import MySQLParser, { TextLiteralContext } from "./generated/TypeScript/MySQLParser.js";
 
 // This interface describes functionality found in both, lexer and parser classes.
 export interface IMySQLRecognizerCommon {
@@ -61,12 +63,12 @@ export const getText = (context: RuleContext, convertEscapes: boolean): string =
         // TODO: take the optional repertoire prefix into account.
         let result = "";
 
-        for (let index = 0; index < context.childCount; ++index) {
+        for (let index = 0; index < context.getChildren().size(); ++index) {
             const child = context.textStringLiteral(index);
             // eslint-disable-next-line no-underscore-dangle
             const token = child._value;
-            if (token.type === MySQLParser.DOUBLE_QUOTED_TEXT || token.type === MySQLParser.SINGLE_QUOTED_TEXT) {
-                let text = token.text || "''";
+            if (token.getType() === MySQLParser.DOUBLE_QUOTED_TEXT || token.getType() === MySQLParser.SINGLE_QUOTED_TEXT) {
+                let text = token.getText() || "''";
                 const quoteChar = text[0];
                 const doubledQuoteChar = quoteChar.repeat(2);
                 text = text.substr(1, text.length - 2); // Remove outer quotes.
@@ -129,7 +131,7 @@ export const getText = (context: RuleContext, convertEscapes: boolean): string =
         return result;
     }
 
-    return context.text; // In all other cases return the text unprocessed.
+    return context.getText(); // In all other cases return the text unprocessed.
 };
 
 /**
@@ -144,11 +146,11 @@ export const getText = (context: RuleContext, convertEscapes: boolean): string =
 export const dumpTree = (context: RuleContext, vocabulary: Vocabulary, indentation: string): string => {
     let result = "";
 
-    for (let index = 0; index < context.childCount; ++index) {
-        const child = context.getChild(index);
+    for (let index = 0; index < context.getChildren().size(); ++index) {
+        const child = context.getChildren().get(index);
         if (child instanceof RuleContext) {
             if (child instanceof TextLiteralContext) {
-                const interval = child.sourceInterval;
+                const interval = child.getSourceInterval();
                 const childText = getText(child, true);
                 result += `${indentation} (index range: ${interval.a}..${interval.b}, string literal) ${childText}\n`;
             } else {
@@ -161,12 +163,12 @@ export const dumpTree = (context: RuleContext, vocabulary: Vocabulary, indentati
             const node = child as TerminalNode;
             if (child instanceof ErrorNode) { result += "Syntax Error: "; }
 
-            const token = node.symbol;
+            const token = node.getSymbol();
 
-            const type = token.type;
-            const tokenName = type === Token.EOF ? "<EOF>" : (vocabulary.getSymbolicName(token.type) ?? "<not found>");
-            result += `(line: ${token.line}, offset: ${token.charPositionInLine}, index: ${token.tokenIndex}, ` +
-                `${tokenName} [${token.type}]) ${token.text ?? ""}\n`;
+            const type = token.getType();
+            const tokenName = type === Token.EOF ? "<EOF>" : (vocabulary.getSymbolicName(token.getType()) ?? "<not found>");
+            result += `(line: ${token.getLine()}, offset: ${token.getCharPositionInLine()}, index: ${token.getTokenIndex()}, ` +
+                `${tokenName} [${token.getType()}]) ${token.getText() ?? ""}\n`;
         }
     }
 
@@ -174,7 +176,7 @@ export const dumpTree = (context: RuleContext, vocabulary: Vocabulary, indentati
 };
 
 /**
- * Retrieves the original source text, including all whitespaces and comments, for a range enclosed by two nodes.
+ * Retrieves the original source text, including all white spaces and comments, for a range enclosed by two nodes.
  *
  * @param start The start token or parse tree that contain the start character index.
  * @param stop Ditto for the stop character index. Start and stop form the range to retrieve.
@@ -185,21 +187,21 @@ export const dumpTree = (context: RuleContext, vocabulary: Vocabulary, indentati
 export const sourceTextForRange = (start: Token | ParseTree, stop: Token | ParseTree | undefined,
     keepQuotes: boolean): string => {
 
-    const isToken = (start as Token).type !== undefined;
+    const isToken = (start as Token).getType() !== undefined;
 
     let startToken = start as Token;
     if (!isToken) {
-        startToken = (start instanceof TerminalNode) ? start.symbol : (start as ParserRuleContext).start;
+        startToken = (start instanceof TerminalNode) ? start.getSymbol() : (start as ParserRuleContext).getStart();
     }
 
     let stopToken = stop as Token;
     if (!isToken) { // start + stop must either both Token or ParseTree instances.
-        stopToken = (stop instanceof TerminalNode) ? stop.symbol : (stop as ParserRuleContext).start;
+        stopToken = (stop instanceof TerminalNode) ? stop.getSymbol() : (stop as ParserRuleContext).getStart();
     }
 
-    const stream = startToken.tokenSource?.inputStream;
-    const stopIndex = stop ? stopToken.stopIndex : 1e100;
-    let result = stream?.getText(new Interval(startToken.startIndex, stopIndex)) || "";
+    const stream = startToken.getTokenSource()?.getInputStream();
+    const stopIndex = stop ? stopToken.getStopIndex() : 1e100;
+    let result = stream?.getText(new Interval(startToken.getStartIndex(), stopIndex)) || "";
     if (keepQuotes || result.length < 2) {
         return result;
     }
@@ -218,7 +220,7 @@ export const sourceTextForRange = (start: Token | ParseTree, stop: Token | Parse
 };
 
 /**
- * Returns the original source text, including all whitespaces and comments, for the given context.
+ * Returns the original source text, including all white spaces and comments, for the given context.
  *
  * @param ctx The context to return text for.
  * @param keepQuotes Flag to indicate if quotes around text shall be left in or not.
@@ -226,7 +228,7 @@ export const sourceTextForRange = (start: Token | ParseTree, stop: Token | Parse
  * @returns The original source text.
  */
 export const sourceTextForContext = (ctx: ParserRuleContext, keepQuotes: boolean): string => {
-    return sourceTextForRange(ctx.start, ctx.stop, keepQuotes);
+    return sourceTextForRange(ctx.getStart(), ctx.getStop(), keepQuotes);
 };
 
 /**
@@ -238,7 +240,7 @@ export const sourceTextForContext = (ctx: ParserRuleContext, keepQuotes: boolean
  * @returns The node preceding the given node in the same parent or undefined if the given node is the first child.
  */
 export const getPreviousSibling = (tree: ParseTree): ParseTree | undefined => {
-    const parent = tree.parent;
+    const parent = tree.getParent();
     if (!parent) {
         return undefined;
     }
@@ -246,11 +248,11 @@ export const getPreviousSibling = (tree: ParseTree): ParseTree | undefined => {
     // Get the index of the given tree in the child list of its parent.
     // No need to check if the index is always valid, since will always find the tree.
     let index = 0;
-    while (parent.getChild(index) !== tree) {
+    while (parent.getChildren().get(index) !== tree) {
         ++index;
     }
 
-    return index > 0 ? parent.getChild(index - 1) : undefined;
+    return index > 0 ? parent.getChildren().get(index - 1) : undefined;
 };
 
 /**
@@ -271,15 +273,15 @@ export const getPrevious = (tree: ParseTree): ParseTree | undefined => {
             }
 
             walker = sibling;
-            while (walker.childCount > 0) { // Walk down to the last child node.
-                walker = walker.getChild(walker.childCount - 1);
+            while (walker?.getChildren().size() > 0) { // Walk down to the last child node.
+                walker = walker.getChildren().get(walker.getChildren().size() - 1);
             }
 
             if (walker instanceof TerminalNode) {
                 return walker;
             }
         } else {
-            walker = walker?.parent;
+            walker = walker?.getParent() ?? undefined;
         }
     } while (walker);
 
@@ -296,7 +298,7 @@ export const getPrevious = (tree: ParseTree): ParseTree | undefined => {
  * @returns The node following the given node in the same parent or undefined if the given node is the last child.
  */
 export const getNextSibling = (tree: ParseTree): ParseTree | undefined => {
-    const parent = tree.parent;
+    const parent = tree.getParent();
     if (!parent) {
         return undefined;
     }
@@ -304,11 +306,11 @@ export const getNextSibling = (tree: ParseTree): ParseTree | undefined => {
     // Get the index of the given tree in the child list of its parent.
     // No need to check if the index is always valid, since will always find the tree.
     let index = 0;
-    while (parent.getChild(index) !== tree) {
+    while (parent.getChildren().get(index) !== tree) {
         ++index;
     }
 
-    return index < parent.childCount - 1 ? parent.getChild(index + 1) : undefined;
+    return index < parent.getChildren().size() - 1 ? parent.getChildren().get(index + 1) : undefined;
 };
 
 /**
@@ -320,10 +322,10 @@ export const getNextSibling = (tree: ParseTree): ParseTree | undefined => {
  */
 export const getNext = (tree: ParseTree): ParseTree | undefined => {
     // If we have children then return the first one.
-    if (tree.childCount > 0) {
+    if (tree.getChildren().size() > 0) {
         do {
-            tree = tree.getChild(0);
-        } while (tree.childCount > 0);
+            tree = tree.getChildren().get(0);
+        } while (tree.getChildren().size() > 0);
 
         return tree;
     }
@@ -339,7 +341,7 @@ export const getNext = (tree: ParseTree): ParseTree | undefined => {
 
             return getNext(sibling);
         }
-        run = run.parent;
+        run = run.getParent() ?? undefined;
     } while (run);
 
     return undefined;
@@ -362,23 +364,23 @@ export const terminalFromPosition = (root: ParseTree, column: number, line: numb
     do {
         run = getNext(run);
         if (run instanceof TerminalNode) {
-            const token = run.symbol;
-            if (token.type === Token.EOF) {
+            const token = run.getSymbol();
+            if (token.getType() === Token.EOF) {
                 return getPrevious(run);
             }
 
             // If we reached a position after the given one then we found a situation
             // where that position is between two terminals. Return the previous one in this case.
-            if (line < token.line) {
+            if (line < token.getLine()) {
                 return getPrevious(run);
             }
 
-            if (line === token.line && column < token.charPositionInLine) {
+            if (line === token.getLine() && column < token.getCharPositionInLine()) {
                 return getPrevious(run);
             }
 
-            const length = token.stopIndex - token.startIndex + 1;
-            if (line === token.line && (column < token.charPositionInLine + length)) {
+            const length = token.getStopIndex() - token.getStartIndex() + 1;
+            if (line === token.getLine() && (column < token.getCharPositionInLine() + length)) {
                 return run;
             }
         }
@@ -397,11 +399,11 @@ export const terminalFromPosition = (root: ParseTree, column: number, line: numb
  */
 const treeContainsPosition = (node: ParseTree, position: number): boolean => {
     if (node instanceof TerminalNode) {
-        return node.symbol.startIndex <= position && position <= node.symbol.stopIndex;
+        return node.getSymbol().getStartIndex() <= position && position <= node.getSymbol().getStopIndex();
     }
 
-    if (node instanceof ParserRuleContext && node.stop) {
-        return node.start.startIndex <= position && position <= node.stop.stopIndex;
+    if (node instanceof ParserRuleContext && node.getStop()) {
+        return node.getStart().getStartIndex() <= position && position <= node.getStop().getStopIndex();
     }
 
     return false;
@@ -420,14 +422,14 @@ export const contextFromPosition = (root: ParseTree, position: number): ParseTre
         return undefined;
     }
 
-    for (let index = 0; index < root.childCount; ++index) {
-        const result = contextFromPosition(root.getChild(index), position);
+    for (let index = 0; index < root.getChildren().size(); ++index) {
+        const result = contextFromPosition(root.getChildren().get(index), position);
         if (result) {
             return result;
         }
     }
 
-    // No child contains the given position, so it must be in whitespaces between them.
+    // No child contains the given position, so it must be in white spaces between them.
     // Return the root for that case.
     return root;
 };

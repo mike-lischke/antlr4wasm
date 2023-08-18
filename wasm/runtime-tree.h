@@ -119,9 +119,8 @@ EMSCRIPTEN_BINDINGS(tree) {
   class_<tree::ParseTree>("ParseTree$Internal");
 
   class_<ParseTreeHelper, base<tree::ParseTree>>("ParseTree")
-    .property("children", &ParseTreeHelper::childrenGet)
-
-    .function("parent", &ParseTreeHelper::parentGet, allow_raw_pointers())
+    .function("getChildren", &ParseTreeHelper::childrenGet, allow_raw_pointers())
+    .function("getParent", &ParseTreeHelper::parentGet, allow_raw_pointers())
 
     .function("toStringTree", select_overload<std::string(bool)>(&tree::ParseTree::toStringTree), pure_virtual())
     .function("toStringTree", select_overload<std::string(Parser *, bool)>(&tree::ParseTree::toStringTree),

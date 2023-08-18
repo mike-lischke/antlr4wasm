@@ -165,7 +165,7 @@ export declare abstract class ANTLRErrorStrategy extends Deletable {
     public abstract reportError(recognizer: Parser, e: RecognitionException): void;
 }
 
-export declare class ANTLRInputStream extends Deletable implements CharStream {
+export declare class ANTLRInputStream extends CharStream {
     public constructor();
 
     public load(input: string, lenient?: boolean): void;
@@ -190,9 +190,16 @@ export declare class ANTLRInputStream extends Deletable implements CharStream {
      *  update line and charPositionInLine. If we seek backwards, just set p
      */
     public seek(index: number): void;
-    public getText(start: number, stop: number): string;
     public getSourceName(): string;
+
+    public getText(interval: Interval): string;
     public toString(): string;
+}
+
+export declare class BailErrorStrategy extends DefaultErrorStrategy {
+    public recover(recognizer: Parser, e: RecognitionException): void;
+    public recoverInline(recognizer: Parser): Token;
+    public sync(recognizer: Parser): void;
 }
 
 export declare class CancellationException extends RuntimeException {
@@ -216,7 +223,8 @@ export abstract class CharStream extends IntStream {
      * @throws UnsupportedOperationException if the stream does not support
      * getting the text of the specified interval
      */
-    public abstract getText(start: number, stop: number): string;
+    public abstract getText(interval: Interval): string;
+
     public abstract toString(): string;
 }
 
@@ -285,6 +293,16 @@ export declare class CommonTokenStream extends BufferedTokenStream {
     public getNumberOfOnChannelTokens(): number;
 }
 
+export declare class DefaultErrorStrategy extends ANTLRErrorStrategy {
+    public reset(recognizer: Parser | null): void;
+    public inErrorRecoveryMode(recognizer: Parser | null): boolean;
+    public reportMatch(recognizer: Parser | null): void;
+    public reportError(recognizer: Parser | null, e: RecognitionException): void;
+    public recover(recognizer: Parser | null, e: RecognitionException): void;
+    public sync(recognizer: Parser | null): void;
+    public recoverInline(recognizer: Parser | null): Token;
+}
+
 /**
  * A semantic predicate failed during validation.  Validation of predicates
  * occurs when normally parsing the alternative just like matching a token.
@@ -314,7 +332,7 @@ export declare class FailedPredicateException extends RecognitionException {
  * * {@link #consume}
  * * {@link #size}
  */
-export declare abstract class IntStream {
+export declare abstract class IntStream extends Deletable {
     /**
      * The value returned by {@link #LA LA()} when the end of the stream is
      * reached.
@@ -510,6 +528,7 @@ export declare class LexerNoViableAltException extends RecognitionException {
 }
 
 export declare class NoViableAltException extends RecognitionException {
+    public constructor(recognizer: Parser);
     public constructor(recognizer: Parser, input: TokenStream, startToken: Token, offendingToken: Token,
         message: string, ctx: ParserRuleContext);
 
@@ -520,8 +539,9 @@ export declare class NoViableAltException extends RecognitionException {
 export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public constructor(input: TokenStream);
 
-    public ctx(): ParserRuleContext | null;
-    public errHandler(): ANTLRErrorStrategy;
+    public getCtx(): ParserRuleContext | null;
+    public setCtx(ctx: ParserRuleContext): void;
+
     public input(): TokenStream;
 
     public reset(): void;
@@ -556,11 +576,11 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public enterRecursionRule(localctx: ParserRuleContext, state: number, ruleIndex: number, precedence: number): void;
     public enterRecursionRule(localctx: ParserRuleContext, ruleIndex: number): void;
     public pushNewRecursionContext(localctx: ParserRuleContext, state: number, ruleIndex: number): void;
-    public unrollRecursionContexts(parentCtx: ParserRuleContext): void;
+    public unrollRecursionContexts(parentCtx: ParserRuleContext | null): void;
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
     public getContext(): ParserRuleContext;
     public setContext(ctx: ParserRuleContext): void;
-    public precpred(localctx: ParserRuleContext, precedence: number): boolean;
+    public precpred(localctx: ParserRuleContext | null, precedence: number): boolean;
     public inContext(context: string): boolean;
     public isExpectedToken(symbol: number): boolean;
     public isMatchedEOF(): boolean;
@@ -626,8 +646,13 @@ export declare class ParserRuleContext extends RuleContext {
     public getRuleContexts(ruleIndex: number): Vector<ParserRuleContext>;
 
     public getSourceInterval(): Interval;
+
     public getStart(): Token;
+    public setStart(start: Token): void;
+
     public getStop(): Token;
+    public setStop(stop: Token): void;
+
     public toInfoString(recognizer: Parser): string;
 }
 
@@ -707,7 +732,7 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public setInputStream(input: IntStream): void;
 }
 
-export declare class RuleContext extends Extendable {
+export declare class RuleContext extends ParseTree {
     public static is(tree: ParseTree): boolean;
 
     public readonly invokingState: number;
@@ -727,7 +752,7 @@ export declare class RuleContext extends Extendable {
     public accept<T>(visitor: ParseTreeVisitor<T>): T;
 
     public toStringTree(recognizer: Parser, pretty: boolean): string;
-    public toStringTree(ruleNames: Vector<string>, pretty: boolean): string;
+    //public toStringTree(ruleNames: Vector<string>, pretty: boolean): string;
     public toStringTree(pretty: boolean): string;
 
     public toString(ruleNames?: string[]): string;
@@ -1306,10 +1331,31 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
 
     public constructor(input: CharStream);
 
-    public getInterpreter(): LexerATNSimulator;
-    public setInterpreter(interpreter: LexerATNSimulator): void;
+    public reset(): void;
+    public nextToken(): Token;
 
+    public skip(): void;
+    public more(): void;
+    public setMode(m: number): void;
+    public pushMode(m: number): void;
+    public popMode(): number;
+
+    public getTokenFactory(): TokenFactory;
+
+    public setInputStream(input: CharStream): void;
+    public getSourceName(): string;
+    public getInputStream(): CharStream;
     public getLine(): number;
+    public getCharPositionInLine(): number;
+    public setLine(line: number): void;
+    public setCharPositionInLine(charPositionInLine: number): void;
+    public getCharIndex(): number;
+    public getText(): string;
+    public setText(text: string): void;
+    public setType(type: number): void;
+    public getType(): number;
+    public setChannel(channel: number): void;
+    public getChannel(): number;
 
     public abstract getChannelNames(): string[];
     public abstract getModeNames(): string[];
@@ -1318,13 +1364,10 @@ export declare abstract class Lexer extends Recognizer<LexerATNSimulator> implem
     public abstract getGrammarFileName(): string;
     public abstract getATN(): ATN;
 
-    public nextToken(): Token;
-    public getCharPositionInLine(): number;
-    public setInputStream(input: CharStream): void;
-    public getInputStream(): CharStream;
-    public getSourceName(): string;
     public getErrorDisplay(s: string): string;
     public getNumberOfSyntaxErrors(): number;
+
+    public createToken(type: number, text: string): CommonToken;
 }
 
 export declare class LexerAction extends Deletable {
@@ -1396,7 +1439,7 @@ export declare class ParserATNSimulator extends ATNSimulator {
 
     public override reset(): void;
     public override clearDFA(): number;
-    public adaptivePredict(input: TokenStream, decision: number, outerContext: ParserRuleContext): number;
+    public adaptivePredict(input: TokenStream, decision: number, outerContext: ParserRuleContext | null): number;
     public canDropLoopEntryEdgeInLeftRecursiveRule(config: ATNConfig): boolean;
     public getRuleName(index: number): string;
     public setPredictionMode(mode: PredictionMode): void;
@@ -2016,9 +2059,9 @@ export declare abstract class ErrorNode extends TerminalNode {
  *
  * The payload is either a {@link Token} or a {@link RuleContext} object.
  */
-export declare abstract class ParseTree extends Deletable {
-    public children(): Vector<ParseTree>;
-    public parent(): ParseTree | undefined;
+export declare abstract class ParseTree extends Extendable {
+    public getChildren(): Vector<ParseTree>;
+    public getParent(): ParseTree | null;
 
     public abstract toStringTree(pretty: boolean): string;
 
@@ -2448,14 +2491,17 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     ANTLRErrorListener: typeof ANTLRErrorListener;
     ANTLRErrorStrategy: typeof ANTLRErrorStrategy;
     ANTLRInputStream: typeof ANTLRInputStream;
+    BailErrorStrategy: typeof BailErrorStrategy;
     BufferedTokenStream: typeof BufferedTokenStream;
     CancellationException: typeof CancellationException;
     CharStream: typeof CharStream;
     CommonToken: typeof CommonToken;
     CommonTokenStream: typeof CommonTokenStream;
+    DefaultErrorStrategy: typeof DefaultErrorStrategy;
     FailedPredicateException: typeof FailedPredicateException;
     IntStream: typeof IntStream;
     LexerNoViableAltException: typeof LexerNoViableAltException;
+    NoViableAltException: typeof NoViableAltException;
     Parser: typeof Parser;
     ParserRuleContext: typeof ParserRuleContext;
     RecognitionException: typeof RecognitionException;
@@ -2483,6 +2529,7 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     LexerActionType: typeof LexerActionType;
     LexerActionExecutor: typeof LexerActionExecutor;
     ParserATNSimulator: typeof ParserATNSimulator;
+    PredictionMode: typeof PredictionMode;
     RuleStartState: typeof RuleStartState;
     RuleStopState: typeof RuleStopState;
     RuntimeException: typeof RuntimeException;
