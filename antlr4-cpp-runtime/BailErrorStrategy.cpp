@@ -33,7 +33,23 @@ void BailErrorStrategy::recover(Parser *recognizer, std::exception_ptr e) {
   }
 }
 
-Token* BailErrorStrategy::recoverInline(Parser *recognizer)  {
+#ifdef __EMSCRIPTEN__
+void BailErrorStrategy::recover(Parser *recognizer, RecognitionException *e) {
+  ParserRuleContext *context = recognizer->getContext();
+  auto exception = std::make_exception_ptr(*e);
+
+  do {
+    context->exception = exception;
+    if (context->parent == nullptr)
+      break;
+    context = static_cast<ParserRuleContext *>(context->parent);
+  } while (true);
+
+  throw new ParseCancellationException(e->what());
+}
+#endif
+
+Token *BailErrorStrategy::recoverInline(Parser *recognizer) {
   InputMismatchException e(recognizer);
   std::exception_ptr exception = std::make_exception_ptr(e);
 

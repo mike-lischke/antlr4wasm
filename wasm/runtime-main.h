@@ -60,6 +60,10 @@ public:
     call<void>("recover", recognizer, e);
   }
 
+  virtual void recover(Parser *recognizer, RecognitionException *e) override {
+    call<void>("recover", recognizer, e);
+  }
+
   virtual void sync(Parser *recognizer) override {
     call<void>("sync", recognizer);
   }
@@ -122,6 +126,26 @@ public:
 
   virtual std::string toString() const override {
     return call<std::string>("toString");
+  }
+};
+
+class CommonTokenStreamHelper : public CommonTokenStream {
+public:
+  /**
+   * Need to provide a different API for the token source. Emscripten does not support multiple inheritance.
+   * The `Lexer` class derives from `Recognizer` and `TokenSource`, but we can only specify one of them as
+   * base class for the wrapper (and picked Recognizer). So we need to provide APIs that work with a lexer pointer
+   * instead of a token source pointer.
+   */
+
+  CommonTokenStreamHelper(Lexer *tokenSource) : CommonTokenStream(tokenSource) {
+  }
+
+  CommonTokenStreamHelper(Lexer *tokenSource, size_t channel) : CommonTokenStream(tokenSource, channel) {
+  }
+
+  virtual void setTokenSource(Lexer *tokenSource) {
+    BufferedTokenStream::setTokenSource(tokenSource);
   }
 };
 
@@ -352,8 +376,10 @@ public:
   GETTER(std::vector<tree::ParseTree *>, children)
   GETTER(tree::ParseTree *, parent)
 
-  void captureException() {
+  std::exception_ptr captureException() {
     exception = std::current_exception();
+
+    return exception;
   }
 };
 
@@ -678,7 +704,11 @@ public:
 
 EMSCRIPTEN_BINDINGS(main1) {
   // Exception support.
-  class_<std::exception>("std::exception").function("what", &std::exception::what, allow_raw_pointers());
+  class_<std::exception>("std::exception")
+    //
+    .function("what", &std::exception::what, allow_raw_pointers());
+  class_<std::exception_ptr>("std::exception_ptr");
+
   emscripten::function("getExceptionMessage", &getExceptionMessage);
 
   constant("ANTLRCPP_VERSION_MAJOR", ANTLRCPP_VERSION_MAJOR);
@@ -699,7 +729,8 @@ EMSCRIPTEN_BINDINGS(main1) {
     .function("reset", &ANTLRErrorStrategy::reset, pure_virtual(), allow_raw_pointers())
     .function("recoverInline", &ANTLRErrorStrategy::recoverInline, pure_virtual(), allow_raw_pointers(),
               allow_raw_pointer<Token *>())
-    .function("recover", &ANTLRErrorStrategy::recover, pure_virtual(), allow_raw_pointers())
+    .function("recover", select_overload<void(Parser *, RecognitionException *)>(&ANTLRErrorStrategy::recover),
+              pure_virtual(), allow_raw_pointers())
     .function("sync", &ANTLRErrorStrategy::sync, pure_virtual(), allow_raw_pointers())
     .function("inErrorRecoveryMode", &ANTLRErrorStrategy::inErrorRecoveryMode, pure_virtual(), allow_raw_pointers())
     .function("reportMatch", &ANTLRErrorStrategy::reportMatch, pure_virtual(), allow_raw_pointers())
@@ -736,7 +767,9 @@ EMSCRIPTEN_BINDINGS(main1) {
   class_<BailErrorStrategy, base<DefaultErrorStrategy>>("BailErrorStrategy")
     .constructor<>()
 
-    .function("recover", &BailErrorStrategy::recover, allow_raw_pointers())
+    .function("recover", select_overload<void(Parser *, RecognitionException *)>(&BailErrorStrategy::recover),
+              allow_raw_pointers())
+
     .function("recoverInline", &BailErrorStrategy::recoverInline, allow_raw_pointers(), allow_raw_pointer<Token *>())
     .function("sync", &BailErrorStrategy::sync, allow_raw_pointers());
 
@@ -747,9 +780,11 @@ EMSCRIPTEN_BINDINGS(main1) {
     .function("reportContextSensitivity", &BaseErrorListener::reportContextSensitivity, allow_raw_pointers());
 
   class_<BufferedTokenStream, base<TokenStream>>("BufferedTokenStream")
-    .constructor<TokenSource *>()
+    .constructor<Lexer *>()
 
     .function("getTokenSource", &BufferedTokenStream::getTokenSource, allow_raw_pointers())
+    .function("setTokenSource", &BufferedTokenStream::setTokenSource, allow_raw_pointers())
+
     .function("index", &BufferedTokenStream::index)
     .function("mark", &BufferedTokenStream::mark)
     .function("release", &BufferedTokenStream::release)
@@ -762,14 +797,13 @@ EMSCRIPTEN_BINDINGS(main1) {
               allow_raw_pointers())
     .function("LA", &BufferedTokenStream::LA, allow_raw_pointers())
     .function("LT", &BufferedTokenStream::LT, allow_raw_pointers())
-    .function("setTokenSource", &BufferedTokenStream::setTokenSource, allow_raw_pointers())
     .function("getTokens", select_overload<std::vector<Token *>()>(&BufferedTokenStream::getTokens))
     .function("getTokens", select_overload<std::vector<Token *>(size_t, size_t)>(&BufferedTokenStream::getTokens))
     .function("getTokens", select_overload<std::vector<Token *>(size_t, size_t, const std::vector<size_t> &)>(
                              &BufferedTokenStream::getTokens))
-    .function("getTokens",
+    /*.function("getTokens",
               select_overload<std::vector<Token *>(size_t, size_t, size_t)>(&BufferedTokenStream::getTokens),
-              allow_raw_pointers())
+              allow_raw_pointers())*/
     .function("getHiddenTokensToRight",
               select_overload<std::vector<Token *>(size_t, ssize_t)>(&BufferedTokenStream::getHiddenTokensToRight),
               allow_raw_pointers())
@@ -791,7 +825,9 @@ EMSCRIPTEN_BINDINGS(main1) {
               allow_raw_pointers())
     .function("fill", &BufferedTokenStream::fill);
 
-  class_<CancellationException, base<RuntimeException>>("CancellationException").constructor<std::string>();
+  class_<CancellationException, base<IllegalStateException>>("CancellationException")
+    //
+    .constructor<std::string>();
 }
 
 EMSCRIPTEN_BINDINGS(main2) {
@@ -845,11 +881,15 @@ EMSCRIPTEN_BINDINGS(main2) {
     .function("create", select_overload<std::unique_ptr<CommonToken>(size_t type, const std::string &text)>(
                           &CommonTokenFactory::create));
 
-  class_<CommonTokenStream, base<BufferedTokenStream>>("CommonTokenStream")
+  class_<CommonTokenStream, base<BufferedTokenStream>>("CommonTokenStream$Internal");
+
+  class_<CommonTokenStreamHelper, base<BufferedTokenStream>>("CommonTokenStream")
     // The library code expects a TokenSource* here, but we can't pass a Lexer* in JS, because it uses multiple
     // inheritance, which we cannot model in emscripten.
     .constructor<Lexer *>()
     .constructor<Lexer *, size_t>()
+
+    .function("setTokenSource", &CommonTokenStreamHelper::setTokenSource, allow_raw_pointers())
 
     .function("LT", &CommonTokenStream::LT, allow_raw_pointers())
     .function("getNumberOfOnChannelTokens", &CommonTokenStream::getNumberOfOnChannelTokens);
@@ -868,7 +908,10 @@ EMSCRIPTEN_BINDINGS(main2) {
     .function("inErrorRecoveryMode", &DefaultErrorStrategy::inErrorRecoveryMode, allow_raw_pointers())
     .function("reportMatch", &DefaultErrorStrategy::reportMatch, allow_raw_pointers())
     .function("reportError", &DefaultErrorStrategy::reportError, allow_raw_pointers())
-    .function("recover", &DefaultErrorStrategy::recover, allow_raw_pointers())
+
+    .function("recover", select_overload<void(Parser *, RecognitionException *)>(&DefaultErrorStrategy::recover),
+              allow_raw_pointers())
+
     .function("sync", &DefaultErrorStrategy::sync, allow_raw_pointers())
     .function("recoverInline", &DefaultErrorStrategy::recoverInline, allow_raw_pointers());
 
@@ -881,7 +924,9 @@ EMSCRIPTEN_BINDINGS(main2) {
               allow_raw_pointers())
     .function("reportContextSensitivity", &DiagnosticErrorListener::reportContextSensitivity, allow_raw_pointers());
 
-  class_<EmptyStackException, base<RuntimeException>>("EmptyStackException").constructor<std::string>();
+  class_<EmptyStackException, base<RuntimeException>>("EmptyStackException")
+    //
+    .constructor<std::string>();
 
   class_<FailedPredicateException, base<RecognitionException>>("FailedPredicateException")
     .constructor<Parser *>()
@@ -892,18 +937,27 @@ EMSCRIPTEN_BINDINGS(main2) {
     .function("getPredicateIndex", &FailedPredicateException::getPredIndex)
     .function("getPredicate", &FailedPredicateException::getPredicate);
 
-  class_<IllegalArgumentException, base<RuntimeException>>("IllegalArgumentException").constructor<std::string>();
+  class_<IllegalArgumentException, base<RuntimeException>>("IllegalArgumentException")
+    //
+    .constructor<std::string>();
 
-  class_<IllegalStateException, base<RuntimeException>>("IllegalStateException").constructor<std::string>();
+  class_<IllegalStateException, base<RuntimeException>>("IllegalStateException")
+    //
+    .constructor<std::string>();
 
-  class_<IndexOutOfBoundsException, base<RuntimeException>>("IndexOutOfBoundsException").constructor<std::string>();
+  class_<IndexOutOfBoundsException, base<RuntimeException>>("IndexOutOfBoundsException")
+    //
+    .constructor<std::string>();
+
+  class_<InputMismatchException, base<RecognitionException>>("InputMismatchException")
+    //
+    .constructor<Parser *>();
+  ;
 
   class_<IOException, base<std::exception>>("IOException")
     .constructor<std::string>()
 
     .function("what", &IOException::what, allow_raw_pointers());
-
-  class_<InputMismatchException, base<RecognitionException>>("InputMismatchException").constructor<Parser *>();
 
   class_<InterpreterRuleContext, base<ParserRuleContext>>("InterpreterRuleContext")
     .constructor<>()
@@ -1040,9 +1094,13 @@ EMSCRIPTEN_BINDINGS(main3) {
     .function("getStartToken", &NoViableAltException::getStartToken, allow_raw_pointers())
     .function("getDeadEndConfigs", &NoViableAltException::getDeadEndConfigs, allow_raw_pointers());
 
-  class_<NullPointerException, base<RuntimeException>>("NullPointerException").constructor<std::string>();
+  class_<NullPointerException, base<RuntimeException>>("NullPointerException")
+    //
+    .constructor<std::string>();
 
-  class_<ParseCancellationException, base<RuntimeException>>("ParseCancellationException").constructor<std::string>();
+  class_<ParseCancellationException, base<CancellationException>>("ParseCancellationException")
+    //
+    .constructor<std::string>();
 }
 
 EMSCRIPTEN_BINDINGS(main4) {
@@ -1323,8 +1381,7 @@ EMSCRIPTEN_BINDINGS(main5) {
   class_<RuntimeException, base<std::exception>>("RuntimeException")
     .constructor<std::string>()
 
-    .function("what",
-              optional_override([](RuntimeException &self) { return std::string(self.RuntimeException::what()); }));
+    .function("what", &RuntimeException::what, allow_raw_pointers());
 
   class_<RuntimeMetaData>("RuntimeMetaData")
     .class_property("VERSION", &RuntimeMetaData::VERSION)

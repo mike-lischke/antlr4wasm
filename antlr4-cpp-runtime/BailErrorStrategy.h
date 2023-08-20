@@ -47,9 +47,13 @@ namespace antlr4 {
   public:
     virtual void recover(Parser *recognizer, std::exception_ptr e) override;
 
+#ifdef __EMSCRIPTEN__
+    virtual void recover(Parser *recognizer, RecognitionException *e) override;
+#endif
+
     /// Make sure we don't attempt to recover inline; if the parser
     ///  successfully recovers, it won't throw an exception.
-    virtual Token* recoverInline(Parser *recognizer) override;
+    virtual Token *recoverInline(Parser *recognizer) override;
 
     /// <summary>
     /// Make sure we don't attempt to recover from problems in subrules. </summary>

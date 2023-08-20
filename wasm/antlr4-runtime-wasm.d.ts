@@ -60,9 +60,13 @@ export declare class Extendable extends Deletable {
 
 // ===== STL =====
 
-export declare class std$$exception {
+export declare class std$$exception extends Deletable {
     // Useful to test if an exception came from ANTLR4 or is a native JS exception.
     public what(): string;
+}
+
+export declare class std$$exception_ptr extends Deletable {
+
 }
 
 // ===== main =====
@@ -197,12 +201,43 @@ export declare class ANTLRInputStream extends CharStream {
 }
 
 export declare class BailErrorStrategy extends DefaultErrorStrategy {
-    public recover(recognizer: Parser, e: RecognitionException): void;
     public recoverInline(recognizer: Parser): Token;
     public sync(recognizer: Parser): void;
 }
 
-export declare class CancellationException extends RuntimeException {
+export declare class BufferedTokenStream extends TokenStream {
+    constructor(source: Lexer);
+
+    public getTokenSource(): TokenSource;
+    public index(): number;
+    public mark(): number;
+    public release(marker: number): void;
+    public reset(): void;
+    public seek(index: number): void;
+    public size(): number;
+    public consume(): void;
+    public get(i: number): Token;
+    public get(start: number, stop: number): Vector<Token>;
+    public LA(k: number): number;
+    public LT(i: number): Token;
+    public setTokenSource(source: TokenSource): void;
+    public getTokens(): Vector<Token>;
+    public getTokens(start: number, stop: number): Vector<Token>;
+    public getTokens(start: number, stop: number, types: Vector<number>): Vector<Token>;
+    public getTokens(start: number, stop: number, type: number): Vector<Token>;
+    public getHiddenTokensToRight(tokenIndex: number, channel: number): Vector<Token>;
+    public getHiddenTokensToRight(tokenIndex: number): Vector<Token>;
+    public getHiddenTokensToLeft(tokenIndex: number, channel: number): Vector<Token>;
+    public getHiddenTokensToLeft(tokenIndex: number): Vector<Token>;
+    public getSourceName(): string;
+    public getText(): string;
+    public getText(interval: Interval): string;
+    public getText(ctx: RuleContext): string;
+    public getText(tokenStart: Token, tokenStop: Token): string;
+    public fill(): void;
+}
+
+export declare class CancellationException extends IllegalStateException {
     public constructor(msg: string);
 }
 
@@ -226,38 +261,6 @@ export abstract class CharStream extends IntStream {
     public abstract getText(interval: Interval): string;
 
     public abstract toString(): string;
-}
-
-export declare class BufferedTokenStream extends TokenStream {
-    constructor(source: TokenSource);
-
-    public getTokenSource(): TokenSource;
-    public index(): number;
-    public mark(): number;
-    public release(): void;
-    public reset(): void;
-    public seek(): void;
-    public size(): number;
-    public consume(): void;
-    public get(i: number): Token;
-    public get(start: number, stop: number): Vector<Token>;
-    public LA(k: number): number;
-    public LT(i: number): Token;
-    public setTokenSource(source: TokenSource): void;
-    public getTokens(): Vector<Token>;
-    public getTokens(start: number, stop: number): Vector<Token>;
-    public getTokens(start: number, stop: number, types: Vector<number>): Vector<Token>;
-    public getTokens(start: number, stop: number, type: number): Vector<Token>;
-    public getHiddenTokensToRight(tokenIndex: number, channel: number): Vector<Token>;
-    public getHiddenTokensToRight(tokenIndex: number): Vector<Token>;
-    public getHiddenTokensToLeft(tokenIndex: number, channel: number): Vector<Token>;
-    public getHiddenTokensToLeft(tokenIndex: number): Vector<Token>;
-    public getSourceName(): string;
-    public getText(): string;
-    public getText(interval: Interval): string;
-    public getText(ctx: RuleContext): string;
-    public getText(tokenStart: Token, tokenStop: Token): string;
-    public fill(): void;
 }
 
 export declare class CommonToken implements WritableToken {
@@ -287,7 +290,9 @@ export declare class CommonToken implements WritableToken {
 }
 
 export declare class CommonTokenStream extends BufferedTokenStream {
-    public constructor(tokenSource: TokenSource, channel?: number);
+    public constructor(tokenSource: Lexer, channel?: number);
+
+    public setTokenSource(tokenSource: Lexer): void;
 
     public LT(k: number): Token;
     public getNumberOfOnChannelTokens(): number;
@@ -298,7 +303,9 @@ export declare class DefaultErrorStrategy extends ANTLRErrorStrategy {
     public inErrorRecoveryMode(recognizer: Parser | null): boolean;
     public reportMatch(recognizer: Parser | null): void;
     public reportError(recognizer: Parser | null, e: RecognitionException): void;
+
     public recover(recognizer: Parser | null, e: RecognitionException): void;
+
     public sync(recognizer: Parser | null): void;
     public recoverInline(recognizer: Parser | null): Token;
 }
@@ -311,11 +318,18 @@ export declare class DefaultErrorStrategy extends ANTLRErrorStrategy {
  */
 export declare class FailedPredicateException extends RecognitionException {
     public constructor(recognizer: Parser);
-    public constructor(recognizer: Parser, predicate?: string, message?: string);
+    public constructor(recognizer: Parser, predicate: string);
+    public constructor(recognizer: Parser, predicate: string, message: string);
 
     public getRuleIndex(): number;
     public getPredicateIndex(): number;
     public getPredicate(): string;
+}
+
+export declare class IllegalStateException extends RuntimeException {
+}
+
+export declare class InputMismatchException extends RecognitionException {
 }
 
 /**
@@ -536,6 +550,9 @@ export declare class NoViableAltException extends RecognitionException {
     public getDeadEndConfigs(): ATNConfigSet;
 }
 
+export declare class ParseCancellationException extends CancellationException {
+}
+
 export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public constructor(input: TokenStream);
 
@@ -620,7 +637,7 @@ export declare class ParserRuleContext extends RuleContext {
     /**
      * Triggers capturing the last thrown exception in C++. It should be called only in a catch block.
      */
-    public captureException(): void;
+    public captureException(): std$$exception_ptr;
 
     public copyFrom(ctx: ParserRuleContext): void;
     public enterRule(listener: ParseTreeListener): void;
@@ -1531,7 +1548,7 @@ export declare class RuleStopState extends ATNState {
     public static is(candidate: ATNState): boolean;
 }
 
-export declare class RuntimeException extends Deletable {
+export declare class RuntimeException extends std$$exception {
     public constructor(msg: string);
 
     public what(): string;
@@ -1928,7 +1945,7 @@ export declare class IntervalSet extends Deletable {
     public static COMPLETE_CHAR_SET: IntervalSet;
     public static EMPTY_SET: IntervalSet;
 
-    public constructor(set?: IntervalSet);
+    public constructor(set?: Vector<Interval>);
 
     /**
      * Create a set with all ints within range [a..b] (inclusive). If b is omitted, the set contains the single element
@@ -2001,7 +2018,7 @@ export declare class IntervalSet extends Deletable {
     public toString(vocabulary: Vocabulary): string;
 
     public size(): number;
-    public toList(): number;
+    public toList(): Vector<number>;
     public toSet(): Set<number>;
 
     /** Get the ith element of ordered set. */
@@ -2477,7 +2494,6 @@ export declare abstract class TerminalNode extends ParseTree {
 export declare interface ANTLR4Wasm extends EmscriptenModule {
     // Exception handling
     std$$exception: typeof std$$exception;
-    getExceptionMessage(e: number): string;
 
     StringVector: typeof StringVector;
     TerminalNodeVector: typeof TerminalNodeVector;
@@ -2499,9 +2515,12 @@ export declare interface ANTLR4Wasm extends EmscriptenModule {
     CommonTokenStream: typeof CommonTokenStream;
     DefaultErrorStrategy: typeof DefaultErrorStrategy;
     FailedPredicateException: typeof FailedPredicateException;
+    IllegalStateException: typeof IllegalStateException;
+    InputMismatchException: typeof InputMismatchException;
     IntStream: typeof IntStream;
     LexerNoViableAltException: typeof LexerNoViableAltException;
     NoViableAltException: typeof NoViableAltException;
+    ParseCancellationException: typeof ParseCancellationException;
     Parser: typeof Parser;
     ParserRuleContext: typeof ParserRuleContext;
     RecognitionException: typeof RecognitionException;

@@ -3,7 +3,11 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
-        "Struct"
+        "Logfile",
+        "nauseum",
+        "Struct",
+        "Tablespace",
+        "whitespaces"
     ],
     "ignoreWords": [
         "Evals",
@@ -20,6 +24,7 @@
         "parentctx",
         "precpred",
         "recog",
+        "sakila",
         "seealso",
         "sempred",
         "sempreds"

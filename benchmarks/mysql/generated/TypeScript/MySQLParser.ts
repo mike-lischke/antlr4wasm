@@ -3117,6 +3117,12 @@ export default class MySQLParser extends MySQLBaseRecognizer {
     public override getSerializedATN(): SerializedATNView { return MySQLParser._serializedATN; }
 
     protected createFailedPredicateException(predicate?: string, message?: string): FailedPredicateException {
+        if (predicate === undefined) {
+            return new FailedPredicateException(this);
+        } else if (message === undefined) {
+            return new FailedPredicateException(this, predicate);
+        }
+
         return new FailedPredicateException(this, predicate, message);
     }
 
@@ -3181,7 +3187,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -3716,7 +3721,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -3840,7 +3844,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -3888,7 +3891,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -3941,7 +3943,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4090,7 +4091,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4136,7 +4136,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4186,7 +4185,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4235,7 +4233,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4264,7 +4261,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4312,7 +4308,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4397,7 +4392,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4447,7 +4441,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4491,7 +4484,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4559,7 +4551,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4887,7 +4878,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -4963,7 +4953,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5011,7 +5000,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5506,7 +5494,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5548,7 +5535,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5581,7 +5567,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5646,7 +5631,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5697,7 +5681,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5748,7 +5731,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5809,7 +5791,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5844,7 +5825,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5871,7 +5851,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5909,7 +5888,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -5988,7 +5966,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6039,7 +6016,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6089,7 +6065,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6114,7 +6089,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6166,7 +6140,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6255,7 +6228,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6314,7 +6286,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6374,7 +6345,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6412,7 +6382,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6448,7 +6417,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6495,7 +6463,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6625,7 +6592,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6752,7 +6718,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6806,7 +6771,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6855,7 +6819,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6955,7 +6918,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -6997,7 +6959,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7035,7 +6996,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7078,7 +7038,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7113,7 +7072,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7165,7 +7123,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7201,7 +7158,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7261,7 +7217,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7358,7 +7313,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7459,7 +7413,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7523,7 +7476,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7581,7 +7533,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7619,7 +7570,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7723,7 +7673,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7903,7 +7852,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7964,7 +7912,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -7993,7 +7940,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8039,7 +7985,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8089,7 +8034,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8160,7 +8104,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8197,7 +8140,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8245,7 +8187,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8334,7 +8275,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8389,7 +8329,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8433,7 +8372,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8487,7 +8425,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8514,7 +8451,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8566,7 +8502,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8664,7 +8599,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8701,7 +8635,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8746,7 +8679,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8783,7 +8715,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8820,7 +8751,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8857,7 +8787,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8895,7 +8824,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8943,7 +8871,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -8976,7 +8903,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9013,7 +8939,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9050,7 +8975,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9087,7 +9011,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9124,7 +9047,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9184,7 +9106,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9237,7 +9158,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9275,7 +9195,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9312,7 +9231,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9402,7 +9320,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9438,7 +9355,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9565,7 +9481,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9602,7 +9517,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9697,7 +9611,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9771,7 +9684,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9892,7 +9804,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9929,7 +9840,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -9966,7 +9876,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10003,7 +9912,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10040,7 +9948,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10092,7 +9999,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10156,7 +10062,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10198,7 +10103,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10235,7 +10139,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10308,7 +10211,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10370,7 +10272,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10407,7 +10308,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10462,7 +10362,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10499,7 +10398,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10540,7 +10438,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10580,7 +10477,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10633,7 +10529,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10662,7 +10557,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10699,7 +10593,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10730,7 +10623,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10780,7 +10672,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10947,7 +10838,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -10978,7 +10868,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11011,7 +10900,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11038,7 +10926,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11132,7 +11019,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11223,7 +11109,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11353,7 +11238,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11386,7 +11270,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11434,7 +11317,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11476,7 +11358,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11511,7 +11392,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11613,7 +11493,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11681,7 +11560,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11751,7 +11629,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11789,7 +11666,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11822,7 +11698,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11956,7 +11831,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -11989,7 +11863,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12020,7 +11893,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12087,7 +11959,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12124,7 +11995,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12216,7 +12086,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12305,7 +12174,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12354,7 +12222,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12433,7 +12300,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12557,7 +12423,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12667,7 +12532,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12734,7 +12598,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12777,7 +12640,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12830,7 +12692,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12934,7 +12795,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12959,7 +12819,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -12992,7 +12851,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13019,7 +12877,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13046,7 +12903,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13091,7 +12947,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13137,7 +12992,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13265,7 +13119,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13317,7 +13170,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13344,7 +13196,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13390,7 +13241,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13419,7 +13269,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13448,7 +13297,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13516,7 +13364,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13554,7 +13401,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13587,7 +13433,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13635,7 +13480,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13714,7 +13558,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13745,7 +13588,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13816,7 +13658,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13875,7 +13716,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13931,7 +13771,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -13971,7 +13810,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14010,7 +13848,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14037,7 +13874,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14066,7 +13902,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14099,7 +13934,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14140,7 +13974,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14184,7 +14017,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14230,7 +14062,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14257,7 +14088,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14296,7 +14126,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14343,7 +14172,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14381,7 +14209,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14452,7 +14279,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14485,7 +14311,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14527,7 +14352,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14585,7 +14409,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14633,7 +14456,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14682,7 +14504,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14709,7 +14530,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14789,7 +14609,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14829,7 +14648,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -14928,7 +14746,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15000,7 +14817,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15061,7 +14877,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15107,7 +14922,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15170,7 +14984,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15225,7 +15038,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15268,7 +15080,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15352,7 +15163,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15395,7 +15205,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15442,7 +15251,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15490,7 +15298,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15586,7 +15393,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15635,7 +15441,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15675,7 +15480,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15704,7 +15508,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15733,7 +15536,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15782,7 +15584,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15815,7 +15616,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15860,7 +15660,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15904,7 +15703,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -15990,7 +15788,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16023,7 +15820,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16056,7 +15852,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16109,7 +15904,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16162,7 +15956,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16204,7 +15997,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16242,7 +16034,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16334,7 +16125,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16392,7 +16182,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16501,7 +16290,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16537,7 +16325,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16591,7 +16378,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16729,7 +16515,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16817,7 +16602,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16854,7 +16638,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -16916,7 +16699,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17063,7 +16845,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17090,7 +16871,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17140,7 +16920,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17293,7 +17072,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17365,7 +17143,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17414,7 +17191,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17463,7 +17239,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17507,7 +17282,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17549,7 +17323,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17591,7 +17364,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -17997,7 +17769,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18030,7 +17801,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18063,7 +17833,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18096,7 +17865,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18129,7 +17897,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18162,7 +17929,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18195,7 +17961,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18228,7 +17993,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18261,7 +18025,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18294,7 +18057,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18327,7 +18089,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18360,7 +18121,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18393,7 +18153,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18426,7 +18185,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18459,7 +18217,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18492,7 +18249,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18525,7 +18281,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18558,7 +18313,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18591,7 +18345,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18624,7 +18377,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18657,7 +18409,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18690,7 +18441,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18723,7 +18473,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18756,7 +18505,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18789,7 +18537,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18822,7 +18569,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18860,7 +18606,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18893,7 +18638,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18938,7 +18682,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -18976,7 +18719,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19048,7 +18790,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19081,7 +18822,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19114,7 +18854,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19168,7 +18907,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19226,7 +18964,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19414,7 +19151,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19456,7 +19192,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19498,7 +19233,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19540,7 +19274,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19565,7 +19298,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19607,7 +19339,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19707,7 +19438,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19755,7 +19485,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19836,7 +19565,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19865,7 +19593,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19894,7 +19621,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19923,7 +19649,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19952,7 +19677,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -19994,7 +19718,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20027,7 +19750,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20081,7 +19803,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20123,7 +19844,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20170,7 +19890,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20199,7 +19918,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20228,7 +19946,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20257,7 +19974,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20290,7 +20006,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20371,7 +20086,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20411,7 +20125,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20453,7 +20166,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20557,7 +20269,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20622,7 +20333,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20660,7 +20370,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20735,7 +20444,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20951,7 +20659,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -20995,7 +20702,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21293,7 +20999,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21512,7 +21217,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21539,7 +21243,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21590,7 +21293,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21664,7 +21366,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21708,7 +21409,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21737,7 +21437,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21793,7 +21492,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -21873,7 +21571,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22083,7 +21780,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22133,7 +21829,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22172,7 +21867,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22332,7 +22026,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22378,7 +22071,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22443,7 +22135,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22470,7 +22161,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22536,7 +22226,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22574,7 +22263,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22603,7 +22291,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22657,7 +22344,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22817,7 +22503,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22850,7 +22535,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -22892,7 +22576,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23144,7 +22827,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23229,7 +22911,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23282,7 +22963,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23335,7 +23015,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23406,7 +23085,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23520,7 +23198,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23564,7 +23241,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23599,7 +23275,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23766,7 +23441,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23846,7 +23520,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23900,7 +23573,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -23933,7 +23605,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24022,7 +23693,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24049,7 +23719,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24241,7 +23910,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24304,7 +23972,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24339,7 +24006,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24402,7 +24068,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24442,7 +24107,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24564,7 +24228,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24608,7 +24271,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24645,7 +24307,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24687,7 +24348,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24716,7 +24376,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24789,7 +24448,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24827,7 +24485,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24885,7 +24542,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24943,7 +24599,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -24991,7 +24646,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25041,7 +24695,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25091,7 +24744,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25118,7 +24770,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25149,7 +24800,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25180,7 +24830,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25211,7 +24860,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25280,7 +24928,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25317,7 +24964,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25363,7 +25009,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25437,7 +25082,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25511,7 +25155,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25580,7 +25223,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25618,7 +25260,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25653,7 +25294,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25688,7 +25328,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25726,7 +25365,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25764,7 +25402,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25791,7 +25428,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25853,7 +25489,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25901,7 +25536,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25939,7 +25573,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -25987,7 +25620,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26025,7 +25657,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26063,7 +25694,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26090,7 +25720,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26142,7 +25771,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26183,7 +25811,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26214,7 +25841,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26245,7 +25871,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26274,7 +25899,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26314,7 +25938,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26345,7 +25968,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26376,7 +25998,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26407,7 +26028,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26449,7 +26069,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26491,7 +26110,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26524,7 +26142,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26557,7 +26174,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26588,7 +26204,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26619,7 +26234,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26670,7 +26284,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26708,7 +26321,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26741,7 +26353,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26768,7 +26379,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26810,7 +26420,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -26883,7 +26492,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27059,7 +26667,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27097,7 +26704,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27139,7 +26745,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27175,7 +26780,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27219,7 +26823,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27258,7 +26861,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27296,7 +26898,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27338,7 +26939,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27431,7 +27031,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27464,7 +27063,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27527,7 +27125,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27573,7 +27170,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27636,7 +27232,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27678,7 +27273,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27726,7 +27320,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27757,7 +27350,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27811,7 +27403,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27894,7 +27485,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27956,7 +27546,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -27994,7 +27583,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28032,7 +27620,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28065,7 +27652,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28137,7 +27723,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28181,7 +27766,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28231,7 +27815,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28273,7 +27856,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28336,7 +27918,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28387,7 +27968,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28468,7 +28048,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28538,7 +28117,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28565,7 +28143,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28592,7 +28169,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28617,7 +28193,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28787,7 +28362,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28913,7 +28487,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -28946,7 +28519,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29024,7 +28596,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29124,7 +28695,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29319,7 +28889,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29848,7 +29417,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29877,7 +29445,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -29921,7 +29488,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30257,7 +29823,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30288,7 +29853,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30494,7 +30058,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30535,7 +30098,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30617,7 +30179,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30655,7 +30216,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30702,7 +30262,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30737,7 +30296,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30813,7 +30371,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30848,7 +30405,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30890,7 +30446,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -30932,7 +30487,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -31006,7 +30560,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -31894,7 +31447,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -31921,7 +31473,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32030,7 +31581,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32068,7 +31618,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32093,7 +31642,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32155,7 +31703,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32220,7 +31767,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32253,7 +31799,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32365,7 +31910,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32443,7 +31987,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32509,7 +32052,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32551,7 +32093,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32586,7 +32127,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32628,7 +32168,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32657,7 +32196,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32710,7 +32248,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32793,7 +32330,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32828,7 +32364,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32855,7 +32390,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32882,7 +32416,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -32909,7 +32442,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33155,7 +32687,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33197,7 +32728,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33239,7 +32769,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33272,7 +32801,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33305,7 +32833,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33371,7 +32898,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33404,7 +32930,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33433,7 +32958,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33462,7 +32986,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33491,7 +33014,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33535,7 +33057,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33570,7 +33091,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33612,7 +33132,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33637,7 +33156,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33666,7 +33184,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33781,7 +33298,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33808,7 +33324,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33839,7 +33354,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33890,7 +33404,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33917,7 +33430,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -33963,7 +33475,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34029,7 +33540,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34056,7 +33566,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34093,7 +33602,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34118,7 +33626,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34145,7 +33652,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34192,7 +33698,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34229,7 +33734,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34276,7 +33780,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34307,7 +33810,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34342,7 +33844,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34377,7 +33878,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34423,7 +33923,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34475,7 +33974,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34527,7 +34025,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34560,7 +34057,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34605,7 +34101,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34642,7 +34137,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34704,7 +34198,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34765,7 +34258,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34798,7 +34290,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34825,7 +34316,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34852,7 +34342,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34949,7 +34438,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -34994,7 +34482,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35045,7 +34532,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35115,7 +34601,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35148,7 +34633,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35218,7 +34702,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35288,7 +34771,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35317,7 +34799,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35344,7 +34825,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35371,7 +34851,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35423,7 +34902,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35494,7 +34972,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35531,7 +35008,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35573,7 +35049,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35600,7 +35075,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35636,7 +35110,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35928,7 +35401,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -35963,7 +35435,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36077,7 +35548,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36394,7 +35864,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36427,7 +35896,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36460,7 +35928,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36487,7 +35954,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36525,7 +35991,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36615,7 +36080,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36725,7 +36189,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36791,7 +36254,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36837,7 +36299,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36883,7 +36344,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36929,7 +36389,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -36978,7 +36437,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37024,7 +36482,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37058,7 +36515,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37096,7 +36552,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37202,7 +36657,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37235,7 +36689,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37270,7 +36723,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37312,7 +36764,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37337,7 +36788,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -37364,7 +36814,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38035,7 +37484,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38077,7 +37525,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38127,7 +37574,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38170,7 +37616,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38222,7 +37667,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38305,7 +37749,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38357,7 +37800,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38409,7 +37851,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38438,7 +37879,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38467,7 +37907,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38515,7 +37954,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38564,7 +38002,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38617,7 +38054,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38669,7 +38105,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38717,7 +38152,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38765,7 +38199,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -38809,7 +38242,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39410,7 +38842,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39455,7 +38886,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39503,7 +38933,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39551,7 +38980,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39599,7 +39027,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39660,7 +39087,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39802,7 +39228,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39888,7 +39313,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39917,7 +39341,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -39963,7 +39386,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40077,7 +39499,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40136,7 +39557,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40308,7 +39728,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40350,7 +39769,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40396,7 +39814,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40434,7 +39851,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40463,7 +39879,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40490,7 +39905,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40519,7 +39933,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40548,7 +39961,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40592,7 +40004,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40619,7 +40030,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40646,7 +40056,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40681,7 +40090,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40714,7 +40122,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40756,7 +40163,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40800,7 +40206,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40843,7 +40248,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40870,7 +40274,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40916,7 +40319,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -40987,7 +40389,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41033,7 +40434,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41070,7 +40470,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41114,7 +40513,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41158,7 +40556,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41225,7 +40622,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41264,7 +40660,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41330,7 +40725,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41359,7 +40753,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41390,7 +40783,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41419,7 +40811,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41452,7 +40843,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41485,7 +40875,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41520,7 +40909,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41569,7 +40957,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41598,7 +40985,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41627,7 +41013,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41690,7 +41075,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41717,7 +41101,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41744,7 +41127,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41779,7 +41161,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41827,7 +41208,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41854,7 +41234,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41894,7 +41273,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41927,7 +41305,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41960,7 +41337,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -41987,7 +41363,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42035,7 +41410,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42060,7 +41434,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42085,7 +41458,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42131,7 +41503,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42156,7 +41527,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42194,7 +41564,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42219,7 +41588,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42244,7 +41612,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42285,7 +41652,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42310,7 +41676,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42335,7 +41700,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42360,7 +41724,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42385,7 +41748,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42410,7 +41772,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42435,7 +41796,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42460,7 +41820,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42485,7 +41844,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42523,7 +41881,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42561,7 +41918,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42586,7 +41942,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42611,7 +41966,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42636,7 +41990,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42661,7 +42014,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42686,7 +42038,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42711,7 +42062,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42736,7 +42086,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42761,7 +42110,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42786,7 +42134,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42811,7 +42158,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42849,7 +42195,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42876,7 +42221,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42932,7 +42276,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -42970,7 +42313,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43012,7 +42354,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43054,7 +42395,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43079,7 +42419,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43117,7 +42456,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43142,7 +42480,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43180,7 +42517,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43205,7 +42541,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43230,7 +42565,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43255,7 +42589,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43280,7 +42613,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43330,7 +42662,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43368,7 +42699,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43412,7 +42742,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43441,7 +42770,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43476,7 +42804,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43522,7 +42849,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43549,7 +42875,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43582,7 +42907,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43615,7 +42939,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43648,7 +42971,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43704,7 +43026,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43753,7 +43074,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43795,7 +43115,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43879,7 +43198,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43921,7 +43239,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43946,7 +43263,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -43992,7 +43308,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44034,7 +43349,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44079,7 +43393,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44121,7 +43434,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44187,7 +43499,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44212,7 +43523,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44254,7 +43564,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44303,7 +43612,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44336,7 +43644,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44369,7 +43676,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44402,7 +43708,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44455,7 +43760,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44493,7 +43797,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44518,7 +43821,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44551,7 +43853,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44589,7 +43890,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44627,7 +43927,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44665,7 +43964,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44703,7 +44001,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44730,7 +44027,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44763,7 +44059,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44796,7 +44091,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44849,7 +44143,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44884,7 +44177,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -44909,7 +44201,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45019,7 +44310,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45052,7 +44342,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45085,7 +44374,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45209,7 +44497,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45242,7 +44529,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45299,7 +44585,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45375,7 +44660,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45427,7 +44711,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45460,7 +44743,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45493,7 +44775,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {
@@ -45543,7 +44824,6 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         }
         catch (re) {
             if (re instanceof RecognitionException) {
-                localctx.captureException();
                 this.getErrorHandler().reportError(this, re);
                 this.getErrorHandler().recover(this, re);
             } else {

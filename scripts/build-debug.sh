@@ -16,7 +16,6 @@ em++ \
     -s WASM=1\
     -s WASM_BIGINT=1\
     -s ALLOW_MEMORY_GROWTH=1\
-    -s STACK_SIZE=1000000\
     -s ASSERTIONS=2\
     -fwasm-exceptions\
     -g
@@ -29,3 +28,4 @@ em++ \
 # -fsanitize=address\
 # -s ASSERTIONS=2\
 # -s ERROR_ON_WASM_CHANGES_AFTER_LINK=1\
+# -s STACK_SIZE=1000000\

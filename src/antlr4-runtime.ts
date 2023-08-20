@@ -57,6 +57,12 @@ const DefaultErrorStrategy = antlr4.DefaultErrorStrategy;
 type FailedPredicateException = InstanceType<typeof antlr4.FailedPredicateException>;
 const FailedPredicateException = antlr4.FailedPredicateException;
 
+type IllegalStateException = InstanceType<typeof antlr4.IllegalStateException>;
+const IllegalStateException = antlr4.IllegalStateException;
+
+type InputMismatchException = InstanceType<typeof antlr4.InputMismatchException>;
+const InputMismatchException = antlr4.InputMismatchException;
+
 type IntStream = InstanceType<typeof antlr4.IntStream>;
 const IntStream = antlr4.IntStream;
 
@@ -68,6 +74,9 @@ const LexerNoViableAltException = antlr4.LexerNoViableAltException;
 
 type NoViableAltException = InstanceType<typeof antlr4.NoViableAltException>;
 const NoViableAltException = antlr4.NoViableAltException;
+
+type ParseCancellationException = InstanceType<typeof antlr4.ParseCancellationException>;
+const ParseCancellationException = antlr4.ParseCancellationException;
 
 type Parser = InstanceType<typeof antlr4.Parser>;
 const Parser = antlr4.Parser;
@@ -230,6 +239,7 @@ export {
     type Vector,
 
     std$$exception,
+
     StringVector,
     TerminalNodeVector,
 
@@ -249,10 +259,13 @@ export {
     CommonTokenStream,
     DefaultErrorStrategy,
     FailedPredicateException,
+    IllegalStateException,
+    InputMismatchException,
     IntStream,
     LexerATNSimulator,
     LexerNoViableAltException,
     NoViableAltException,
+    ParseCancellationException,
     Parser,
     ParserRuleContext,
     RecognitionException,

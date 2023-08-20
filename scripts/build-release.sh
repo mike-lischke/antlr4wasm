@@ -16,4 +16,6 @@ em++ \
     -s WASM=1\
     -s WASM_BIGINT=1\
     -s ALLOW_MEMORY_GROWTH=1\
-    -fwasm-exceptions
+    -s ASSERTIONS\
+    -fexceptions\
+    -g
