@@ -473,9 +473,6 @@ public:
   virtual void enterQueryExpressionBody(MySQLParser::QueryExpressionBodyContext * /*ctx*/) override { }
   virtual void exitQueryExpressionBody(MySQLParser::QueryExpressionBodyContext * /*ctx*/) override { }
 
-  virtual void enterQueryExpressionBodyNew(MySQLParser::QueryExpressionBodyNewContext * /*ctx*/) override { }
-  virtual void exitQueryExpressionBodyNew(MySQLParser::QueryExpressionBodyNewContext * /*ctx*/) override { }
-
   virtual void enterQueryExpressionParens(MySQLParser::QueryExpressionParensContext * /*ctx*/) override { }
   virtual void exitQueryExpressionParens(MySQLParser::QueryExpressionParensContext * /*ctx*/) override { }
 

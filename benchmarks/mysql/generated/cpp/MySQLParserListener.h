@@ -471,9 +471,6 @@ public:
   virtual void enterQueryExpressionBody(MySQLParser::QueryExpressionBodyContext *ctx) = 0;
   virtual void exitQueryExpressionBody(MySQLParser::QueryExpressionBodyContext *ctx) = 0;
 
-  virtual void enterQueryExpressionBodyNew(MySQLParser::QueryExpressionBodyNewContext *ctx) = 0;
-  virtual void exitQueryExpressionBodyNew(MySQLParser::QueryExpressionBodyNewContext *ctx) = 0;
-
   virtual void enterQueryExpressionParens(MySQLParser::QueryExpressionParensContext *ctx) = 0;
   virtual void exitQueryExpressionParens(MySQLParser::QueryExpressionParensContext *ctx) = 0;
 

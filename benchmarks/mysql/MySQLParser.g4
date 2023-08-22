@@ -1070,29 +1070,21 @@ selectStatementWithInto:
 ;
 
 queryExpression:
-    {this.serverVersion < 80031}? (
-        withClause? (queryExpressionBody | queryExpressionParens) orderClause? limitClause?
-    )
-    | {this.serverVersion >= 80031}? (
-        withClause? queryExpressionBodyNew orderClause? limitClause?
-    )
+    withClause? queryExpressionBody orderClause? limitClause?
 ;
 
 queryExpressionBody:
-    (
-        queryPrimary
-        | queryExpressionParens UNION_SYMBOL unionOption? (
-            queryPrimary
-            | queryExpressionParens
-        )
-    ) (UNION_SYMBOL unionOption? ( queryPrimary | queryExpressionParens))*
-;
+    queryPrimary {this.serverVersion < 80031}? (
+        UNION_SYMBOL unionOption? (queryPrimary | queryExpressionParens)
+    )*
+    | queryExpressionParens {this.serverVersion < 80031}? (
+        UNION_SYMBOL unionOption? (queryPrimary | queryExpressionParens)
+    )*
 
-// Have to factor this part out into a new rule as ANTLR4 will otherwise complain about direct left recursion.
-queryExpressionBodyNew:
-    queryPrimary
-    | queryExpressionParens
-    | queryExpressionBody (UNION_SYMBOL | EXCEPT_SYMBOL | INTERSECT_SYMBOL) unionOption? queryExpressionBody
+    // Manually resolving the left recursion part here.
+    {this.serverVersion >= 80031}? (
+        (UNION_SYMBOL | EXCEPT_SYMBOL | INTERSECT_SYMBOL) unionOption? queryExpressionBody
+    )*
 ;
 
 queryExpressionParens:
