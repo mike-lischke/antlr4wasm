@@ -21,7 +21,7 @@ namespace antlr4 {
   class ANTLR4CPP_PUBLIC BaseErrorListener : public ANTLRErrorListener {
   public:
     virtual void syntaxError(Recognizer *recognizer, Token *offendingSymbol, size_t line, size_t charPositionInLine,
-                             const std::string &msg, std::exception_ptr e) override;
+                             const std::string &msg, const RecognitionException &e) override;
 
     virtual void reportAmbiguity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
                                  bool exact, const antlrcpp::BitSet &ambigAlts, atn::ATNConfigSet *configs) override;

@@ -8,11 +8,26 @@
 
 #include "helpers.h"
 
-std::string getExceptionMessage(intptr_t exceptionPtr) {
-  return std::string(reinterpret_cast<std::exception *>(exceptionPtr)->what());
-}
+class ANTLRErrorListenerHelper : public ANTLRErrorListener {
+public:
+  virtual void syntaxError(Recognizer *recognizer, Token *offendingSymbol, size_t line, size_t charPositionInLine,
+                           const std::string &msg, const RecognitionException &e) override {
+  }
 
-class ANTLRErrorListenerWrapper : public wrapper<ANTLRErrorListener> {
+  virtual void reportAmbiguity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex, bool exact,
+                               const antlrcpp::BitSet &ambigAlts, atn::ATNConfigSet *configs) override {
+  }
+
+  virtual void reportAttemptingFullContext(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+                                           const BitSet &conflictingAlts, atn::ATNConfigSet *configs) override {
+  }
+
+  virtual void reportContextSensitivity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+                                        size_t prediction, atn::ATNConfigSet *configs) override {
+  }
+};
+
+class ANTLRErrorListenerWrapper : public wrapper<ANTLRErrorListenerHelper> {
 public:
   EMSCRIPTEN_WRAPPER(ANTLRErrorListenerWrapper);
 
@@ -20,25 +35,27 @@ public:
   }
 
   virtual void syntaxError(Recognizer *recognizer, Token *offendingSymbol, size_t line, size_t charPositionInLine,
-                           const std::string &msg, std::exception_ptr e) override {
+                           const std::string &msg, const RecognitionException &e) override {
     call<void>("syntaxError", recognizer, offendingSymbol, line, charPositionInLine, msg, e);
   }
 
-  virtual void reportAmbiguity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex, bool exact,
-                               const antlrcpp::BitSet &ambigAlts, atn::ATNConfigSet *configs) override {
-    call<void>("reportAmbiguity", recognizer, std::cref(dfa), startIndex, stopIndex, exact, ambigAlts, configs);
-  }
+  /*
+  virtual void reportAmbiguity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex, bool
+exact, const antlrcpp::BitSet &ambigAlts, atn::ATNConfigSet *configs) override { call<void>("reportAmbiguity",
+recognizer, dfa, startIndex, stopIndex, exact, ambigAlts, configs);
+}
 
-  virtual void reportAttemptingFullContext(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
-                                           const BitSet &conflictingAlts, atn::ATNConfigSet *configs) override {
-    call<void>("reportAttemptingFullContext", recognizer, std::cref(dfa), startIndex, stopIndex, conflictingAlts,
-               configs);
-  }
+virtual void
+reportAttemptingFullContext(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+                            const BitSet &conflictingAlts, atn::ATNConfigSet *configs) override {
+  call<void>("reportAttemptingFullContext", recognizer, dfa, startIndex, stopIndex, conflictingAlts, configs);
+}
 
-  virtual void reportContextSensitivity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
-                                        size_t prediction, atn::ATNConfigSet *configs) override {
-    call<void>("reportContextSensitivity", recognizer, std::cref(dfa), startIndex, stopIndex, prediction, configs);
-  }
+virtual void reportContextSensitivity(Parser *recognizer, const dfa::DFA &dfa, size_t startIndex, size_t stopIndex,
+                                      size_t prediction, atn::ATNConfigSet *configs) override {
+  call<void>("reportContextSensitivity", recognizer, dfa, startIndex, stopIndex, prediction, configs);
+
+}*/
 };
 
 class ANTLRErrorStrategyWrapper : public wrapper<ANTLRErrorStrategy> {
@@ -144,7 +161,7 @@ public:
   CommonTokenStreamHelper(Lexer *tokenSource, size_t channel) : CommonTokenStream(tokenSource, channel) {
   }
 
-  virtual void setTokenSource(Lexer *tokenSource) {
+  virtual void setLexerTokenSource(Lexer *tokenSource) {
     BufferedTokenStream::setTokenSource(tokenSource);
   }
 };
@@ -709,18 +726,25 @@ EMSCRIPTEN_BINDINGS(main1) {
     .function("what", &std::exception::what, allow_raw_pointers());
   class_<std::exception_ptr>("std::exception_ptr");
 
-  emscripten::function("getExceptionMessage", &getExceptionMessage);
-
   constant("ANTLRCPP_VERSION_MAJOR", ANTLRCPP_VERSION_MAJOR);
   constant("ANTLRCPP_VERSION_MINOR", ANTLRCPP_VERSION_MINOR);
   constant("ANTLRCPP_VERSION_PATCH", ANTLRCPP_VERSION_PATCH);
   constant("ANTLRCPP_VERSION", ANTLRCPP_VERSION);
 
-  class_<ANTLRErrorListener>("ANTLRErrorListener")
-    .function("syntaxError", &ANTLRErrorListener::syntaxError, pure_virtual(), allow_raw_pointers())
-    .function("reportAmbiguity", &ANTLRErrorListener::reportAmbiguity, pure_virtual(), allow_raw_pointers())
+  class_<ANTLRErrorListener>("ANTLRErrorListener$Internal");
+
+  class_<ANTLRErrorListenerHelper, base<ANTLRErrorListener>>("ANTLRErrorListener")
+    .function(
+      "syntaxError",
+      optional_override([](ANTLRErrorListenerHelper &self, Recognizer *recognizer, Token *offendingSymbol, size_t line,
+                           size_t charPositionInLine, const std::string &msg, const RecognitionException &e) {
+        return self.ANTLRErrorListenerHelper::syntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg,
+                                                          e);
+      }),
+      allow_raw_pointers())
+    /*.function("reportAmbiguity", &ANTLRErrorListener::reportAmbiguity, pure_virtual(), allow_raw_pointers())
     .function("reportAttemptingFullContext", &ANTLRErrorListener::reportAttemptingFullContext, pure_virtual(),
-              allow_raw_pointers())
+              allow_raw_pointers())*/
     .allow_subclass<ANTLRErrorListenerWrapper>("ANTLRErrorListenerWrapper");
 
   class_<ANTLRErrorStrategy>("ANTLRErrorStrategy")
@@ -889,7 +913,7 @@ EMSCRIPTEN_BINDINGS(main2) {
     .constructor<Lexer *>()
     .constructor<Lexer *, size_t>()
 
-    .function("setTokenSource", &CommonTokenStreamHelper::setTokenSource, allow_raw_pointers())
+    .function("setTokenSource", &CommonTokenStreamHelper::setLexerTokenSource, allow_raw_pointers())
 
     .function("LT", &CommonTokenStream::LT, allow_raw_pointers())
     .function("getNumberOfOnChannelTokens", &CommonTokenStream::getNumberOfOnChannelTokens);
@@ -1151,9 +1175,10 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("setTokenStream", &Parser::setTokenStream, allow_raw_pointers())
     .function("getCurrentToken", &Parser::getCurrentToken, allow_raw_pointers())
     .function("notifyErrorListeners", select_overload<void(const std::string &)>(&Parser::notifyErrorListeners))
-    .function("notifyErrorListeners",
-              select_overload<void(Token *, const std::string &, std::exception_ptr)>(&Parser::notifyErrorListeners),
-              allow_raw_pointers())
+    .function(
+      "notifyErrorListeners",
+      select_overload<void(Token *, const std::string &, const RecognitionException *)>(&Parser::notifyErrorListeners),
+      allow_raw_pointers())
     .function("consume", &Parser::consume, allow_raw_pointers())
     .function("enterRule", &Parser::enterRule, allow_raw_pointers())
     .function("exitRule", &Parser::exitRule)

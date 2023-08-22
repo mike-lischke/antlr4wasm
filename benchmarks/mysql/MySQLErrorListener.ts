@@ -24,7 +24,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import {
-    ANTLRErrorListener, ATNConfigSet, BitSet, DFA, FailedPredicateException, InputMismatchException, Interval,
+    ANTLRErrorListener as AEL, ATNConfigSet, BitSet, DFA, FailedPredicateException, InputMismatchException, Interval,
     IntervalSet, LexerNoViableAltException, NoViableAltException, Parser, ParserRuleContext, RecognitionException,
     Recognizer, Token, Vocabulary
 } from "../../src/antlr4-runtime.js";
@@ -32,6 +32,9 @@ import MySQLParser from "./generated/TypeScript/MySQLParser.js";
 import { ErrorReportCallback } from "./parse-helper.js";
 import { MySQLBaseLexer } from "./MySQLBaseLexer.js";
 import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
+
+const ANTLRErrorListener = AEL.extend<AEL>("AEL", {});
+type ANTLRErrorListener = InstanceType<typeof ANTLRErrorListener>;
 
 export class MySQLErrorListener extends ANTLRErrorListener {
 
@@ -85,14 +88,15 @@ export class MySQLErrorListener extends ANTLRErrorListener {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public syntaxError<T extends Token | number>(recognizer: Recognizer<any>, offendingSymbol: T | undefined,
-        line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
+    public syntaxError<T extends Token>(recognizer: Recognizer<any>, offendingSymbol: T | null,
+        line: number, charPositionInLine: number, msg: string, e: RecognitionException | null): void {
 
         let message = "";
 
         // If not undefined then offendingSymbol is of type Token.
         if (offendingSymbol) {
-            let token = offendingSymbol as Token;
+            // Need to clone the symbol to avoid releasing the original token prematurely.
+            let token = offendingSymbol.clone() as Token;
 
             const parser = recognizer as MySQLParser;
             const lexer = parser.getInputStream().getTokenSource() as MySQLBaseLexer;
@@ -123,7 +127,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
 
             if (invalidForVersion) {
                 // The expected tokens set is read-only, so make a copy.
-                expected = new IntervalSet(expected.getIntervals());
+                expected = new IntervalSet(expected);
                 expected.remove(tokenType);
             }
 
@@ -253,7 +257,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                     condition.replace(/serverVersion/g, "server version");
                     condition.replace(/ && /g, "and");
                     message = wrongText + " is valid only for " + condition;
-                } if (e instanceof NoViableAltException) {
+                } else if (e instanceof NoViableAltException) {
                     if (isEof) {
                         message = "Statement is incomplete";
                     } else {
@@ -266,6 +270,8 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                     if (expectedText.length > 0) {
                         message += ", expecting " + expectedText;
                     }
+                } else {
+                    message = msg;
                 }
             }
 
@@ -311,8 +317,19 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                     input.index() - lexer.tokenStartCharIndex);
 
             }
-
         }
+    }
+
+    public reportAmbiguity(recognizer: Parser, startIndex: number, stopIndex: number, exact: boolean,
+        ambigAlts: BitSet, configs: ATNConfigSet): void {
+    }
+
+    public reportAttemptingFullContext(recognizer: Parser, startIndex: number, stopIndex: number,
+        conflictingAlts: BitSet, configs: ATNConfigSet): void {
+    }
+
+    public reportContextSensitivity(recognizer: Parser, startIndex: number, stopIndex: number,
+        prediction: number, configs: ATNConfigSet): void {
     }
 
     private intervalToString(set: IntervalSet, maxCount: number, vocabulary: Vocabulary): string {
@@ -326,7 +343,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
         let firstEntry = true;
         maxCount = Math.min(maxCount, symbols.size());
         for (let i = 0; i < maxCount; ++i) {
-            const symbol = symbols[i];
+            const symbol = symbols.get(i);
             if (!firstEntry) {
                 result += ", ";
             }
@@ -356,17 +373,5 @@ export class MySQLErrorListener extends ANTLRErrorListener {
         }
 
         return result;
-    }
-
-    public reportAmbiguity(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number, exact: boolean,
-        ambigAlts: BitSet, configs: ATNConfigSet): void {
-    }
-
-    public reportAttemptingFullContext(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number,
-        conflictingAlts: BitSet, configs: ATNConfigSet): void {
-    }
-
-    public reportContextSensitivity(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number,
-        prediction: number, configs: ATNConfigSet): void {
     }
 }

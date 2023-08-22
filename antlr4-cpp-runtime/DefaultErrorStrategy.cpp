@@ -69,7 +69,7 @@ void DefaultErrorStrategy::reportError(Parser *recognizer, const RecognitionExce
   } else if (is<const FailedPredicateException *>(&e)) {
     reportFailedPredicate(recognizer, static_cast<const FailedPredicateException &>(e));
   } else if (is<const RecognitionException *>(&e)) {
-    recognizer->notifyErrorListeners(e.getOffendingToken(), e.what(), std::current_exception());
+    recognizer->notifyErrorListeners(e.getOffendingToken(), e.what(), &e);
   }
 }
 
@@ -150,19 +150,19 @@ void DefaultErrorStrategy::reportNoViableAlternative(Parser *recognizer, const N
     input = "<unknown input>";
   }
   std::string msg = "no viable alternative at input " + escapeWSAndQuote(input);
-  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, std::make_exception_ptr(e));
+  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, &e);
 }
 
 void DefaultErrorStrategy::reportInputMismatch(Parser *recognizer, const InputMismatchException &e) {
   std::string msg = "mismatched input " + getTokenErrorDisplay(e.getOffendingToken()) + " expecting " +
                     e.getExpectedTokens().toString(recognizer->getVocabulary());
-  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, std::make_exception_ptr(e));
+  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, &e);
 }
 
 void DefaultErrorStrategy::reportFailedPredicate(Parser *recognizer, const FailedPredicateException &e) {
   const std::string &ruleName = recognizer->getRuleNames()[recognizer->getContext()->getRuleIndex()];
   std::string msg = "rule " + ruleName + " " + e.what();
-  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, std::make_exception_ptr(e));
+  recognizer->notifyErrorListeners(e.getOffendingToken(), msg, &e);
 }
 
 void DefaultErrorStrategy::reportUnwantedToken(Parser *recognizer) {

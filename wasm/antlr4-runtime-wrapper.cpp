@@ -27,6 +27,7 @@ using namespace antlrcpp;
 
 EMSCRIPTEN_BINDINGS(default) {
   register_vector<size_t>("SizeTVector");
+  register_vector<ssize_t>("SsizeTVector");
   register_vector<std::string>("StringVector");
 
   register_vector<Token *>("TokenVector");
@@ -35,6 +36,8 @@ EMSCRIPTEN_BINDINGS(default) {
   register_vector<atn::ATNState *>("ATNStateVector");
 
   register_vector<dfa::DFA *>("DFAVector");
+
+  register_vector<misc::Interval>("IntervalSetVector");
 
   register_vector<tree::TerminalNode *>("TerminalNodeVector");
   register_vector<tree::ParseTree *>("ParseTreeVector");

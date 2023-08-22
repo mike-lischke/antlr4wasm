@@ -73,7 +73,8 @@ EMSCRIPTEN_BINDINGS(dfa) {
 
     .function("getAltSet", &dfa::DFAState::getAltSet)
     .function("hashCode", &dfa::DFAState::hashCode)
-    .function("equals", &dfa::DFAState::equals)
+    /*.function("equals", select_overload<bool(const dfa::DFAState *) const>(&dfa::DFAState::equals),
+              allow_raw_pointers())*/
     .function("toString", &dfa::DFAState::toString);
 
   class_<dfa::Vocabulary>("Vocabulary")

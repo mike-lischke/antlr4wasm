@@ -117,6 +117,10 @@ export class MySQLParsingServices {
 
         this.lexer.removeErrorListeners();
         this.lexer.addErrorListener(this.errorListener);
+
+        this.parser.removeParseListeners();
+        this.parser.removeErrorListeners();
+        this.parser.addErrorListener(this.errorListener);
     }
 
     /**
@@ -495,14 +499,14 @@ export class MySQLParsingServices {
         this.parser.setBuildParseTree(!fast);
 
         // First parse with the bail error strategy to get quick feedback for correct queries.
+        // Note: there's no need to delete the strategy instance. The error handler will take care.
         this.parser.setErrorHandler(new BailErrorStrategy());
         this.parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 
         try {
             this.tree = this.parseUnit(unit);
         } catch (e) {
-            // The operator `instanceof` does not work here, so we have to check the class name.
-            if (e.name === "antlr4::ParseCancellationException*") {
+            if (this.isCancellationException(e)) {
                 // Even in fast mode we have to do a second run if we got no error yet (BailErrorStrategy
                 // does not do full processing).
                 if (fast && this.errors.length > 0) {
@@ -552,4 +556,7 @@ export class MySQLParsingServices {
         this.parser.sqlModes = this.lexer.sqlModes;
     }
 
+    private isCancellationException(e: Error): boolean {
+        return e.name === "std::__nested<antlr4::ParseCancellationException>";
+    }
 }

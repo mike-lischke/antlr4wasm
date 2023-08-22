@@ -35,9 +35,14 @@ bool DFAState::equals(const DFAState &other) const {
   if (this == std::addressof(other)) {
     return true;
   }
-  return configs == other.configs ||
-         (configs != nullptr && other.configs != nullptr && *configs == *other.configs);
+  return configs == other.configs || (configs != nullptr && other.configs != nullptr && *configs == *other.configs);
 }
+
+#ifdef __EMSCRIPTEN__
+bool DFAState::equals(const DFAState *other) const {
+  return equals(*other);
+}
+#endif
 
 std::string DFAState::toString() const {
   std::stringstream ss;

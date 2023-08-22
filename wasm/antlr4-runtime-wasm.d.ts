@@ -22,6 +22,7 @@ export declare interface Vector<T> {
 
 export declare class Deletable {
     public delete(): void;
+    public clone(): this;
 }
 
 export declare class StringVector extends Deletable implements Vector<string>{
@@ -71,16 +72,15 @@ export declare class std$$exception_ptr extends Deletable {
 
 // ===== main =====
 
-export declare abstract class ANTLRErrorListener {
-    public abstract syntaxError(recognizer: Recognizer<ATNSimulator>, offendingSymbol: Token, line: number,
-        charPositionInLine: number, msg: string, e: unknown): void;
-    public abstract reportAmbiguity(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number, exact: boolean,
+export declare abstract class ANTLRErrorListener extends Extendable {
+    public abstract syntaxError(recognizer: Recognizer<ATNSimulator>, offendingSymbol: Token | null, line: number,
+        charPositionInLine: number, msg: string, e: RecognitionException | null): void;
+    public abstract reportAmbiguity(recognizer: Parser, /*dfa: DFA,*/ startIndex: number, stopIndex: number, exact: boolean,
         ambigAlts: BitSet, configs: ATNConfigSet): void;
-    public abstract reportAttemptingFullContext(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number,
+    public abstract reportAttemptingFullContext(recognizer: Parser, /*dfa: DFA,*/ startIndex: number, stopIndex: number,
         conflictingAlts: BitSet, configs: ATNConfigSet): void;
-    public abstract reportContextSensitivity(recognizer: Parser, dfa: DFA, startIndex: number, stopIndex: number,
-        prediction: number, configs: ATNConfigSet
-    ): void;
+    public abstract reportContextSensitivity(recognizer: Parser, /*dfa: DFA,*/ startIndex: number, stopIndex: number,
+        prediction: number, configs: ATNConfigSet): void;
 }
 
 export declare abstract class ANTLRErrorStrategy extends Deletable {
@@ -122,6 +122,8 @@ export declare abstract class ANTLRErrorStrategy extends Deletable {
      * @throws {RecognitionException} - if the error strategy could not recover from the recognition exception
      */
     public abstract recover(recognizer: Parser, e: RecognitionException): void;
+
+    public abstract recover(recognizer: Parser): void;
 
     /**
      * This method provides the error handler with an opportunity to handle
@@ -201,6 +203,7 @@ export declare class ANTLRInputStream extends CharStream {
 }
 
 export declare class BailErrorStrategy extends DefaultErrorStrategy {
+    public recover(recognizer: Parser): void;
     public recoverInline(recognizer: Parser): Token;
     public sync(recognizer: Parser): void;
 }
@@ -263,7 +266,7 @@ export abstract class CharStream extends IntStream {
     public abstract toString(): string;
 }
 
-export declare class CommonToken implements WritableToken {
+export declare class CommonToken extends WritableToken {
     public constructor(type: number);
     public constructor(source: [TokenSource, CharStream], type: number, channel: number, start: number, stop: number);
     public constructor(type: number, text: string);
@@ -305,6 +308,7 @@ export declare class DefaultErrorStrategy extends ANTLRErrorStrategy {
     public reportError(recognizer: Parser | null, e: RecognitionException): void;
 
     public recover(recognizer: Parser | null, e: RecognitionException): void;
+    public recover(recognizer: Parser): void;
 
     public sync(recognizer: Parser | null): void;
     public recoverInline(recognizer: Parser | null): Token;
@@ -597,7 +601,9 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
     public getContext(): ParserRuleContext;
     public setContext(ctx: ParserRuleContext): void;
+
     public precpred(localctx: ParserRuleContext | null, precedence: number): boolean;
+
     public inContext(context: string): boolean;
     public isExpectedToken(symbol: number): boolean;
     public isMatchedEOF(): boolean;
@@ -610,7 +616,6 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
     public getContext(): ParserRuleContext;
     public setContext(ctx: ParserRuleContext): void;
-    public precpred(localctx: ParserRuleContext, precedence: number): boolean;
     public inContext(context: string): boolean;
     public isExpectedToken(symbol: number): boolean;
     public isMatchedEOF(): boolean;
@@ -741,7 +746,7 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public removeErrorListeners(): void;
     public getErrorListenersDispatch(): Vector<ANTLRErrorListener>;
     public sempred(localctx: RuleContext, ruleIndex: number, actionIndex: number): boolean;
-    public precpred(localctx: RuleContext, precedence: number): boolean;
+    public precpred(localctx: RuleContext | null, precedence: number): boolean;
     public action(localctx: RuleContext, ruleIndex: number, actionIndex: number): void;
     public getState(): number;
     public setState(atnState: number): void;
@@ -784,7 +789,7 @@ export declare class RuleContext extends ParseTree {
  * (so we can ignore tabs), token channel, index, and source from which
  * we obtained this token.
  */
-export declare abstract class Token {
+export declare abstract class Token extends Deletable {
     public abstract getText(): string;
     public abstract getType(): number;
     public abstract getLine(): number;
@@ -1750,7 +1755,7 @@ export declare class DFAState extends Deletable {
 
     public getAltSet(): Set<number>;
     public hashCode(): number;
-    public equals(o: unknown): boolean;
+    public equals(o: DFAState): boolean;
     public toString(): string;
 }
 
@@ -1945,7 +1950,8 @@ export declare class IntervalSet extends Deletable {
     public static COMPLETE_CHAR_SET: IntervalSet;
     public static EMPTY_SET: IntervalSet;
 
-    public constructor(set?: Vector<Interval>);
+    public constructor();
+    public constructor(set: IntervalSet);
 
     /**
      * Create a set with all ints within range [a..b] (inclusive). If b is omitted, the set contains the single element

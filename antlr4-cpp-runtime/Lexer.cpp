@@ -241,13 +241,13 @@ void Lexer::recover(const LexerNoViableAltException & /*e*/) {
   }
 }
 
-void Lexer::notifyListeners(const LexerNoViableAltException & /*e*/) {
+void Lexer::notifyListeners(const LexerNoViableAltException &e) {
   ++_syntaxErrors;
   std::string text = _input->getText(misc::Interval(tokenStartCharIndex, _input->index()));
   std::string msg = std::string("token recognition error at: '") + getErrorDisplay(text) + std::string("'");
 
   ProxyErrorListener &listener = getErrorListenerDispatch();
-  listener.syntaxError(this, nullptr, tokenStartLine, tokenStartCharPositionInLine, msg, std::current_exception());
+  listener.syntaxError(this, nullptr, tokenStartLine, tokenStartCharPositionInLine, msg, e);
 }
 
 std::string Lexer::getErrorDisplay(const std::string &s) {

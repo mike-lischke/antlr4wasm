@@ -1,6 +1,6 @@
 # ANTLR4 Typescript WebAssembly target
 
-This projects realizes a WebAssembly target for ANTLR4. It is based on the [ANTLR4 C++ target](https://github.com/antlr/antlr4/tree/dev/runtime/Cpp)and currently in an early stage and not ready for production use.
+This projects realizes a WebAssembly target for ANTLR4. It is based on the [ANTLR4 C++ target](https://github.com/antlr/antlr4/tree/dev/runtime/Cpp) and currently in an early stage and not ready for production use.
 
 ## Build
 
