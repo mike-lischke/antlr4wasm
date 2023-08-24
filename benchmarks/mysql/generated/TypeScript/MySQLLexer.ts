@@ -6871,7 +6871,7 @@ export default class MySQLLexer extends MySQLBaseLexer {
     ]);
 
     private static _atn: ATN;
-    public override getATN(): ATN {
+    public getATN(): ATN {
         if (!MySQLLexer._atn) {
             MySQLLexer._atn = new ATNDeserializer().deserialize(MySQLLexer._serializedATN);
         }

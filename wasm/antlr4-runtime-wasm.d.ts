@@ -607,17 +607,7 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getExpectedTokens(): IntervalSet;
     public getExpectedTokensWithinCurrentRule(): IntervalSet;
     public getRuleIndexMap(): Map<string, number>;
-    public getRuleContext(): ParserRuleContext;
-    public getRuleInvocationStack(p?: RuleContext): Vector<string>;
-    public unrollRecursionContexts(parentCtx: ParserRuleContext): void;
-    public getInvokingContext(ruleIndex: number): ParserRuleContext;
-    public inContext(context: string): boolean;
-    public isExpectedToken(symbol: number): boolean;
-    public isMatchedEOF(): boolean;
-    public getExpectedTokens(): IntervalSet;
-    public getExpectedTokensWithinCurrentRule(): IntervalSet;
-    public getRuleIndexMap(): Map<string, number>;
-    public getRuleContext(): ParserRuleContext;
+    public getRuleContext<T extends ParserRuleContext>(): T;
     public getRuleInvocationStack(p?: RuleContext): Vector<string>;
     public getDFAStrings(): Vector<string>;
     public dumpDFA(): void;
@@ -654,13 +644,13 @@ export declare class ParserRuleContext extends RuleContext {
      * @param ruleIndex The index of the rule whose ParserRuleContext we are interested in.
      * @param i The ith value of the specific rule in the child list.
      */
-    public getRuleContext(ruleIndex: number, i: number): ParserRuleContext | null;
+    public getRuleContext<T extends ParserRuleContext>(ruleIndex: number, i: number): T | null;
 
     /**
      * Returns a list of ParserRuleContext objects matching the specified rule index.
      * @param ruleIndex The rule whose ParserRuleContext objects we are interested in.
      */
-    public getRuleContexts(ruleIndex: number): Vector<ParserRuleContext>;
+    public getRuleContexts<T extends ParserRuleContext>(ruleIndex: number): Vector<T>;
 
     public getSourceInterval(): Interval;
 

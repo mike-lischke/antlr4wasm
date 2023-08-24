@@ -80,8 +80,7 @@ options {
 
 /* cspell: disable */
 
-import { MySQLBaseRecognizer } from "./MySQLBaseRecognizer";
-import { SqlMode } from "./MySQLRecognizerCommon";
+import { SqlMode } from "../../MySQLRecognizerCommon.js";
 }
 
 //----------------------------------------------------------------------------------------------------------------------
