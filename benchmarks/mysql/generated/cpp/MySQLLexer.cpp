@@ -22,9 +22,9 @@
 */
 
 /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
+/* cspell: disable */
 
-import { MySQLBaseLexer } from "./MySQLBaseLexer";
-import { SqlMode } from "./MySQLRecognizerCommon";
+import { SqlMode } from "../../MySQLRecognizerCommon.js";
 
 
 // Generated from MySQLLexer.g4 by ANTLR 4.13.0
@@ -4514,7 +4514,7 @@ void MySQLLexer::LOGICAL_OR_OPERATORAction(antlr4::RuleContext *context, size_t 
 
 void MySQLLexer::INT_NUMBERAction(antlr4::RuleContext *context, size_t actionIndex) {
   switch (actionIndex) {
-    case 1:  this.type = this.determineNumericType(this.text);  break;
+    case 1:  this.type = this.determineNumericType(this.getText());  break;
 
   default:
     break;
@@ -4847,7 +4847,7 @@ void MySQLLexer::VAR_SAMP_SYMBOLAction(antlr4::RuleContext *context, size_t acti
 
 void MySQLLexer::UNDERSCORE_CHARSETAction(antlr4::RuleContext *context, size_t actionIndex) {
   switch (actionIndex) {
-    case 38:  this.type = this.checkCharset(this.text);  break;
+    case 38:  this.type = this.checkCharset(this.getText());  break;
 
   default:
     break;
@@ -5985,7 +5985,7 @@ bool MySQLLexer::SINGLE_QUOTED_TEXTSempred(antlr4::RuleContext *_localctx, size_
 
 bool MySQLLexer::VERSION_COMMENT_STARTSempred(antlr4::RuleContext *_localctx, size_t predicateIndex) {
   switch (predicateIndex) {
-    case 111: return this.checkVersion(this.text);
+    case 111: return this.checkVersion(this.getText());
 
   default:
     break;

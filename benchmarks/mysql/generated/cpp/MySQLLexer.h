@@ -22,9 +22,9 @@
 */
 
 /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
+/* cspell: disable */
 
-import { MySQLBaseLexer } from "./MySQLBaseLexer";
-import { SqlMode } from "./MySQLRecognizerCommon";
+import { SqlMode } from "../../MySQLRecognizerCommon.js";
 
 
 // Generated from MySQLLexer.g4 by ANTLR 4.13.0

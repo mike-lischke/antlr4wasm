@@ -24,7 +24,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-useless-escape, no-lone-blocks */
 
-import { MySQLBaseRecognizer } from "./MySQLBaseRecognizer";
+/* cspell: disable */
+
 import { SqlMode } from "./MySQLRecognizerCommon";
 
 
