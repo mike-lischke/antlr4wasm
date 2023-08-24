@@ -87,9 +87,9 @@ tokens {
 */
 
 /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
+/* cspell: disable */
 
-import { MySQLBaseLexer } from "./MySQLBaseLexer";
-import { SqlMode } from "./MySQLRecognizerCommon";
+import { SqlMode } from "../../MySQLRecognizerCommon.js";
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ fragment HEXDIGIT: [0-9a-fA-F];
 HEX_NUMBER: ('0x' HEXDIGIT+) | ('x\'' HEXDIGIT+ '\'');
 BIN_NUMBER: ('0b' [01]+) | ('b\'' [01]+ '\'');
 
-INT_NUMBER: DIGITS { this.type = this.determineNumericType(this.text); };
+INT_NUMBER: DIGITS { this.type = this.determineNumericType(this.getText()); };
 
 // Float types must be handled first or the DOT_IDENTIIFER rule will make them to identifiers
 // (if there is no leading digit before the dot).
@@ -1203,7 +1203,7 @@ INVALID_INPUT:
 
 // The underscore charset token is used to defined the repertoire of a string, though it conflicts
 // with normal identifiers, which also can start with an underscore.
-UNDERSCORE_CHARSET: UNDERLINE_SYMBOL [a-z0-9]+ { this.type = this.checkCharset(this.text); };
+UNDERSCORE_CHARSET: UNDERLINE_SYMBOL [a-z0-9]+ { this.type = this.checkCharset(this.getText()); };
 
 // Identifiers might start with a digit, even though it is discouraged, and may not consist entirely of digits only.
 // All keywords above are automatically excluded.
@@ -1243,7 +1243,7 @@ SINGLE_QUOTED_TEXT: (
 // /*!12345 ... */ - Same as the previous one except code is only used when the given number is lower
 //                   than the current server version (specifying so the minimum server version the code can run with).
 VERSION_COMMENT_START: ('/*!' DIGITS) (
-        {this.checkVersion(this.text)}? // Will set this.inVersionComment if the number matches.
+        {this.checkVersion(this.getText())}? // Will set this.inVersionComment if the number matches.
         | .*? '*/'
     ) -> channel(HIDDEN)
 ;

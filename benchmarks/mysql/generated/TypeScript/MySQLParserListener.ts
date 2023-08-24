@@ -613,7 +613,6 @@ import { KeyListContext } from "./MySQLParser.js";
 import { KeyPartContext } from "./MySQLParser.js";
 import { KeyListWithExpressionContext } from "./MySQLParser.js";
 import { KeyPartOrExpressionContext } from "./MySQLParser.js";
-import { KeyListVariantsContext } from "./MySQLParser.js";
 import { IndexTypeContext } from "./MySQLParser.js";
 import { IndexOptionContext } from "./MySQLParser.js";
 import { CommonIndexOptionContext } from "./MySQLParser.js";
@@ -6712,16 +6711,6 @@ export default class MySQLParserListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     exitKeyPartOrExpression?: (ctx: KeyPartOrExpressionContext) => void;
-    /**
-     * Enter a parse tree produced by `MySQLParser.keyListVariants`.
-     * @param ctx the parse tree
-     */
-    enterKeyListVariants?: (ctx: KeyListVariantsContext) => void;
-    /**
-     * Exit a parse tree produced by `MySQLParser.keyListVariants`.
-     * @param ctx the parse tree
-     */
-    exitKeyListVariants?: (ctx: KeyListVariantsContext) => void;
     /**
      * Enter a parse tree produced by `MySQLParser.indexType`.
      * @param ctx the parse tree

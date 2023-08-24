@@ -318,8 +318,6 @@ public:
   virtual ~ParserHelper() noexcept override {
   }
 
-  GETTER_SETTER(ParserRuleContext *, _ctx);
-
   virtual std::vector<std::string> const &getRuleNames() const override {
     return _empty;
   }
@@ -1139,9 +1137,6 @@ EMSCRIPTEN_BINDINGS(main4) {
     .function("getGrammarFileName", select_overload<std::string() const>(&Parser::getGrammarFileName))
     //.function("getATN", &Parser::getATN, select_overload<const atn::ATN &() const>(&Parser::getATN))
 
-    .function("getCtx", &ParserHelper::_ctxGet, allow_raw_pointers())
-    .function("setCtx", &ParserHelper::_ctxSet, allow_raw_pointers())
-
     .function("input", &ParserHelper::input, allow_raw_pointers())
 
     .function("reset", &Parser::reset)
@@ -1316,6 +1311,9 @@ EMSCRIPTEN_BINDINGS(main5) {
   class_<RecognizerHelper, base<Recognizer>>("Recognizer")
     .constructor<>()
 
+    .function("getState", &Recognizer::getState)
+    .function("setState", &Recognizer::setState)
+
     .function("getRuleNames", &Recognizer::getRuleNames, pure_virtual())
     .function("getVocabulary", &Recognizer::getVocabulary, pure_virtual())
     .function("getTokenTypeMap", &Recognizer::getTokenTypeMap)
@@ -1351,9 +1349,7 @@ EMSCRIPTEN_BINDINGS(main5) {
       }),
       allow_raw_pointers())
 
-    .function("getState", &Recognizer::getState)
     //.function("getATN", &Recognizer::getATN, pure_virtual())
-    .function("setState", &Recognizer::setState)
     .function("getInputStream", &Recognizer::getInputStream, pure_virtual(), allow_raw_pointers())
     .function("setInputStream", &Recognizer::setInputStream, pure_virtual(), allow_raw_pointers())
     .allow_subclass<RecognizerWrapper>("RecognizerWrapper");

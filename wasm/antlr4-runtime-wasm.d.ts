@@ -25,7 +25,7 @@ export declare class Deletable {
     public clone(): this;
 }
 
-export declare class StringVector extends Deletable implements Vector<string>{
+export declare class StringVector extends Deletable implements Vector<string> {
     size(): number;
     push_back(value: string): void;
     resize(size: number): void;
@@ -36,7 +36,7 @@ export declare class StringVector extends Deletable implements Vector<string>{
     [key: number]: never;
 }
 
-export declare class TerminalNodeVector extends Deletable implements Vector<TerminalNode>{
+export declare class TerminalNodeVector extends Deletable implements Vector<TerminalNode> {
     size(): number;
     push_back(value: TerminalNode): void;
     resize(size: number): void;
@@ -560,9 +560,6 @@ export declare class ParseCancellationException extends CancellationException {
 export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public constructor(input: TokenStream);
 
-    public getCtx(): ParserRuleContext | null;
-    public setCtx(ctx: ParserRuleContext): void;
-
     public input(): TokenStream;
 
     public reset(): void;
@@ -599,8 +596,8 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public pushNewRecursionContext(localctx: ParserRuleContext, state: number, ruleIndex: number): void;
     public unrollRecursionContexts(parentCtx: ParserRuleContext | null): void;
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
-    public getContext(): ParserRuleContext;
-    public setContext(ctx: ParserRuleContext): void;
+    public getContext(): ParserRuleContext | null;
+    public setContext(ctx: ParserRuleContext | null): void;
 
     public precpred(localctx: ParserRuleContext | null, precedence: number): boolean;
 
@@ -614,8 +611,6 @@ export declare abstract class Parser extends Recognizer<ParserATNSimulator> {
     public getRuleInvocationStack(p?: RuleContext): Vector<string>;
     public unrollRecursionContexts(parentCtx: ParserRuleContext): void;
     public getInvokingContext(ruleIndex: number): ParserRuleContext;
-    public getContext(): ParserRuleContext;
-    public setContext(ctx: ParserRuleContext): void;
     public inContext(context: string): boolean;
     public isExpectedToken(symbol: number): boolean;
     public isMatchedEOF(): boolean;
@@ -748,8 +743,10 @@ export declare abstract class Recognizer<ATNInterpreter extends ATNSimulator> ex
     public sempred(localctx: RuleContext, ruleIndex: number, actionIndex: number): boolean;
     public precpred(localctx: RuleContext | null, precedence: number): boolean;
     public action(localctx: RuleContext, ruleIndex: number, actionIndex: number): void;
+
     public getState(): number;
     public setState(atnState: number): void;
+
     public getInputStream(): IntStream;
     public setInputStream(input: IntStream): void;
 }
@@ -994,7 +991,7 @@ export declare abstract class TokenStream extends IntStream {
      * `stop` (inclusive).
      *
      * If the specified `start` or `stop` token was not provided by
-     * this stream, or if the `stop` occurred before the `start`}
+     * this stream, or if the `stop` occurred before the `start`
      * token, the behavior is unspecified.
      *
      * For streams which ensure that the `Token.tokenIndex` method is

@@ -64,7 +64,7 @@ export const getText = (context: RuleContext, convertEscapes: boolean): string =
         let result = "";
 
         for (let index = 0; index < context.getChildren().size(); ++index) {
-            const child = context.textStringLiteral(index);
+            const child = context.textStringLiteral(index)!;
             // eslint-disable-next-line no-underscore-dangle
             const token = child._value;
             if (token.getType() === MySQLParser.DOUBLE_QUOTED_TEXT || token.getType() === MySQLParser.SINGLE_QUOTED_TEXT) {

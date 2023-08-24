@@ -33,7 +33,7 @@ import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
 const LexerExtender = Lexer.extend<Lexer>("Lexer", {});
 
 // The base lexer class provides a number of functions needed in actions in the lexer (grammar).
-export abstract class MySQLBaseLexer extends LexerExtender implements IMySQLRecognizerCommon {
+export default abstract class MySQLBaseLexer extends LexerExtender implements IMySQLRecognizerCommon {
     public serverVersion = 0;
     public sqlModes = new Set<SqlMode>();
 

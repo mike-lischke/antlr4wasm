@@ -10,7 +10,7 @@
  * designated in a particular file or component or in included license
  * documentation. The authors of MySQL hereby grant you an additional
  * permission to link the program and your derivative works with the
- * separately licensed software that they have included with
+ * separately licensed software that they have included with MySQL.
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
@@ -21,31 +21,18 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-import { Parser } from "../../src/antlr4-runtime.js";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-useless-escape, no-lone-blocks */
 
-import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
+import { MySQLBaseRecognizer } from "./MySQLBaseRecognizer";
+import { SqlMode } from "./MySQLRecognizerCommon";
 
-const ParserExtender = Parser.extend<Parser>("Parser", {});
 
-export default abstract class MySQLBaseRecognizer extends ParserExtender implements IMySQLRecognizerCommon {
+// Generated from MySQLParser.g4 by ANTLR 4.13.0
 
-    // To parameterize the parsing process.
-    public serverVersion = 0;
-    public sqlModes = new Set<SqlMode>();
 
-    /**
-     * Determines if the given SQL mode is currently active in the lexer.
-     *
-     * @param mode The mode to check.
-     *
-     * @returns True if the mode is one of the currently active modes.
-     */
-    public isSqlModeActive(mode: SqlMode): boolean {
-        return this.sqlModes.has(mode);
-    }
+#include "MySQLParserVisitor.h"
 
-    public sqlModeFromString(_modes: string): void {
-        throw new Error("sqlModeFromString not implemented");
-    }
 
-}
+using namespace antlr4;
+

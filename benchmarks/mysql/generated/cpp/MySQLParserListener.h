@@ -1794,9 +1794,6 @@ public:
   virtual void enterKeyPartOrExpression(MySQLParser::KeyPartOrExpressionContext *ctx) = 0;
   virtual void exitKeyPartOrExpression(MySQLParser::KeyPartOrExpressionContext *ctx) = 0;
 
-  virtual void enterKeyListVariants(MySQLParser::KeyListVariantsContext *ctx) = 0;
-  virtual void exitKeyListVariants(MySQLParser::KeyListVariantsContext *ctx) = 0;
-
   virtual void enterIndexType(MySQLParser::IndexTypeContext *ctx) = 0;
   virtual void exitIndexType(MySQLParser::IndexTypeContext *ctx) = 0;
 

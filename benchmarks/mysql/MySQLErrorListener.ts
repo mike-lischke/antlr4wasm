@@ -30,7 +30,7 @@ import {
 } from "../../src/antlr4-runtime.js";
 import MySQLParser from "./generated/TypeScript/MySQLParser.js";
 import { ErrorReportCallback } from "./parse-helper.js";
-import { MySQLBaseLexer } from "./MySQLBaseLexer.js";
+import MySQLBaseLexer from "./MySQLBaseLexer.js";
 import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
 
 const ANTLRErrorListener = AEL.extend<AEL>("AEL", {});

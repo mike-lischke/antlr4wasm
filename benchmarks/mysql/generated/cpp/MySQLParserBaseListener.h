@@ -1796,9 +1796,6 @@ public:
   virtual void enterKeyPartOrExpression(MySQLParser::KeyPartOrExpressionContext * /*ctx*/) override { }
   virtual void exitKeyPartOrExpression(MySQLParser::KeyPartOrExpressionContext * /*ctx*/) override { }
 
-  virtual void enterKeyListVariants(MySQLParser::KeyListVariantsContext * /*ctx*/) override { }
-  virtual void exitKeyListVariants(MySQLParser::KeyListVariantsContext * /*ctx*/) override { }
-
   virtual void enterIndexType(MySQLParser::IndexTypeContext * /*ctx*/) override { }
   virtual void exitIndexType(MySQLParser::IndexTypeContext * /*ctx*/) override { }
 

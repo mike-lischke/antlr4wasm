@@ -78,6 +78,8 @@ options {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-useless-escape, no-lone-blocks */
 
+/* cspell: disable */
+
 import { MySQLBaseRecognizer } from "./MySQLBaseRecognizer";
 import { SqlMode } from "./MySQLRecognizerCommon";
 }
@@ -600,7 +602,7 @@ indexNameAndType:
 ;
 
 createIndexTarget:
-    ON_SYMBOL tableRef keyListVariants
+    ON_SYMBOL tableRef keyListWithExpression
 ;
 
 createLogfileGroup:
@@ -977,14 +979,9 @@ insertValues:
 ;
 
 insertQueryExpression:
-    {this.serverVersion < 80031}? (
-        queryExpressionOrParens
-        | OPEN_PAR_SYMBOL fields? CLOSE_PAR_SYMBOL queryExpressionWithOptLockingClauses
-    )
-    | {this.serverVersion >= 80031}? (
-        queryExpressionWithOptLockingClauses
-        | OPEN_PAR_SYMBOL fields? CLOSE_PAR_SYMBOL queryExpressionWithOptLockingClauses
-    )
+    queryExpression
+    | queryExpressionParens
+    | (OPEN_PAR_SYMBOL fields? CLOSE_PAR_SYMBOL)? queryExpressionWithOptLockingClauses
 ;
 
 valueList:
@@ -1074,16 +1071,14 @@ queryExpression:
 ;
 
 queryExpressionBody:
-    queryPrimary {this.serverVersion < 80031}? (
-        UNION_SYMBOL unionOption? (queryPrimary | queryExpressionParens)
-    )*
-    | queryExpressionParens {this.serverVersion < 80031}? (
-        UNION_SYMBOL unionOption? (queryPrimary | queryExpressionParens)
-    )*
+    (queryPrimary | queryExpressionParens)
 
-    // Manually resolving the left recursion part here.
-    {this.serverVersion >= 80031}? (
-        (UNION_SYMBOL | EXCEPT_SYMBOL | INTERSECT_SYMBOL) unionOption? queryExpressionBody
+    // Unlimited UNIONS.
+    (
+        (
+            UNION_SYMBOL
+            | {this.serverVersion >= 80031}? (EXCEPT_SYMBOL | INTERSECT_SYMBOL)
+        ) unionOption? queryExpressionBody
     )*
 ;
 
@@ -1561,10 +1556,7 @@ resetOption:
 ;
 
 sourceResetOptions:
-    TO_SYMBOL (
-        {this.serverVersion < 80017}? real_ulong_number
-        | {this.serverVersion >= 80017}? real_ulonglong_number
-    )
+    TO_SYMBOL real_ulonglong_number
 ;
 
 replicationLoad:
@@ -2103,8 +2095,7 @@ grantTargetList:
 ;
 
 grantOptions:
-    {this.serverVersion < 80011}? WITH_SYMBOL grantOption+
-    | {this.serverVersion >= 80011}? WITH_SYMBOL GRANT_SYMBOL OPTION_SYMBOL
+    WITH_SYMBOL grantOption ({this.serverVersion < 80011}? grantOption)*
 ;
 
 exceptRoleList:
@@ -2207,10 +2198,12 @@ requireListElement:
 
 grantOption:
     option = GRANT_SYMBOL OPTION_SYMBOL
-    | option = MAX_QUERIES_PER_HOUR_SYMBOL ulong_number
-    | option = MAX_UPDATES_PER_HOUR_SYMBOL ulong_number
-    | option = MAX_CONNECTIONS_PER_HOUR_SYMBOL ulong_number
-    | option = MAX_USER_CONNECTIONS_SYMBOL ulong_number
+    | {this.serverVersion < 80011}? (
+        option = MAX_QUERIES_PER_HOUR_SYMBOL ulong_number
+        | option = MAX_UPDATES_PER_HOUR_SYMBOL ulong_number
+        | option = MAX_CONNECTIONS_PER_HOUR_SYMBOL ulong_number
+        | option = MAX_USER_CONNECTIONS_SYMBOL ulong_number
+    )
 ;
 
 setRoleStatement:
@@ -2904,8 +2897,8 @@ windowFunctionCall:
         | PERCENT_RANK_SYMBOL
     ) parentheses windowingClause
     | NTILE_SYMBOL (
-        {this.serverVersion < 80024}? simpleExprWithParentheses
-        | {this.serverVersion >= 80024}? OPEN_PAR_SYMBOL stableInteger CLOSE_PAR_SYMBOL
+        OPEN_PAR_SYMBOL stableInteger CLOSE_PAR_SYMBOL
+        | {this.serverVersion < 80024}? simpleExprWithParentheses
     ) windowingClause
     | (LEAD_SYMBOL | LAG_SYMBOL) OPEN_PAR_SYMBOL expr leadLagInfo? CLOSE_PAR_SYMBOL nullTreatment? windowingClause
     | (FIRST_VALUE_SYMBOL | LAST_VALUE_SYMBOL) exprWithParentheses nullTreatment? windowingClause
@@ -2920,7 +2913,8 @@ windowingClause:
 
 leadLagInfo:
     COMMA_SYMBOL (
-        {this.serverVersion < 80024}? (ulonglong_number | PARAM_MARKER)
+        ulonglong_number
+        | PARAM_MARKER
         | {this.serverVersion >= 80024}? stableInteger
     ) (COMMA_SYMBOL expr)?
 ;
@@ -3125,7 +3119,7 @@ rvalueSystemOrUserVariable:
 
 lvalueVariable: (
         // Check in semantic phase that the first id is not global/local/session/default.
-        {this.serverVersion < 80017}? identifier dotIdentifier?
+        identifier dotIdentifier?
         | {this.serverVersion >= 80017}? lValueIdentifier dotIdentifier?
     )
     | DEFAULT_SYMBOL dotIdentifier
@@ -3489,11 +3483,11 @@ constraintEnforcement:
 ;
 
 tableConstraintDef:
-    type = (KEY_SYMBOL | INDEX_SYMBOL) indexNameAndType? keyListVariants indexOption*
-    | type = FULLTEXT_SYMBOL keyOrIndex? indexName? keyListVariants fulltextIndexOption*
-    | type = SPATIAL_SYMBOL keyOrIndex? indexName? keyListVariants spatialIndexOption*
+    type = (KEY_SYMBOL | INDEX_SYMBOL) indexNameAndType? keyListWithExpression indexOption*
+    | type = FULLTEXT_SYMBOL keyOrIndex? indexName? keyListWithExpression fulltextIndexOption*
+    | type = SPATIAL_SYMBOL keyOrIndex? indexName? keyListWithExpression spatialIndexOption*
     | constraintName? (
-        (type = PRIMARY_SYMBOL KEY_SYMBOL | type = UNIQUE_SYMBOL keyOrIndex?) indexNameAndType? keyListVariants indexOption*
+        (type = PRIMARY_SYMBOL KEY_SYMBOL | type = UNIQUE_SYMBOL keyOrIndex?) indexNameAndType? keyListWithExpression indexOption*
         | type = FOREIGN_SYMBOL KEY_SYMBOL indexName? keyList references
         | checkConstraint ({this.serverVersion >= 80017}? constraintEnforcement)?
     )
@@ -3601,12 +3595,7 @@ keyListWithExpression:
 
 keyPartOrExpression: // key_part_with_expression in sql_yacc.yy.
     keyPart
-    | exprWithParentheses direction?
-;
-
-keyListVariants:
-    {this.serverVersion >= 80013}? keyListWithExpression
-    | {this.serverVersion < 80013}? keyList
+    | {this.serverVersion >= 80013}? exprWithParentheses direction?
 ;
 
 indexType:
