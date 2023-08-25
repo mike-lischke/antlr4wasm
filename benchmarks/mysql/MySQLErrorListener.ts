@@ -28,10 +28,12 @@ import {
     IntervalSet, LexerNoViableAltException, NoViableAltException, Parser, ParserRuleContext, RecognitionException,
     Recognizer, Token, Vocabulary
 } from "../../src/antlr4-runtime.js";
-import MySQLParser from "./generated/TypeScript/MySQLParser.js";
-import { ErrorReportCallback } from "./parse-helper.js";
+
+import MySQLParser from "./targets/TypeScriptWasm/MySQLParser.js";
 import MySQLBaseLexer from "./MySQLBaseLexer.js";
-import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
+import MySQLLexer from "./targets/TypeScriptWasm/MySQLLexer.js";
+
+import { ErrorReportCallback } from "./helpers.js";
 
 const ANTLRErrorListener = AEL.extend<AEL>("AEL", {});
 type ANTLRErrorListener = InstanceType<typeof ANTLRErrorListener>;

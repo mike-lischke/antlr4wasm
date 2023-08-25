@@ -14,6 +14,7 @@
     "ignoreWords": [
         "Evals",
         "Harwell",
+        "Runtimes",
         "SQUOTE",
         "Whitebox",
         "ambig",
@@ -25,6 +26,7 @@
         "nvae",
         "parentctx",
         "precpred",
+        "rdbms",
         "recog",
         "sakila",
         "seealso",

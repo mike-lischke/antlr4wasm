@@ -2558,22 +2558,21 @@ public:
     antlr4::Token *type = nullptr;
     CreateIndexContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
+    IndexNameContext *indexName();
     CreateIndexTargetContext *createIndexTarget();
     antlr4::tree::TerminalNode *INDEX_SYMBOL();
-    IndexNameContext *indexName();
     OnlineOptionContext *onlineOption();
     antlr4::tree::TerminalNode *FULLTEXT_SYMBOL();
     antlr4::tree::TerminalNode *SPATIAL_SYMBOL();
     IndexLockAndAlgorithmContext *indexLockAndAlgorithm();
     antlr4::tree::TerminalNode *UNIQUE_SYMBOL();
+    IndexTypeClauseContext *indexTypeClause();
     std::vector<IndexOptionContext *> indexOption();
     IndexOptionContext* indexOption(size_t i);
     std::vector<FulltextIndexOptionContext *> fulltextIndexOption();
     FulltextIndexOptionContext* fulltextIndexOption(size_t i);
     std::vector<SpatialIndexOptionContext *> spatialIndexOption();
     SpatialIndexOptionContext* spatialIndexOption(size_t i);
-    IndexTypeClauseContext *indexTypeClause();
-    IndexNameAndTypeContext *indexNameAndType();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -12451,13 +12450,12 @@ public:
     antlr4::tree::TerminalNode *NOT_SYMBOL();
     antlr4::tree::TerminalNode *SECONDARY_SYMBOL();
     antlr4::tree::TerminalNode *DEFAULT_SYMBOL();
-    SignedLiteralContext *signedLiteral();
     NowOrSignedLiteralContext *nowOrSignedLiteral();
-    antlr4::tree::TerminalNode *NOW_SYMBOL();
     ExprWithParenthesesContext *exprWithParentheses();
-    TimeFunctionParametersContext *timeFunctionParameters();
     antlr4::tree::TerminalNode *UPDATE_SYMBOL();
+    antlr4::tree::TerminalNode *NOW_SYMBOL();
     antlr4::tree::TerminalNode *ON_SYMBOL();
+    TimeFunctionParametersContext *timeFunctionParameters();
     antlr4::tree::TerminalNode *AUTO_INCREMENT_SYMBOL();
     antlr4::tree::TerminalNode *VALUE_SYMBOL();
     antlr4::tree::TerminalNode *SERIAL_SYMBOL();
@@ -16779,7 +16777,6 @@ public:
   bool createStatementSempred(CreateStatementContext *_localctx, size_t predicateIndex);
   bool createDatabaseOptionSempred(CreateDatabaseOptionContext *_localctx, size_t predicateIndex);
   bool queryExpressionOrParensSempred(QueryExpressionOrParensContext *_localctx, size_t predicateIndex);
-  bool createIndexSempred(CreateIndexContext *_localctx, size_t predicateIndex);
   bool tsDataFileNameSempred(TsDataFileNameContext *_localctx, size_t predicateIndex);
   bool tablespaceOptionSempred(TablespaceOptionContext *_localctx, size_t predicateIndex);
   bool dropStatementSempred(DropStatementContext *_localctx, size_t predicateIndex);

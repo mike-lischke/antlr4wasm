@@ -568,10 +568,7 @@ routineOption:
 
 createIndex:
     onlineOption? (
-        UNIQUE_SYMBOL? type = INDEX_SYMBOL (
-            {this.serverVersion >= 80014}? indexName indexTypeClause?
-            | indexNameAndType?
-        ) createIndexTarget indexOption*
+        UNIQUE_SYMBOL? type = INDEX_SYMBOL indexName indexTypeClause? createIndexTarget indexOption*
         | type = FULLTEXT_SYMBOL INDEX_SYMBOL indexName createIndexTarget fulltextIndexOption*
         | type = SPATIAL_SYMBOL INDEX_SYMBOL indexName createIndexTarget spatialIndexOption*
     ) indexLockAndAlgorithm?
@@ -651,8 +648,8 @@ createUndoTablespace:
 ;
 
 tsDataFileName:
-    {this.serverVersion >= 80014}? (ADD_SYMBOL tsDataFile)?
-    | ADD_SYMBOL tsDataFile
+    ADD_SYMBOL tsDataFile
+    | {this.serverVersion >= 80014}? (ADD_SYMBOL tsDataFile)? // now optional
 ;
 
 tsDataFile:
@@ -3510,9 +3507,7 @@ columnAttribute:
     NOT_SYMBOL? nullLiteral
     | {this.serverVersion >= 80014}? NOT_SYMBOL SECONDARY_SYMBOL
     | value = DEFAULT_SYMBOL (
-        {this.serverVersion < 80024}? signedLiteral
-        | {this.serverVersion >= 80024}? nowOrSignedLiteral
-        | NOW_SYMBOL timeFunctionParameters?
+        nowOrSignedLiteral
         | {this.serverVersion >= 80013}? exprWithParentheses
     )
     | value = ON_SYMBOL UPDATE_SYMBOL NOW_SYMBOL timeFunctionParameters?

@@ -240,22 +240,6 @@ public:
     return _atn;
   }
 
-  virtual size_t getLine() const override {
-    return 0;
-  }
-
-  virtual size_t getCharPositionInLine() override {
-    return 0;
-  }
-
-  virtual CharStream *getInputStream() override {
-    return nullptr;
-  }
-
-  virtual std::string getSourceName() override {
-    return "";
-  }
-
 private:
   atn::ATN _atn;
   dfa::Vocabulary _vocabulary;

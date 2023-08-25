@@ -4,9 +4,9 @@ $$
 select 1$$
 --
 $$
--- 
+--
 $$
---	
+--
 $$
 -- comment
 select 1$$
@@ -278,7 +278,6 @@ TRUNCATE auth_user_user_permissions ;$$
 CREATE INDEX app_recipe_author_id ON app_recipe ( author_id ) ;$$
 DELETE FROM django_site WHERE id IN ( ? /* , ... */ )$$
 UPDATE inventory_instance_attributes SET supported = ? , frequency = ? , insert_count = ? , latest_save_time = ? , latest_string_value = NULL , latest_double_value = ? , latest_long_value = NULL WHERE instance_attribute_id = ?$$
-rollback$$
 INSERT INTO inventory_instances ( instance_name , type_id , parent_id , insert_count , instance_id ) VALUES ( ? , ? , ? , ? , ? ) ON DUPLICATE KEY UPDATE insert_count = insert_count + ?$$
 SELECT ( ? ) AS `a` FROM auth_user WHERE auth_user . username = ?$$
 UPDATE django_site SET domain = ? , name = ? WHERE django_site . id = ?$$
@@ -419,16 +418,16 @@ BEGIN
   SELECT result;
 END$$
 select (select t1.id as a, sakila.actor.actor_id b, t2.id c, (select  1 * 0.123, a from t3) from  `ÄÖÜ丈` t1, sakila.actor as t2)$$
-SELECT 
+SELECT
 	currency_code,
-	SUM(CASE WHEN TYPE = 'buy'THEN to_amount END ) AS BUY, 
-	SUM(CASE WHEN TYPE = 'sell' THEN to_amount END ) AS SELL, 
-	SUM(CASE WHEN TYPE = 'sell' THEN rate END ) AS SELL_RATE, 
-	SUM(CASE WHEN TYPE = 'buy' THEN rate END ) AS BUY_RATE, 
-	AVG(CASE WHEN TYPE = 'buy' THEN rate END ) AS AVG_BUY_RATE, 
+	SUM(CASE WHEN TYPE = 'buy'THEN to_amount END ) AS BUY,
+	SUM(CASE WHEN TYPE = 'sell' THEN to_amount END ) AS SELL,
+	SUM(CASE WHEN TYPE = 'sell' THEN rate END ) AS SELL_RATE,
+	SUM(CASE WHEN TYPE = 'buy' THEN rate END ) AS BUY_RATE,
+	AVG(CASE WHEN TYPE = 'buy' THEN rate END ) AS AVG_BUY_RATE,
 	AVG(CASE WHEN TYPE = 'sell' THEN rate END ) AS AVG_SELL_RATE
 FROM tb_currency
-LEFT JOIN tb_bill 
+LEFT JOIN tb_bill
 	ON tb_currency.CURRENCY_ID = tb_bill.CURRENCY_ID
 		AND tb_bill.TYPE IN ('buy', 'sell')
 		AND date( DATE_TIME ) >= '2011-01-01'

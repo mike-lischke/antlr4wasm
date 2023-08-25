@@ -8,17 +8,21 @@ import path from "path";
 import assert from "assert";
 import { fileURLToPath } from 'url';
 
-import {
-    ANTLRInputStream, BailErrorStrategy, CommonTokenStream, std$$exception, PredictionMode
-} from "../../src/antlr4-runtime.js";
-import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
-import MySQLParser from "./generated/TypeScript/MySQLParser.js";
+import { std$$exception } from "../../src/antlr4-runtime.js";
 
-import { MySQLParseUnit, MySQLParsingServices, StatementFinishState } from "./parse-helper.js";
+import { ParseServiceWasm } from "./ParseServiceWasm.js";
+import { MySQLParseUnit, StatementFinishState, determineStatementRanges } from "./helpers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 
-const services = new MySQLParsingServices();
+const charSets = new Set<string>();
+const content = fs.readFileSync(path.join(path.dirname(__filename), "./data/rdbms-info.json"), { encoding: "utf-8" });
+const rdbmsInfo = JSON.parse(content);
+Object.keys(rdbmsInfo.characterSets).forEach((set: string) => {
+    charSets.add("_" + set.toLowerCase());
+});
+
+const services = new ParseServiceWasm(charSets);
 
 interface ITestFile {
     name: string;
@@ -91,7 +95,7 @@ const splitterTest = () => {
     const data = fs.readFileSync(path.join(path.dirname(__filename), "/data/sakila-db/sakila-data.sql"), { encoding: "utf-8" });
     assert(data.length === 3231413);
 
-    let ranges = services.determineStatementRanges(data, ";");
+    let ranges = determineStatementRanges(data, ";");
     assert(ranges.length === 57);
 
     const r1 = ranges[0];
@@ -116,7 +120,7 @@ const splitterTest = () => {
     const schema = fs.readFileSync(path.join(path.dirname(__filename), "./data/sakila-db/sakila-schema.sql"), { encoding: "utf-8" });
     assert(schema.length === 23219);
 
-    ranges = services.determineStatementRanges(schema, ";");
+    ranges = determineStatementRanges(schema, ";");
     assert(ranges.length === 56);
 
     const r4 = ranges[43];
@@ -129,7 +133,7 @@ const splitterTest = () => {
 const parseFiles = () => {
     const testFiles: ITestFile[] = [
         // Large set of all possible query types in different combinations and versions.
-        { name: "./data/statements.txt", initialDelimiter: "$$" },
+        //{ name: "./data/statements.txt", initialDelimiter: "$$" },
 
         // Not so many, but some very long insert statements.
         { name: "./data/sakila-db/sakila-data.sql", initialDelimiter: ";" },
@@ -138,7 +142,10 @@ const parseFiles = () => {
     testFiles.forEach((entry) => {
         const sql = fs.readFileSync(path.join(path.dirname(__filename), entry.name), { encoding: "utf-8" });
 
-        const ranges = services.determineStatementRanges(sql, entry.initialDelimiter);
+        const ranges = determineStatementRanges(sql, entry.initialDelimiter);
+        console.log("    Found " + ranges.length + " statements in " + entry.name + ".");
+
+        let timestamp = performance.now();
         ranges.forEach((range, index) => {
             // The delimiter is considered part of the statement (e.g. for editing purposes)
             // but must be ignored for parsing.
@@ -161,54 +168,48 @@ const parseFiles = () => {
                 // may unexpectedly succeed.
             }
         });
+
+        console.log("    Parsing all statements took: " + (performance.now() - timestamp) + " ms");
     });
 };
 
-try {
-    // 1. Start with splitter tests.
-    splitterTest();
-
-    // 2. Now parse the content of some files of various complexity and size.
-    parseFiles();
-
-    /*
-        const stream = new ANTLRInputStream();
-        stream.load("select * from sakila.actor", true);
-
-        const lexer = new MySQLLexer(stream);
-        const tokenStream = new CommonTokenStream(lexer);
-
-        tokenStream.fill();
-        const tokens = tokenStream.getTokens();
-
-        for (let i = 0; i < tokens.size(); ++i) {
-            console.log(tokens.get(i).toString());
+const parserRun = () => {
+    let timestamp = performance.now();
+    try {
+        parseFiles();
+    } catch (e) {
+        if (e instanceof std$$exception) {
+            console.log(e.what());
+        } else if (e.stack) {
+            console.error(e.stack);
+        } else {
+            console.error(e.toString());
         }
-        tokens.delete();
-
-        const parser = new MySQLParser(tokenStream);
-        const strategy = new BailErrorStrategy();
-        parser.setErrorHandler(strategy); // Takes ownership of the strategy. Don't delete it manually!
-        parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
-        const tree = parser.query();
-
-        const names = parser.getRuleNames();
-        //console.log(tree.toStringTree(names, true));
-        console.log(tree.toStringTree(parser, true));
-        names.delete();
-
-        tree.delete();
-        parser.delete();
-        lexer.delete();
-        stream.delete();*/
-} catch (e) {
-    if (e instanceof std$$exception) {
-        console.log(e.what());
-    } else if (e.stack) {
-        console.error(e.stack);
-    } else {
-        console.error(e.toString());
+    } finally {
+        console.log("Parse run took " + (performance.now() - timestamp) + " ms");
     }
-} finally {
-    console.log("Done");
-}
+};
+
+console.log("Starting antlr4wasm MySQL benchmarks");
+let timestamp = performance.now();
+
+// 1. Start with splitter tests.
+//splitterTest();
+
+console.log("Splitter tests took " + (performance.now() - timestamp) + " ms");
+timestamp = performance.now();
+
+// 2. Do first parser run.
+console.log("Running parser warmup phase...");
+parserRun();
+
+// 3. And another time once the parser is warmed up.
+console.log("Running parser...");
+parserRun();
+parserRun();
+parserRun();
+parserRun();
+parserRun();
+
+services.cleanup();
+console.log("Done");

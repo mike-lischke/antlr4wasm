@@ -26,7 +26,7 @@
 
 import { Lexer, Token } from "../../src/antlr4-runtime.js";
 
-import MySQLLexer from "./generated/TypeScript/MySQLLexer.js";
+import MySQLLexer from "./targets/TypeScriptWasm/MySQLLexer.js";
 
 import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
 
@@ -37,7 +37,7 @@ export default abstract class MySQLBaseLexer extends LexerExtender implements IM
     public serverVersion = 0;
     public sqlModes = new Set<SqlMode>();
 
-    public readonly charSets: Set<string> = new Set(); // Used to check repertoires.
+    public charSets: Set<string> = new Set(); // Used to check repertoires.
     protected inVersionComment = false;
 
     private pendingTokens: Token[] = [];
