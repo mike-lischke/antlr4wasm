@@ -23,9 +23,9 @@
 
 import {
     ErrorNode, Interval, ParseTree, ParserRuleContext, RuleContext, TerminalNode, Token, Vocabulary
-} from "../../src/antlr4-runtime.js";
+} from "../../../../src/antlr4-runtime.js";
 
-import MySQLParser, { TextLiteralContext } from "./targets/TypeScriptWasm/MySQLParser.js";
+import MySQLParser, { TextLiteralContext } from "./MySQLParser.js";
 
 // This interface describes functionality found in both, lexer and parser classes.
 export interface IMySQLRecognizerCommon {

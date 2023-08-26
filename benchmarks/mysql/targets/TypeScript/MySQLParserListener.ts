@@ -1,5 +1,6 @@
 // Generated from MySQLParser.g4 by ANTLR 4.13.0
 
+import { ParseTreeListener } from "antlr4";
 
 /*
  * Copyright (c) 2020, 2023, Oracle and/or its affiliates.
@@ -29,10 +30,8 @@
 
 /* cspell: disable */
 
-import { SqlMode } from "./MySQLRecognizerCommon.js";
+import { SqlMode } from "../TypeScriptWasm/MySQLRecognizerCommon.js";
 
-
-import { ParseTreeListener } from "src/antlr4-runtime.js";
 
 import { QueryContext } from "./MySQLParser.js";
 import { SimpleStatementContext } from "./MySQLParser.js";

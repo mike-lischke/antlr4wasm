@@ -21,13 +21,11 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-import { Parser } from "../../src/antlr4-runtime.js";
+import { Parser } from "antlr4";
 
 import { IMySQLRecognizerCommon, SqlMode } from "./MySQLRecognizerCommon.js";
 
-const ParserExtender = Parser.extend<Parser>("Parser", {});
-
-export default abstract class MySQLBaseRecognizer extends ParserExtender implements IMySQLRecognizerCommon {
+export default abstract class MySQLBaseRecognizer extends Parser implements IMySQLRecognizerCommon {
 
     // To parameterize the parsing process.
     public serverVersion = 0;

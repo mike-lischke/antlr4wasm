@@ -29,7 +29,7 @@
 
 /* cspell: disable */
 
-import { SqlMode } from "../../MySQLRecognizerCommon.js";
+import { SqlMode } from "./MySQLRecognizerCommon.js";
 
 
 import {
@@ -44,7 +44,7 @@ import MySQLParserVisitor from "./MySQLParserVisitor.js";
 const ParserRuleContext = PRC.extend<PRC>("PRC", {});
 type ParserRuleContext = InstanceType<typeof ParserRuleContext>;
 
-import MySQLBaseRecognizer from "../../MySQLBaseRecognizer.js";
+import MySQLBaseRecognizer from "./MySQLBaseRecognizer.js";
 
 export default class MySQLParser extends MySQLBaseRecognizer {
     public static readonly ACCESSIBLE_SYMBOL = 1;

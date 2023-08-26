@@ -10,8 +10,10 @@ import { fileURLToPath } from 'url';
 
 import { std$$exception } from "../../src/antlr4-runtime.js";
 
-import { ParseServiceWasm } from "./ParseServiceWasm.js";
-import { MySQLParseUnit, StatementFinishState, determineStatementRanges } from "./helpers.js";
+import { ParseServiceWasm } from "./targets/TypeScriptWasm/ParseServiceWasm.js";
+import { ParseServiceJS } from "./targets/TypeScript/ParseServiceJS.js";
+
+import { IParserErrorInfo, MySQLParseUnit, StatementFinishState, determineStatementRanges } from "./helpers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -22,7 +24,8 @@ Object.keys(rdbmsInfo.characterSets).forEach((set: string) => {
     charSets.add("_" + set.toLowerCase());
 });
 
-const services = new ParseServiceWasm(charSets);
+const wasmService = new ParseServiceWasm(charSets);
+const jsService = new ParseServiceJS(charSets);
 
 interface ITestFile {
     name: string;
@@ -130,7 +133,7 @@ const splitterTest = () => {
     assert(r4.delimiter === "$$");
 };
 
-const parseFiles = () => {
+const parseFiles = (useWasm: boolean) => {
     const testFiles: ITestFile[] = [
         // Large set of all possible query types in different combinations and versions.
         //{ name: "./data/statements.txt", initialDelimiter: "$$" },
@@ -155,11 +158,24 @@ const parseFiles = () => {
             // The parser only supports syntax from 8.0 onwards. So we expect errors for older statements.
             const checkResult = checkMinStatementVersion(statement, 80000);
             if (checkResult.matched) {
-                const result = services.errorCheck(checkResult.statement, MySQLParseUnit.Generic,
-                    checkResult.version, "ANSI_QUOTES");
-                if (!result) {
-                    const errors = services.errorsWithOffset(0);
-                    const error = errors[0];
+                let error: IParserErrorInfo | undefined;
+                if (useWasm) {
+                    const result = wasmService.errorCheck(checkResult.statement, MySQLParseUnit.Generic,
+                        checkResult.version, "ANSI_QUOTES");
+                    if (!result) {
+                        const errors = wasmService.errorsWithOffset(0);
+                        error = errors[0];
+                    }
+                } else {
+                    const result = jsService.errorCheck(checkResult.statement, MySQLParseUnit.Generic,
+                        checkResult.version, "ANSI_QUOTES");
+                    if (!result) {
+                        const errors = jsService.errorsWithOffset(0);
+                        error = errors[0];
+                    }
+                }
+
+                if (error) {
                     assert(false, `This query failed to parse (${index}: ${checkResult.version}):\n${statement}\n` +
                         `with error: ${error.message}, line: ${error.line - 1}, column: ${error.offset}`);
                 }
@@ -173,10 +189,10 @@ const parseFiles = () => {
     });
 };
 
-const parserRun = () => {
+const parserRun = (useWasm: boolean) => {
     let timestamp = performance.now();
     try {
-        parseFiles();
+        parseFiles(useWasm);
     } catch (e) {
         if (e instanceof std$$exception) {
             console.log(e.what());
@@ -190,26 +206,37 @@ const parserRun = () => {
     }
 };
 
-console.log("Starting antlr4wasm MySQL benchmarks");
+console.log("Starting MySQL benchmarks");
 let timestamp = performance.now();
 
-// 1. Start with splitter tests.
-//splitterTest();
+// Splitter tests compare statement separation in JS vs. WASM.
+splitterTest();
 
 console.log("Splitter tests took " + (performance.now() - timestamp) + " ms");
 timestamp = performance.now();
+/*
+console.log("Running antlr4wasm parser (cold) ...");
+parserRun(true);
 
-// 2. Do first parser run.
-console.log("Running parser warmup phase...");
-parserRun();
+console.log("Running antlr4wasm parser (warm) ...");
+parserRun(true);
+parserRun(true);
+parserRun(true);
+parserRun(true);
+parserRun(true);*/
 
-// 3. And another time once the parser is warmed up.
-console.log("Running parser...");
-parserRun();
-parserRun();
-parserRun();
-parserRun();
-parserRun();
+wasmService.cleanup();
 
-services.cleanup();
+timestamp = performance.now();
+
+console.log("Running antlr4 JS parser (cold) ...");
+parserRun(false);
+
+console.log("Running antlr4 JS parser (warm) ...");
+parserRun(false);
+parserRun(false);
+parserRun(false);
+parserRun(false);
+parserRun(false);
+
 console.log("Done");

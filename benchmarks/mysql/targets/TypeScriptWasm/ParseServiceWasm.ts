@@ -5,12 +5,12 @@
 
 import {
     ANTLRInputStream, BailErrorStrategy, CommonTokenStream, DefaultErrorStrategy, ParseTree, PredictionMode,
-} from "../../src/antlr4-runtime.js";
+} from "../../../../src/antlr4-runtime.js";
 import { MySQLErrorListener } from "./MySQLErrorListener.js";
 
-import MySQLLexer from "./targets/TypeScriptWasm/MySQLLexer.js";
-import MySQLParser from "./targets/TypeScriptWasm/MySQLParser.js";
-import { IParserErrorInfo, IStatementSpan, MySQLParseUnit } from "./helpers.js";
+import MySQLLexer from "./MySQLLexer.js";
+import MySQLParser from "./MySQLParser.js";
+import { IParserErrorInfo, IStatementSpan, MySQLParseUnit } from "../../helpers.js";
 
 
 export class ParseServiceWasm {

@@ -23,22 +23,32 @@
 
 /* eslint-disable no-underscore-dangle */
 
-import {
-    ANTLRErrorListener as AEL, ATNConfigSet, BitSet, DFA, FailedPredicateException, InputMismatchException, Interval,
-    IntervalSet, LexerNoViableAltException, NoViableAltException, Parser, ParserRuleContext, RecognitionException,
-    Recognizer, Token, Vocabulary
-} from "../../src/antlr4-runtime.js";
-
-import MySQLParser from "./targets/TypeScriptWasm/MySQLParser.js";
+import MySQLParser from "./MySQLParser.js";
 import MySQLBaseLexer from "./MySQLBaseLexer.js";
-import MySQLLexer from "./targets/TypeScriptWasm/MySQLLexer.js";
+import MySQLLexer from "./MySQLLexer.js";
 
-import { ErrorReportCallback } from "./helpers.js";
+import { ErrorReportCallback } from "../../helpers.js";
+import {
+    ATNConfigSet, ErrorListener, FailedPredicateException, IntervalSet,
+    NoViableAltException, Parser, ParserRuleContext, RecognitionException, Recognizer, Token
+} from "antlr4";
 
-const ANTLRErrorListener = AEL.extend<AEL>("AEL", {});
-type ANTLRErrorListener = InstanceType<typeof ANTLRErrorListener>;
+class BitSet {
+}
 
-export class MySQLErrorListener extends ANTLRErrorListener {
+class Vocabulary {
+    public getDisplayName(symbol: number): string {
+        return "";
+    }
+}
+
+class LexerNoViableAltException extends RecognitionException {
+}
+
+class InputMismatchException extends RecognitionException {
+}
+
+export class MySQLErrorListener extends ErrorListener<number> {
 
     private static simpleRules: Set<number> = new Set([
         MySQLParser.RULE_identifier,
@@ -90,32 +100,32 @@ export class MySQLErrorListener extends ANTLRErrorListener {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public syntaxError<T extends Token>(recognizer: Recognizer<any>, offendingSymbol: T | null,
-        line: number, charPositionInLine: number, msg: string, e: RecognitionException | null): void {
+    public override syntaxError<T extends Token | number>(recognizer: Recognizer<any>, offendingSymbol: T | null,
+        line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
 
         let message = "";
 
         // If not undefined then offendingSymbol is of type Token.
         if (offendingSymbol) {
             // Need to clone the symbol to avoid releasing the original token prematurely.
-            let token = offendingSymbol.clone() as Token;
+            let token = offendingSymbol as Token;
 
             const parser = recognizer as MySQLParser;
-            const lexer = parser.getInputStream().getTokenSource() as MySQLBaseLexer;
-            const isEof = token.getType() === Token.EOF;
+            const lexer = parser._input.tokenSource as MySQLBaseLexer;
+            const isEof = token.type === Token.EOF;
             if (isEof) {
-                token = parser.getInputStream().get(token.getTokenIndex() - 1);
+                token = parser._input.get(token.tokenIndex - 1);
             }
 
-            const errorLength = token.getStopIndex() - token.getStartIndex() + 1;
-            let wrongText = token.getText() || "";
+            const errorLength = token.stop - token.start + 1;
+            let wrongText = token.text ?? "";
 
             // getExpectedTokens() ignores predicates, so it might include the token for which we got this syntax error,
             // if that was excluded by a predicate (which in our case is always a version check).
             // That's a good indicator to tell the user that this keyword is not valid *for the current server version*.
             let expected = parser.getExpectedTokens();
             let invalidForVersion = false;
-            let tokenType = token.getType();
+            let tokenType = token.type;
             if (tokenType !== MySQLLexer.IDENTIFIER && expected.contains(tokenType)) {
                 invalidForVersion = true;
             } else {
@@ -129,7 +139,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
 
             if (invalidForVersion) {
                 // The expected tokens set is read-only, so make a copy.
-                expected = new IntervalSet(expected);
+                expected = new IntervalSet(expected.intervals);
                 expected.remove(tokenType);
             }
 
@@ -140,8 +150,8 @@ export class MySQLErrorListener extends ANTLRErrorListener {
 
             // Walk up from generic rules to reach something that gives us more context, if needed.
             let context = parser.getRuleContext();
-            while (MySQLErrorListener.simpleRules.has(context.getRuleIndex()) && context.getParent()) {
-                context = context.getParent() as ParserRuleContext;
+            while (MySQLErrorListener.simpleRules.has(context.getRuleIndex()) && context.parentCtx) {
+                context = context.parentCtx as ParserRuleContext;
             }
 
             switch (context.getRuleIndex()) {
@@ -221,7 +231,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                     if (expected.contains(MySQLLexer.IDENTIFIER)) {
                         expectedText = "an identifier";
                     } else {
-                        expectedText = this.intervalToString(expected, 6, parser.getVocabulary());
+                        expectedText = this.intervalToString(expected, 6, new Vocabulary());
                     }
                     break;
                 }
@@ -234,7 +244,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
             if (!e) {
                 // Missing or unwanted tokens.
                 if (msg.includes("missing")) {
-                    if (expected.size() === 1) {
+                    if (expected.size === 1) {
                         message = "Missing " + expectedText;
                     }
                 } else {
@@ -254,7 +264,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                 } else if (e instanceof FailedPredicateException) {
                     // For cases like "... | a ({condition}? b)", but not "... | a ({condition}? b)?".
                     // Remove parts of the message we don't want.
-                    const condition = e.what().substring("failed predicate: ".length);
+                    const condition = e.message.substring("failed predicate: ".length);
 
                     condition.replace(/serverVersion/g, "server version");
                     condition.replace(/ && /g, "and");
@@ -277,13 +287,13 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                 }
             }
 
-            this.callback(message, token.getType(), token.getStartIndex(), line, charPositionInLine, errorLength);
+            this.callback(message, token.type, token.start, line, charPositionInLine, errorLength);
         } else {
             // No offending symbol, which indicates this is a lexer error.
             if (e instanceof LexerNoViableAltException) {
                 const lexer = recognizer as MySQLLexer;
-                const input = lexer.getInputStream();
-                let text = lexer.getErrorDisplay(input.getText(new Interval(lexer.tokenStartCharIndex, input.index())));
+                const input = lexer._input;
+                let text = lexer.getErrorDisplay(input.getText(lexer._tokenStartCharIndex, input.index));
                 if (text === "") {
                     text = " ";  // Should never happen, but we must ensure we have text.
                 }
@@ -315,8 +325,8 @@ export class MySQLErrorListener extends ANTLRErrorListener {
                         break;
                 }
 
-                this.callback(message, 0, lexer.tokenStartCharIndex, line, charPositionInLine,
-                    input.index() - lexer.tokenStartCharIndex);
+                this.callback(message, 0, lexer._tokenStartCharIndex, line, charPositionInLine,
+                    input.index - lexer._tokenStartCharIndex);
 
             }
         }
@@ -335,17 +345,18 @@ export class MySQLErrorListener extends ANTLRErrorListener {
     }
 
     private intervalToString(set: IntervalSet, maxCount: number, vocabulary: Vocabulary): string {
-        const symbols = set.toList();
+        //const symbols = set.toList();
+        const symbols: number[] = [];
 
-        if (symbols.size() === 0) {
+        if (symbols.length === 0) {
             return "";
         }
 
         let result = "";
         let firstEntry = true;
-        maxCount = Math.min(maxCount, symbols.size());
+        maxCount = Math.min(maxCount, symbols.length);
         for (let i = 0; i < maxCount; ++i) {
-            const symbol = symbols.get(i);
+            const symbol = symbols[i];
             if (!firstEntry) {
                 result += ", ";
             }
@@ -370,7 +381,7 @@ export class MySQLErrorListener extends ANTLRErrorListener {
             }
         }
 
-        if (maxCount < symbols.size()) {
+        if (maxCount < symbols.length) {
             result += ", ...";
         }
 
