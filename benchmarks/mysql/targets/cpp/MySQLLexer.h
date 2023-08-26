@@ -24,7 +24,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
 /* cspell: disable */
 
-import { SqlMode } from "../../MySQLRecognizerCommon.js";
+import { SqlMode } from "./MySQLRecognizerCommon.js";
 
 
 // Generated from MySQLLexer.g4 by ANTLR 4.13.0

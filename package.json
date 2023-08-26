@@ -22,7 +22,8 @@
         "build-wasm-release": "./scripts/build-release.sh",
         "build-ts": "tsc -w",
         "generate-test-parser": "./scripts/generate.sh",
-        "generate-benchmark-parsers": "cd ./benchmarks/mysql && ./generate.sh"
+        "generate-benchmark-parsers": "cd ./benchmarks/mysql && ./generate.sh",
+        "run-benchmarks": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/run-benchmarks.ts"
     },
     "devDependencies": {
         "@tsconfig/node-lts-strictest-esm": "18.12.1",

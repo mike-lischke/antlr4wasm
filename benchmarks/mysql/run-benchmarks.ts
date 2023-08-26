@@ -136,7 +136,7 @@ const splitterTest = () => {
 const parseFiles = (useWasm: boolean) => {
     const testFiles: ITestFile[] = [
         // Large set of all possible query types in different combinations and versions.
-        //{ name: "./data/statements.txt", initialDelimiter: "$$" },
+        { name: "./data/statements.txt", initialDelimiter: "$$" },
 
         // Not so many, but some very long insert statements.
         { name: "./data/sakila-db/sakila-data.sql", initialDelimiter: ";" },
@@ -214,16 +214,12 @@ splitterTest();
 
 console.log("Splitter tests took " + (performance.now() - timestamp) + " ms");
 timestamp = performance.now();
-/*
+
 console.log("Running antlr4wasm parser (cold) ...");
 parserRun(true);
 
 console.log("Running antlr4wasm parser (warm) ...");
 parserRun(true);
-parserRun(true);
-parserRun(true);
-parserRun(true);
-parserRun(true);*/
 
 wasmService.cleanup();
 
@@ -233,10 +229,6 @@ console.log("Running antlr4 JS parser (cold) ...");
 parserRun(false);
 
 console.log("Running antlr4 JS parser (warm) ...");
-parserRun(false);
-parserRun(false);
-parserRun(false);
-parserRun(false);
 parserRun(false);
 
 console.log("Done");

@@ -5422,3 +5422,4 @@ export default class MySQLParserVisitor<Result> extends ParseTreeVisitor<Result>
      */
     visitRoleOrLabelKeyword?: (ctx: RoleOrLabelKeywordContext) => Result;
 }
+

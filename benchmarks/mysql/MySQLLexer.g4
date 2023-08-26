@@ -89,7 +89,7 @@ tokens {
 /* eslint-disable @typescript-eslint/no-unused-vars, no-useless-escape */
 /* cspell: disable */
 
-import { SqlMode } from "../../MySQLRecognizerCommon.js";
+import { SqlMode } from "./MySQLRecognizerCommon.js";
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -8512,3 +8512,4 @@ export default class MySQLParserListener extends ParseTreeListener {
      */
     exitRoleOrLabelKeyword?: (ctx: RoleOrLabelKeywordContext) => void;
 }
+

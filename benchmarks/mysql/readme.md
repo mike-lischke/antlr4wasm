@@ -21,9 +21,11 @@ Each number has been measured 5 times and the average was used in the table abov
 
 The C++ runtime is the fastest, as expected, but antlr4ts is pretty close, given that it is pure JavaScript executing. This runtime got some optimization and it really shows. Imagine one could apply those optimizations to the C++ target!
 
-The JavaScript target orders of magnitudes slower than the C++ target. Also this is an expected result. Compare this to antlr4ts to see how much that is optimized.
+The JavaScript target is orders of magnitudes slower than the C++ target. Also this is an expected result. Compare this to antlr4ts to see how much that is optimized.
 
-The results for the WebAssembly runtime show a mixed picture. If there were no antlr4ts then the they would be pretty good (3 times faster for the query collection and 4 times faster for the large binary inserts). Note: we are looking here only at the results produces with warm runtimes, that is, the internal structures for prediction have been created.
+The results for the WebAssembly runtime show a mixed picture. If there were no antlr4ts then the results would be pretty good (3 times faster for the query collection and 4 times faster for the large binary inserts). Note: we are looking here only at the results produces with warm runtimes, that is, the internal structures for prediction have been created.
+
+But on the other hand the WebAssembly version should operate close to the C++ speed, which is not the case, particularly for the large insert data. What's also not visible here is that the memory consumption of the WebAssembly version is very high and indicates some memory leaks. Fixing them is the next step in the development. Another point here is that the warm run for the WebAssembly version is actually slower than the cold one, which is a pretty surprising result, but might have to do with the high memory pressure.
 
 ## Notes on MySQL
 
@@ -37,4 +39,14 @@ The results for the WebAssembly runtime show a mixed picture. If there were no a
 
 ## Notes on the TypeScript Runtime
 
-The existing TypeScript runtime is actually the current JavaScript runtime with a few type definitions added, and does not work out of the box. There were some changes needed, both in the type definitions and in the benchmark script, to make it work. Because node modules are usually not part of a git repository, those changes have been saved as a [patch file](../antlr4%20TS%20runtime%20changes.patch).
+The existing TypeScript runtime only comes with a subset of the required type definitions, so it did not compile out of the box. This [patch file](../antlr4%20TS%20runtime%20changes.patch) contains the minimal changes required to make it compile.
+
+Also the generated files need some (manual) changes: the test scripts are executed using ts-node with Node.js' ESM support enabled. This requires that all imports must include the `.js` extension (even for TypeScript source files). And there are a couple actions in the MySQL grammar that are tailored to the new WebAssembly runtime, for example `this.type = ...`, which need to be changed to `this._type = ...`.
+
+## Running the Benchmarks
+
+Before you can run the benchmarks, you have to generate the parser code and you must install the antlr4 runtime, by running `npm install` in the root directory of this repository. After that generate the parser code by running `npm run generate-benchmark-parsers`. This will generate the parser code for 3 targets: C++, JS/TS and WebAssembly in the `benchmarks/mysql/targets` folder.
+
+The C++ code is not used for the benchmarks yet. You have to apply the changes to the JS/TS runtime + node module like mentioned above, to compile.
+
+After that run the benchmarks using `npm run run-benchmarks`. This will run the WebAssembly parser first and then the JS/TS parser. Each run will print its results to the console.

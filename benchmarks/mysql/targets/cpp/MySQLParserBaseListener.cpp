@@ -26,7 +26,7 @@
 
 /* cspell: disable */
 
-import { SqlMode } from "../../MySQLRecognizerCommon.js";
+import { SqlMode } from "./MySQLRecognizerCommon.js";
 
 
 // Generated from MySQLParser.g4 by ANTLR 4.13.0
