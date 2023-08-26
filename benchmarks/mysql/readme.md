@@ -37,4 +37,4 @@ The results for the WebAssembly runtime show a mixed picture. If there were no a
 
 ## Notes on the TypeScript Runtime
 
-The existing TypeScript runtime is actually the current JavaScript runtime with a few type definitions added, and does not work out of the box. There were some changes needed, both in the type definitions and in the benchmark script, to make it work. Because node modules are usually not part of a git repository, those changes have to be documented here.
+The existing TypeScript runtime is actually the current JavaScript runtime with a few type definitions added, and does not work out of the box. There were some changes needed, both in the type definitions and in the benchmark script, to make it work. Because node modules are usually not part of a git repository, those changes have been saved as a [patch file](../antlr4%20TS%20runtime%20changes.patch).

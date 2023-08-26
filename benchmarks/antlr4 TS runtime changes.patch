@@ -1,0 +1,254 @@
+diff --git forkSrcPrefix/antlr4/src/antlr4/TokenSource.d.ts forkDstPrefix/antlr4/src/antlr4/TokenSource.d.ts
+index 909aa68377e7f5ee9b0f73054c41bbba6ce779f4..bbafaf6f53c66e677a377d8899aff40dd5c03e6c 100644
+--- forkSrcPrefix/antlr4/src/antlr4/TokenSource.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/TokenSource.d.ts
+@@ -1,3 +1,5 @@
+-export declare class TokenSource {
++import { CharStream } from "./CharStream";
+ 
++export declare class TokenSource {
++    readonly inputStream: CharStream | undefined;
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/BufferedTokenStream.d.ts forkDstPrefix/antlr4/src/antlr4/BufferedTokenStream.d.ts
+index cf53eeee5d63410e9d8d9b207f7412b427264f99..c6c1f9c08b920fdf78d8faff31b2b02c15e2ede6 100644
+--- forkSrcPrefix/antlr4/src/antlr4/BufferedTokenStream.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/BufferedTokenStream.d.ts
+@@ -5,4 +5,5 @@ export declare class BufferedTokenStream extends TokenStream {
+ 
+     tokenSource: Lexer;
+ 
++    seek(index: number): void;
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/tree/ParseTree.d.ts forkDstPrefix/antlr4/src/antlr4/tree/ParseTree.d.ts
+index bbf86c705c42b9cc3be592b8319369fdffb10032..eb57c11ce2014184fcf270db88d95d03973cce3c 100644
+--- forkSrcPrefix/antlr4/src/antlr4/tree/ParseTree.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/tree/ParseTree.d.ts
+@@ -1,5 +1,7 @@
+-import {SyntaxTree} from "./SyntaxTree";
++import { SyntaxTree } from "./SyntaxTree";
+ 
+ export declare class ParseTree extends SyntaxTree {
++    readonly parent: ParseTree | undefined;
++
+     getText(): string;
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/Parser.d.ts forkDstPrefix/antlr4/src/antlr4/Parser.d.ts
+index 0e9c932cfcb41eb75d904c2e12ed47d4493d5ce7..0bae59bca2cc21ace3a46dc9afa57c96c916f9c0 100644
+--- forkSrcPrefix/antlr4/src/antlr4/Parser.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/Parser.d.ts
+@@ -1,11 +1,11 @@
+-import {TokenStream} from "./TokenStream";
+-import {Recognizer} from "./Recognizer";
+-import {ErrorStrategy, RecognitionException} from "./error";
+-import {IntervalSet} from "./misc";
+-import {ParserATNSimulator} from "./atn";
+-import {Token} from "./Token";
+-import {ParserRuleContext} from "./context";
+-import {Printer} from "./utils";
++import { TokenStream } from "./TokenStream";
++import { Recognizer } from "./Recognizer";
++import { ErrorStrategy, RecognitionException } from "./error";
++import { IntervalSet } from "./misc";
++import { ParserATNSimulator } from "./atn";
++import { Token } from "./Token";
++import { ParserRuleContext } from "./context";
++import { Printer } from "./utils";
+ 
+ export declare class Parser extends Recognizer<Token> {
+ 
+@@ -26,8 +26,8 @@ export declare class Parser extends Recognizer<Token> {
+     matchWildcard(): Token;
+     consume(): Token;
+     enterRule(localctx: ParserRuleContext, state: number, ruleIndex: number): void;
+-    exitRule() : void;
+-    triggerExitRuleEvent() : void;
++    exitRule(): void;
++    triggerExitRuleEvent(): void;
+     enterOuterAlt(localctx: ParserRuleContext, altNum: number): void;
+     enterRecursionRule(localctx: ParserRuleContext, state: number, ruleIndex: number, precedence: number): void;
+     pushNewRecursionContext(localctx: ParserRuleContext, state: number, ruleIndex: number): void;
+@@ -41,5 +41,6 @@ export declare class Parser extends Recognizer<Token> {
+     setTokenStream(input: TokenStream): void;
+     notifyErrorListeners(msg: string, offendingToken: Token, err: RecognitionException | undefined): void;
+     getCurrentToken(): Token;
+-    
++
++    getRuleContext(): ParserRuleContext;
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/Token.d.ts forkDstPrefix/antlr4/src/antlr4/Token.d.ts
+index 33c0574a0a748a833ce0f953151f66982ff7ae23..daa40f23e8f90cabcbc96ee03f466648346dd394 100644
+--- forkSrcPrefix/antlr4/src/antlr4/Token.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/Token.d.ts
+@@ -1,4 +1,5 @@
+-import {CharStream} from "./CharStream";
++import { TokenSource } from "./TokenSource";
++import { CharStream } from "./CharStream";
+ 
+ export declare class Token {
+ 
+@@ -10,9 +11,12 @@ export declare class Token {
+     channel: number;
+     text: string;
+     type: number;
+-    start : number;
++    start: number;
+     stop: number;
+ 
++    getErrorDisplay(s: string | number): string;
++    readonly tokenSource: TokenSource | undefined;
++
+     clone(): Token;
+     cloneWithType(type: number): Token;
+     getInputStream(): CharStream;
+diff --git forkSrcPrefix/antlr4/src/antlr4/Lexer.d.ts forkDstPrefix/antlr4/src/antlr4/Lexer.d.ts
+index fe32aa7b4f269876c4d741afb3774148ea3533df..ef25363b48ccd55de781ac084119c050e6f4aa50 100644
+--- forkSrcPrefix/antlr4/src/antlr4/Lexer.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/Lexer.d.ts
+@@ -1,22 +1,30 @@
+-import {Recognizer} from "./Recognizer";
+-import {LexerATNSimulator} from "./atn";
+-import {CharStream} from "./CharStream";
+-import {Token} from "./Token";
++import { Recognizer } from "./Recognizer";
++import { LexerATNSimulator } from "./atn";
++import { CharStream } from "./CharStream";
++import { Token } from "./Token";
+ 
+ export declare class Lexer extends Recognizer<number> {
+ 
+     static DEFAULT_MODE: number;
++    static HIDDEN: number;
+ 
+     _input: CharStream;
+     _interp: LexerATNSimulator;
+     text: string;
+     line: number;
+     column: number;
++    _channel: number;
+     _tokenStartCharIndex: number;
++    _tokenStartCharPositionInLine: number;
+     _tokenStartLine: number;
+     _tokenStartColumn: number;
+     _type: number;
+ 
++    // @ts-ignore
++    protected _factory: TokenFactory;
++
++    getErrorDisplay(s: string | number): string;
++
+     constructor(input: CharStream);
+     reset(): void;
+     nextToken(): Token;
+diff --git forkSrcPrefix/antlr4/src/antlr4/misc/IntervalSet.d.ts forkDstPrefix/antlr4/src/antlr4/misc/IntervalSet.d.ts
+index f9782f77123b459e7c03f06e9d454a28dae1cfd3..be4247af6f4fc3010ec6e49053d400598b0d60c6 100644
+--- forkSrcPrefix/antlr4/src/antlr4/misc/IntervalSet.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/misc/IntervalSet.d.ts
+@@ -1,4 +1,4 @@
+-import {Interval} from "./Interval";
++import { Interval } from "./Interval";
+ 
+ export declare class IntervalSet {
+ 
+@@ -10,4 +10,9 @@ export declare class IntervalSet {
+ 
+     contains(i: number): boolean;
+     toString(literalNames?: (string | null)[], symbolicNames?: string[], elemsAreChar?: boolean): string;
++
++    remove(e: number): void;
++
++    static of(a: number, b: number): IntervalSet;
++    constructor(intervals?: Interval[]);
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/index.node.js forkDstPrefix/antlr4/src/antlr4/index.node.js
+index 6f22b4ad6c240ee3f5b9e7c6b15816e97204df71..b54aa2ccdf909f4964675d13b4e686db4403ab8c 100644
+--- forkSrcPrefix/antlr4/src/antlr4/index.node.js
++++ forkDstPrefix/antlr4/src/antlr4/index.node.js
+@@ -34,6 +34,7 @@ import RecognitionException from "./error/RecognitionException.js";
+ import FailedPredicateException from "./error/FailedPredicateException.js";
+ import NoViableAltException from "./error/NoViableAltException.js";
+ import BailErrorStrategy from "./error/BailErrorStrategy.js";
++import DefaultErrorStrategy from "./error/DefaultErrorStrategy.js";
+ import Interval from './misc/Interval.js';
+ import IntervalSet from './misc/IntervalSet.js';
+ import ParseTreeListener from "./tree/ParseTreeListener.js";
+@@ -55,6 +56,6 @@ export {
+     Token, CommonToken, CharStreams, CharStream, InputStream, FileStream, CommonTokenStream, Lexer, Parser,
+     RuleNode, TerminalNode, ParseTreeWalker, RuleContext, ParserRuleContext, Interval, IntervalSet,
+     PredictionMode, LL1Analyzer, ParseTreeListener, ParseTreeVisitor, ATN, ATNDeserializer, PredictionContextCache, LexerATNSimulator, ParserATNSimulator, DFA,
+-    RecognitionException, NoViableAltException, FailedPredicateException, ErrorListener, DiagnosticErrorListener, BailErrorStrategy,
++    RecognitionException, NoViableAltException, FailedPredicateException, ErrorListener, DiagnosticErrorListener, BailErrorStrategy, DefaultErrorStrategy,
+     arrayToString
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/TokenStream.d.ts forkDstPrefix/antlr4/src/antlr4/TokenStream.d.ts
+index 8d5042dfc4259069288b6027be515be2272d356d..f37fcf4e2756200e82a802f9d6d28620092f5558 100644
+--- forkSrcPrefix/antlr4/src/antlr4/TokenStream.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/TokenStream.d.ts
+@@ -1,8 +1,10 @@
+-import {Interval} from "./misc";
+-import {Token} from "./Token";
++import { Interval } from "./misc";
++import { Token } from "./Token";
+ 
+ export declare class TokenStream {
+ 
++    tokenSource: any;
++
+     index: number;
+     size: number;
+ 
+diff --git forkSrcPrefix/antlr4/src/antlr4/index.web.js forkDstPrefix/antlr4/src/antlr4/index.web.js
+index 0429a6689f57293dc0a85d298ed5721daf5f3979..6361803b1ef1561d20bd6a19dd4b7bac08a68687 100644
+--- forkSrcPrefix/antlr4/src/antlr4/index.web.js
++++ forkDstPrefix/antlr4/src/antlr4/index.web.js
+@@ -33,6 +33,7 @@ import RecognitionException from "./error/RecognitionException.js";
+ import FailedPredicateException from "./error/FailedPredicateException.js";
+ import NoViableAltException from "./error/NoViableAltException.js";
+ import BailErrorStrategy from "./error/BailErrorStrategy.js";
++import DefaultErrorStrategy from "./error/DefaultErrorStrategy.js";
+ import Interval from './misc/Interval.js';
+ import IntervalSet from './misc/IntervalSet.js';
+ import ParseTreeListener from "./tree/ParseTreeListener.js";
+@@ -54,6 +55,6 @@ export {
+     Token, CommonToken, CharStreams, CharStream, InputStream, CommonTokenStream, Lexer, Parser,
+     RuleNode, TerminalNode, ParseTreeWalker, RuleContext, ParserRuleContext, Interval, IntervalSet,
+     PredictionMode, LL1Analyzer, ParseTreeListener, ParseTreeVisitor, ATN, ATNDeserializer, PredictionContextCache, LexerATNSimulator, ParserATNSimulator, DFA,
+-    RecognitionException, NoViableAltException, FailedPredicateException, ErrorListener, DiagnosticErrorListener, BailErrorStrategy,
++    RecognitionException, NoViableAltException, FailedPredicateException, ErrorListener, DiagnosticErrorListener, BailErrorStrategy, DefaultErrorStrategy,
+     arrayToString
+ }
+diff --git forkSrcPrefix/antlr4/src/antlr4/context/ParserRuleContext.d.ts forkDstPrefix/antlr4/src/antlr4/context/ParserRuleContext.d.ts
+index 36353be16f496e8b91230b1d84c592421b4b9281..e56d5afbbf84c30dcc0adb0ed4486659fdbb1f64 100644
+--- forkSrcPrefix/antlr4/src/antlr4/context/ParserRuleContext.d.ts
++++ forkDstPrefix/antlr4/src/antlr4/context/ParserRuleContext.d.ts
+@@ -1,8 +1,8 @@
+-import {RuleContext} from "./RuleContext";
+-import {ParseTree, TerminalNode} from "../tree";
+-import {RecognitionException} from "../error";
+-import {Token} from "../Token";
+-import {Parser} from "../Parser";
++import { RuleContext } from "./RuleContext";
++import { ParseTree, TerminalNode } from "../tree";
++import { RecognitionException } from "../error";
++import { Token } from "../Token";
++import { Parser } from "../Parser";
+ 
+ export declare class ParserRuleContext extends RuleContext {
+     start: Token;
+@@ -14,10 +14,13 @@ export declare class ParserRuleContext extends RuleContext {
+ 
+     constructor(parent?: ParserRuleContext, invokingStateNumber?: number);
+     copyFrom(ctx: ParserRuleContext): void;
+-    getChildCount() : number;
+-    getChild(i: number) : ParseTree;
++    getChildCount(): number;
++    getChild(i: number): ParseTree;
+     getToken(ttype: number, i: number): TerminalNode;
+     getTokens(ttype: number): TerminalNode[];
+-    getTypedRuleContext<T extends ParserRuleContext, P extends Parser>(ctxType: { new (parser?: P, parent?: ParserRuleContext, invokingState?: number, ...args: any[]) : T}, i: number): T;
+-    getTypedRuleContexts<T extends ParserRuleContext, P extends Parser>(ctxType: { new (parser?: P, parent?: ParserRuleContext, invokingState?: number, ...args: any[]) : T}): T[];
++    getTypedRuleContext<T extends ParserRuleContext, P extends Parser>(ctxType: { new(parser?: P, parent?: ParserRuleContext, invokingState?: number, ...args: any[]): T; }, i: number): T;
++    getTypedRuleContexts<T extends ParserRuleContext, P extends Parser>(ctxType: { new(parser?: P, parent?: ParserRuleContext, invokingState?: number, ...args: any[]): T; }): T[];
++
++    get ruleContext(): RuleContext;
++    getRuleIndex(): number;
+ }
