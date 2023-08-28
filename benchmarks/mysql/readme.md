@@ -4,10 +4,10 @@
 
 | Runtime | Query Collection Cold | Query Collection Warm | ratio | Large (Binary) Inserts Cold | Large (Binary) Inserts Warm | ratio |
 | ------- | --------------------- | --------------------- | ------| --------------------------- | --------------------------- | ----- |
-| C++| 3.96s | 0.437s | 1.0 | 13.2s | 12.2s | 1.0 |
-| WebAssembly | 6.17s | 1.77s | 4.05 | 56.5s | 60s | 4.93 |
-| antlr4-ts | 12.3s | 0.84s | 1.9 | 44.85s | 43.6s | 3.57 |
-| JavaScript | 72.5s | 5.2s | 11.9 | 248.9s | 250.2s | 20.5 |
+| C++| 1.04s | 0.099s | 1.0 | 3.62s | 3.6s | 1.0 |
+| WebAssembly | 6.17s | 1.77s | 17.9 | 56.5s | 60s | 16.7 |
+| antlr4ts | 12.3s | 0.84s | 8.5 | 44.85s | 43.6s | 12.1 |
+| JavaScript | 10.3s | 0.25s | 2.5 | 10.7s | 10.2s | 2.83 |
 
 ### Notes on the Benchmarks
 
@@ -23,7 +23,7 @@ The C++ runtime is the fastest, as expected, but antlr4ts is pretty close, given
 
 The JavaScript target is orders of magnitudes slower than the C++ target. Also this is an expected result. Compare this to antlr4ts to see how much that is optimized.
 
-The results for the WebAssembly runtime show a mixed picture. If there were no antlr4ts then the results would be pretty good (3 times faster for the query collection and 4 times faster for the large binary inserts). Note: we are looking here only at the results produces with warm runtimes, that is, the internal structures for prediction have been created.
+The results for the WebAssembly runtime show a mixed picture. If there were no antlr4ts then the results would be pretty good (3 times faster for the query collection and 4 times faster for the large binary inserts). Note: we are looking here only at the results produced with warm runtimes, that is, the internal structures for prediction have been created.
 
 But on the other hand the WebAssembly version should operate close to the C++ speed, which is not the case, particularly for the large insert data. What's also not visible here is that the memory consumption of the WebAssembly version is very high and indicates some memory leaks. Fixing them is the next step in the development. Another point here is that the warm run for the WebAssembly version is actually slower than the cold one, which is a pretty surprising result, but might have to do with the high memory pressure.
 

@@ -26,14 +26,8 @@
 
 /* cspell: disable */
 
-import { SqlMode } from "./MySQLRecognizerCommon.js";
-
-
 // Generated from MySQLParser.g4 by ANTLR 4.13.0
-
 
 #include "MySQLParserVisitor.h"
 
-
-using namespace antlr4;
-
+using namespace parsers;

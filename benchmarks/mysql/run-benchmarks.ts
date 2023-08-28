@@ -206,7 +206,7 @@ const parserRun = (useWasm: boolean) => {
     }
 };
 
-console.log("Starting MySQL benchmarks");
+console.log("Starting MySQL wasm + JS/TS benchmarks");
 let timestamp = performance.now();
 
 // Splitter tests compare statement separation in JS vs. WASM.
@@ -229,6 +229,10 @@ console.log("Running antlr4 JS parser (cold) ...");
 parserRun(false);
 
 console.log("Running antlr4 JS parser (warm) ...");
+parserRun(false);
+parserRun(false);
+parserRun(false);
+parserRun(false);
 parserRun(false);
 
 console.log("Done");

@@ -7,7 +7,8 @@
                 "/opt/homebrew/Cellar/emscripten/3.1.44/libexec/system/include"
             ],
             "defines": [
-                "__EMSCRIPTEN__"
+                "__EMSCRIPTEN__",
+                "PARSERS_PUBLIC_TYPE="
             ],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"

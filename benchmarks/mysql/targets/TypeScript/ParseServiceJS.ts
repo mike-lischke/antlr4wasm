@@ -4,7 +4,7 @@
  */
 
 import {
-    CommonTokenStream, CharStreams, ParseTree, BailErrorStrategy, PredictionMode, ErrorStrategy,
+    CommonTokenStream, CharStreams, ParseTree, BailErrorStrategy, PredictionMode, ErrorStrategy, ParserRuleContext,
     //DefaultErrorStrategy
 } from "antlr4";
 
@@ -114,6 +114,7 @@ export class ParseServiceJS {
 
         try {
             this.tree = parser.query();
+            //console.log((this.tree as ParserRuleContext).toStringTree(parser.ruleNames, parser));
         } catch (e) {
             if (this.isCancellationException(e)) {
                 // Even in fast mode we have to do a second run if we got no error yet (BailErrorStrategy

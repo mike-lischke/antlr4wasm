@@ -26,30 +26,24 @@
 
 /* cspell: disable */
 
-import { SqlMode } from "./MySQLRecognizerCommon.js";
-
-
 // Generated from MySQLParser.g4 by ANTLR 4.13.0
 
 #pragma once
 
-
 #include "antlr4-runtime.h"
 #include "MySQLParser.h"
 
-
-namespace antlr4 {
-
-/**
- * This class defines an abstract visitor for a parse tree
- * produced by MySQLParser.
- */
-class PARSERS_PUBLIC_TYPE MySQLParserVisitor : public antlr4::tree::AbstractParseTreeVisitor {
-public:
+namespace parsers {
 
   /**
-   * Visit parse trees produced by MySQLParser.
+   * This class defines an abstract visitor for a parse tree
+   * produced by MySQLParser.
    */
+  class PARSERS_PUBLIC_TYPE MySQLParserVisitor : public antlr4::tree::AbstractParseTreeVisitor {
+  public:
+    /**
+     * Visit parse trees produced by MySQLParser.
+     */
     virtual std::any visitQuery(MySQLParser::QueryContext *context) = 0;
 
     virtual std::any visitSimpleStatement(MySQLParser::SimpleStatementContext *context) = 0;
@@ -148,7 +142,8 @@ public:
 
     virtual std::any visitQueryExpressionOrParens(MySQLParser::QueryExpressionOrParensContext *context) = 0;
 
-    virtual std::any visitQueryExpressionWithOptLockingClauses(MySQLParser::QueryExpressionWithOptLockingClausesContext *context) = 0;
+    virtual std::any visitQueryExpressionWithOptLockingClauses(
+      MySQLParser::QueryExpressionWithOptLockingClausesContext *context) = 0;
 
     virtual std::any visitCreateRoutine(MySQLParser::CreateRoutineContext *context) = 0;
 
@@ -518,7 +513,8 @@ public:
 
     virtual std::any visitSourceDefinition(MySQLParser::SourceDefinitionContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceAutoPosition(MySQLParser::ChangeReplicationSourceAutoPositionContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceAutoPosition(
+      MySQLParser::ChangeReplicationSourceAutoPositionContext *context) = 0;
 
     virtual std::any visitChangeReplicationSourceHost(MySQLParser::ChangeReplicationSourceHostContext *context) = 0;
 
@@ -526,13 +522,16 @@ public:
 
     virtual std::any visitChangeReplicationSourceUser(MySQLParser::ChangeReplicationSourceUserContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourcePassword(MySQLParser::ChangeReplicationSourcePasswordContext *context) = 0;
+    virtual std::any visitChangeReplicationSourcePassword(
+      MySQLParser::ChangeReplicationSourcePasswordContext *context) = 0;
 
     virtual std::any visitChangeReplicationSourcePort(MySQLParser::ChangeReplicationSourcePortContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceConnectRetry(MySQLParser::ChangeReplicationSourceConnectRetryContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceConnectRetry(
+      MySQLParser::ChangeReplicationSourceConnectRetryContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceRetryCount(MySQLParser::ChangeReplicationSourceRetryCountContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceRetryCount(
+      MySQLParser::ChangeReplicationSourceRetryCountContext *context) = 0;
 
     virtual std::any visitChangeReplicationSourceDelay(MySQLParser::ChangeReplicationSourceDelayContext *context) = 0;
 
@@ -540,39 +539,52 @@ public:
 
     virtual std::any visitChangeReplicationSourceSSLCA(MySQLParser::ChangeReplicationSourceSSLCAContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceSSLCApath(MySQLParser::ChangeReplicationSourceSSLCApathContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceSSLCApath(
+      MySQLParser::ChangeReplicationSourceSSLCApathContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceSSLCipher(MySQLParser::ChangeReplicationSourceSSLCipherContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceSSLCipher(
+      MySQLParser::ChangeReplicationSourceSSLCipherContext *context) = 0;
 
     virtual std::any visitChangeReplicationSourceSSLCLR(MySQLParser::ChangeReplicationSourceSSLCLRContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceSSLCLRpath(MySQLParser::ChangeReplicationSourceSSLCLRpathContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceSSLCLRpath(
+      MySQLParser::ChangeReplicationSourceSSLCLRpathContext *context) = 0;
 
     virtual std::any visitChangeReplicationSourceSSLKey(MySQLParser::ChangeReplicationSourceSSLKeyContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceSSLVerifyServerCert(MySQLParser::ChangeReplicationSourceSSLVerifyServerCertContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceSSLVerifyServerCert(
+      MySQLParser::ChangeReplicationSourceSSLVerifyServerCertContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceTLSVersion(MySQLParser::ChangeReplicationSourceTLSVersionContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceTLSVersion(
+      MySQLParser::ChangeReplicationSourceTLSVersionContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceTLSCiphersuites(MySQLParser::ChangeReplicationSourceTLSCiphersuitesContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceTLSCiphersuites(
+      MySQLParser::ChangeReplicationSourceTLSCiphersuitesContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceSSLCert(MySQLParser::ChangeReplicationSourceSSLCertContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceSSLCert(
+      MySQLParser::ChangeReplicationSourceSSLCertContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourcePublicKey(MySQLParser::ChangeReplicationSourcePublicKeyContext *context) = 0;
+    virtual std::any visitChangeReplicationSourcePublicKey(
+      MySQLParser::ChangeReplicationSourcePublicKeyContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceGetSourcePublicKey(MySQLParser::ChangeReplicationSourceGetSourcePublicKeyContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceGetSourcePublicKey(
+      MySQLParser::ChangeReplicationSourceGetSourcePublicKeyContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceHeartbeatPeriod(MySQLParser::ChangeReplicationSourceHeartbeatPeriodContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceHeartbeatPeriod(
+      MySQLParser::ChangeReplicationSourceHeartbeatPeriodContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceCompressionAlgorithm(MySQLParser::ChangeReplicationSourceCompressionAlgorithmContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceCompressionAlgorithm(
+      MySQLParser::ChangeReplicationSourceCompressionAlgorithmContext *context) = 0;
 
-    virtual std::any visitChangeReplicationSourceZstdCompressionLevel(MySQLParser::ChangeReplicationSourceZstdCompressionLevelContext *context) = 0;
+    virtual std::any visitChangeReplicationSourceZstdCompressionLevel(
+      MySQLParser::ChangeReplicationSourceZstdCompressionLevelContext *context) = 0;
 
     virtual std::any visitPrivilegeCheckDef(MySQLParser::PrivilegeCheckDefContext *context) = 0;
 
     virtual std::any visitTablePrimaryKeyCheckDef(MySQLParser::TablePrimaryKeyCheckDefContext *context) = 0;
 
-    virtual std::any visitAssignGtidsToAnonymousTransactionsDefinition(MySQLParser::AssignGtidsToAnonymousTransactionsDefinitionContext *context) = 0;
+    virtual std::any visitAssignGtidsToAnonymousTransactionsDefinition(
+      MySQLParser::AssignGtidsToAnonymousTransactionsDefinitionContext *context) = 0;
 
     virtual std::any visitSourceTlsCiphersuitesDef(MySQLParser::SourceTlsCiphersuitesDefContext *context) = 0;
 
@@ -666,7 +678,8 @@ public:
 
     virtual std::any visitConnectOptions(MySQLParser::ConnectOptionsContext *context) = 0;
 
-    virtual std::any visitAccountLockPasswordExpireOptions(MySQLParser::AccountLockPasswordExpireOptionsContext *context) = 0;
+    virtual std::any visitAccountLockPasswordExpireOptions(
+      MySQLParser::AccountLockPasswordExpireOptionsContext *context) = 0;
 
     virtual std::any visitUserAttribute(MySQLParser::UserAttributeContext *context) = 0;
 
@@ -738,9 +751,11 @@ public:
 
     virtual std::any visitSetSystemVariable(MySQLParser::SetSystemVariableContext *context) = 0;
 
-    virtual std::any visitStartOptionValueListFollowingOptionType(MySQLParser::StartOptionValueListFollowingOptionTypeContext *context) = 0;
+    virtual std::any visitStartOptionValueListFollowingOptionType(
+      MySQLParser::StartOptionValueListFollowingOptionTypeContext *context) = 0;
 
-    virtual std::any visitOptionValueFollowingOptionType(MySQLParser::OptionValueFollowingOptionTypeContext *context) = 0;
+    virtual std::any visitOptionValueFollowingOptionType(
+      MySQLParser::OptionValueFollowingOptionTypeContext *context) = 0;
 
     virtual std::any visitSetExprOrDefault(MySQLParser::SetExprOrDefaultContext *context) = 0;
 
@@ -820,13 +835,17 @@ public:
 
     virtual std::any visitShowCreateTriggerStatement(MySQLParser::ShowCreateTriggerStatementContext *context) = 0;
 
-    virtual std::any visitShowCreateProcedureStatusStatement(MySQLParser::ShowCreateProcedureStatusStatementContext *context) = 0;
+    virtual std::any visitShowCreateProcedureStatusStatement(
+      MySQLParser::ShowCreateProcedureStatusStatementContext *context) = 0;
 
-    virtual std::any visitShowCreateFunctionStatusStatement(MySQLParser::ShowCreateFunctionStatusStatementContext *context) = 0;
+    virtual std::any visitShowCreateFunctionStatusStatement(
+      MySQLParser::ShowCreateFunctionStatusStatementContext *context) = 0;
 
-    virtual std::any visitShowCreateProcedureCodeStatement(MySQLParser::ShowCreateProcedureCodeStatementContext *context) = 0;
+    virtual std::any visitShowCreateProcedureCodeStatement(
+      MySQLParser::ShowCreateProcedureCodeStatementContext *context) = 0;
 
-    virtual std::any visitShowCreateFunctionCodeStatement(MySQLParser::ShowCreateFunctionCodeStatementContext *context) = 0;
+    virtual std::any visitShowCreateFunctionCodeStatement(
+      MySQLParser::ShowCreateFunctionCodeStatementContext *context) = 0;
 
     virtual std::any visitShowCreateEventStatement(MySQLParser::ShowCreateEventStatementContext *context) = 0;
 
@@ -982,7 +1001,8 @@ public:
 
     virtual std::any visitSimpleExprValues(MySQLParser::SimpleExprValuesContext *context) = 0;
 
-    virtual std::any visitSimpleExprUserVariableAssignment(MySQLParser::SimpleExprUserVariableAssignmentContext *context) = 0;
+    virtual std::any visitSimpleExprUserVariableAssignment(
+      MySQLParser::SimpleExprUserVariableAssignmentContext *context) = 0;
 
     virtual std::any visitSimpleExprDefault(MySQLParser::SimpleExprDefaultContext *context) = 0;
 
@@ -1054,7 +1074,8 @@ public:
 
     virtual std::any visitUserVariable(MySQLParser::UserVariableContext *context) = 0;
 
-    virtual std::any visitInExpressionUserVariableAssignment(MySQLParser::InExpressionUserVariableAssignmentContext *context) = 0;
+    virtual std::any visitInExpressionUserVariableAssignment(
+      MySQLParser::InExpressionUserVariableAssignmentContext *context) = 0;
 
     virtual std::any visitRvalueSystemOrUserVariable(MySQLParser::RvalueSystemOrUserVariableContext *context) = 0;
 
@@ -1264,7 +1285,8 @@ public:
 
     virtual std::any visitCreatePartitioningEtc(MySQLParser::CreatePartitioningEtcContext *context) = 0;
 
-    virtual std::any visitCreateTableOptionsSpaceSeparated(MySQLParser::CreateTableOptionsSpaceSeparatedContext *context) = 0;
+    virtual std::any visitCreateTableOptionsSpaceSeparated(
+      MySQLParser::CreateTableOptionsSpaceSeparatedContext *context) = 0;
 
     virtual std::any visitCreateTableOption(MySQLParser::CreateTableOptionContext *context) = 0;
 
@@ -1354,9 +1376,11 @@ public:
 
     virtual std::any visitIdentifiedWithPluginAsAuth(MySQLParser::IdentifiedWithPluginAsAuthContext *context) = 0;
 
-    virtual std::any visitIdentifiedWithPluginByPassword(MySQLParser::IdentifiedWithPluginByPasswordContext *context) = 0;
+    virtual std::any visitIdentifiedWithPluginByPassword(
+      MySQLParser::IdentifiedWithPluginByPasswordContext *context) = 0;
 
-    virtual std::any visitIdentifiedWithPluginByRandomPassword(MySQLParser::IdentifiedWithPluginByRandomPasswordContext *context) = 0;
+    virtual std::any visitIdentifiedWithPluginByRandomPassword(
+      MySQLParser::IdentifiedWithPluginByRandomPasswordContext *context) = 0;
 
     virtual std::any visitInitialAuth(MySQLParser::InitialAuthContext *context) = 0;
 
@@ -1554,13 +1578,16 @@ public:
 
     virtual std::any visitIdentifierKeyword(MySQLParser::IdentifierKeywordContext *context) = 0;
 
-    virtual std::any visitIdentifierKeywordsAmbiguous1RolesAndLabels(MySQLParser::IdentifierKeywordsAmbiguous1RolesAndLabelsContext *context) = 0;
+    virtual std::any visitIdentifierKeywordsAmbiguous1RolesAndLabels(
+      MySQLParser::IdentifierKeywordsAmbiguous1RolesAndLabelsContext *context) = 0;
 
-    virtual std::any visitIdentifierKeywordsAmbiguous2Labels(MySQLParser::IdentifierKeywordsAmbiguous2LabelsContext *context) = 0;
+    virtual std::any visitIdentifierKeywordsAmbiguous2Labels(
+      MySQLParser::IdentifierKeywordsAmbiguous2LabelsContext *context) = 0;
 
     virtual std::any visitLabelKeyword(MySQLParser::LabelKeywordContext *context) = 0;
 
-    virtual std::any visitIdentifierKeywordsAmbiguous3Roles(MySQLParser::IdentifierKeywordsAmbiguous3RolesContext *context) = 0;
+    virtual std::any visitIdentifierKeywordsAmbiguous3Roles(
+      MySQLParser::IdentifierKeywordsAmbiguous3RolesContext *context) = 0;
 
     virtual std::any visitIdentifierKeywordsUnambiguous(MySQLParser::IdentifierKeywordsUnambiguousContext *context) = 0;
 
@@ -1568,13 +1595,12 @@ public:
 
     virtual std::any visitLValueKeyword(MySQLParser::LValueKeywordContext *context) = 0;
 
-    virtual std::any visitIdentifierKeywordsAmbiguous4SystemVariables(MySQLParser::IdentifierKeywordsAmbiguous4SystemVariablesContext *context) = 0;
+    virtual std::any visitIdentifierKeywordsAmbiguous4SystemVariables(
+      MySQLParser::IdentifierKeywordsAmbiguous4SystemVariablesContext *context) = 0;
 
     virtual std::any visitRoleOrIdentifierKeyword(MySQLParser::RoleOrIdentifierKeywordContext *context) = 0;
 
     virtual std::any visitRoleOrLabelKeyword(MySQLParser::RoleOrLabelKeywordContext *context) = 0;
+  };
 
-
-};
-
-}  // namespace antlr4
+} // namespace parsers

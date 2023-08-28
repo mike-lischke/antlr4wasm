@@ -1,7 +1,7 @@
 # Generates the MySQL parser + lexer files for the benchmarks.
 
 java -jar ../../antlr/antlr4-4.13.1-SNAPSHOT-complete.jar \
-    -Dlanguage=Cpp -o ./targets/cpp -visitor -listener -package antlr4 -Xexact-output-dir -Werror \
+    -Dlanguage=Cpp -o ./targets/cpp -visitor -listener -package parsers -Xexact-output-dir -Werror \
     MySQLLexer.g4 MySQLParser.g4
 
 java -jar ../../antlr/antlr4-4.13.1-SNAPSHOT-complete.jar \

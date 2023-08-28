@@ -74,6 +74,8 @@
         "concepts": "cpp",
         "algorithm": "cpp",
         "filesystem": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "list": "cpp",
+        "regex": "cpp"
     }
 }
