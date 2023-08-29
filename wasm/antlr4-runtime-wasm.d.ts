@@ -22,6 +22,7 @@ export declare interface Vector<T> {
 
 export declare class Deletable {
     public delete(): void;
+    public deleteLater(): void;
     public clone(): this;
 }
 
@@ -83,7 +84,7 @@ export declare abstract class ANTLRErrorListener extends Extendable {
         prediction: number, configs: ATNConfigSet): void;
 }
 
-export declare abstract class ANTLRErrorStrategy extends Deletable {
+export declare abstract class ANTLRErrorStrategy extends Extendable {
     /**
      * Reset the error handler state for the specified `recognizer`.
      *
@@ -2485,6 +2486,8 @@ export declare abstract class TerminalNode extends ParseTree {
 
 /** This is the complete ANTLR4 WASM module definition. */
 export declare interface ANTLR4Wasm extends EmscriptenModule {
+    flushPendingDeletes(): void;
+
     // Exception handling
     std$$exception: typeof std$$exception;
 

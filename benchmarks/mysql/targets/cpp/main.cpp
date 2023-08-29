@@ -32,7 +32,9 @@ static const std::vector<TestFile> testFiles = {
   //{ "nasty_tables.sql", "\r\n", ";" },
 
   // Not so many, but some very long insert statements.
-  { "sakila-db/sakila-data.sql", "\n", ";" }
+  { "sakila-db/sakila-data.sql", "\n", ";" },
+
+  { "bitrix_queries_cut.sql", "\n", ";" }
 };
 
 /**

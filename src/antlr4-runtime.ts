@@ -12,6 +12,8 @@ try {
     throw new Error("Could not initialize the ANTLR4 runtime:\n" + e);
 }
 
+const flushPendingDeletes = antlr4.flushPendingDeletes;
+
 const std$$exception = antlr4["std$$exception"];
 
 type StringVector = InstanceType<typeof antlr4.StringVector>;
@@ -236,6 +238,8 @@ type TerminalNode = InstanceType<typeof antlr4.TerminalNode>;
 const TerminalNode = antlr4.TerminalNode;
 
 export {
+    flushPendingDeletes,
+
     type Vector,
 
     std$$exception,

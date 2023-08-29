@@ -138,6 +138,10 @@ const parseFiles = (useWasm: boolean) => {
         // Large set of all possible query types in different combinations and versions.
         { name: "./data/statements.txt", initialDelimiter: "$$" },
 
+        // The largest of the example files from the grammar repository:
+        // (https://github.com/antlr/grammars-v4/tree/master/sql/mysql/Positive-Technologies/examples)
+        //{ name: "./data/bitrix_queries_cut.sql", initialDelimiter: ";" },
+
         // Not so many, but some very long insert statements.
         { name: "./data/sakila-db/sakila-data.sql", initialDelimiter: ";" },
     ];
@@ -213,7 +217,6 @@ let timestamp = performance.now();
 splitterTest();
 
 console.log("Splitter tests took " + (performance.now() - timestamp) + " ms");
-timestamp = performance.now();
 
 console.log("Running antlr4wasm parser (cold) ...");
 parserRun(true);
@@ -222,8 +225,6 @@ console.log("Running antlr4wasm parser (warm) ...");
 parserRun(true);
 
 wasmService.cleanup();
-
-timestamp = performance.now();
 
 console.log("Running antlr4 JS parser (cold) ...");
 parserRun(false);

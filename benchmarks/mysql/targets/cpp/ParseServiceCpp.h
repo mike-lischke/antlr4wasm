@@ -29,7 +29,8 @@ public:
   std::string lastErrors;
 
   virtual void syntaxError(antlr4::Recognizer *recognizer, antlr4::Token *offendingSymbol, size_t line,
-                           size_t charPositionInLine, const std::string &msg, std::exception_ptr e) override {
+                           size_t charPositionInLine, const std::string &msg,
+                           const antlr4::RecognitionException &e) override {
     // Here we use the message provided by the DefaultErrorStrategy class.
     if (!lastErrors.empty())
       lastErrors += "\n";

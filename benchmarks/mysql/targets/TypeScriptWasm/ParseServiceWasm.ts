@@ -4,7 +4,9 @@
  */
 
 import {
-    ANTLRInputStream, BailErrorStrategy, CommonTokenStream, DefaultErrorStrategy, ParseTree, PredictionMode,
+    ANTLRInputStream, BailErrorStrategy as BES, CommonTokenStream, DefaultErrorStrategy, ParseTree, Parser,
+    PredictionMode,
+    flushPendingDeletes,
 } from "../../../../src/antlr4-runtime.js";
 import { MySQLErrorListener } from "./MySQLErrorListener.js";
 
@@ -12,6 +14,12 @@ import MySQLLexer from "./MySQLLexer.js";
 import MySQLParser from "./MySQLParser.js";
 import { IParserErrorInfo, IStatementSpan, MySQLParseUnit } from "../../helpers.js";
 
+const BailErrorStrategy = BES.extend<BES>("BailErrorStrategy", {});
+type BailErrorStrategy = InstanceType<typeof BailErrorStrategy>;
+
+class SimpleBailErrorStrategy extends BailErrorStrategy {
+    public override sync(recognizer: Parser): void { }
+}
 
 export class ParseServiceWasm {
     private stream = new ANTLRInputStream();
@@ -128,7 +136,7 @@ export class ParseServiceWasm {
 
         // First parse with the bail error strategy to get quick feedback for correct queries.
         // Note: there's no need to delete the strategy instance. The error handler will take care.
-        this.parser.setErrorHandler(new BailErrorStrategy());
+        this.parser.setErrorHandler(new SimpleBailErrorStrategy());
         this.parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 
         try {
@@ -153,6 +161,8 @@ export class ParseServiceWasm {
                 throw e;
             }
         }
+
+        flushPendingDeletes();
 
         return this.tree;
     }

@@ -16,6 +16,7 @@ em++ \
     -s WASM=1\
     -s WASM_BIGINT=1\
     -s ALLOW_MEMORY_GROWTH=1\
-    -s ASSERTIONS\
-    -fexceptions\
-    -g
+    -s FILESYSTEM=0\
+    -s MODULARIZE\
+    -flto\
+    -fexceptions

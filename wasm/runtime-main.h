@@ -98,6 +98,14 @@ public:
   }
 };
 
+class BailErrorStrategyWrapper : public wrapper<BailErrorStrategy> {
+public:
+  EMSCRIPTEN_WRAPPER(BailErrorStrategyWrapper);
+
+  virtual ~BailErrorStrategyWrapper() noexcept override {
+  }
+};
+
 class CharStreamWrapper : public wrapper<CharStream> {
 public:
   EMSCRIPTEN_WRAPPER(CharStreamWrapper);
@@ -360,6 +368,26 @@ public:
 
   virtual const atn::ATN &getATN() const override {
     return call<const atn::ATN &>("getATN");
+  }
+
+  virtual void setInputStream(IntStream *input) override {
+    call<void>("setInputStream", input);
+  }
+
+  virtual atn::SerializedATNView getSerializedATN() const override {
+    return call<atn::SerializedATNView>("getSerializedATN");
+  }
+
+  virtual bool sempred(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    return call<bool>("sempred", localctx, ruleIndex, actionIndex);
+  }
+
+  virtual bool precpred(RuleContext *localctx, int precedence) override {
+    return call<bool>("precpred", localctx, precedence);
+  }
+
+  virtual void action(RuleContext *localctx, size_t ruleIndex, size_t actionIndex) override {
+    call<void>("action", localctx, ruleIndex, actionIndex);
   }
 };
 
@@ -777,7 +805,9 @@ EMSCRIPTEN_BINDINGS(main1) {
               allow_raw_pointers())
 
     .function("recoverInline", &BailErrorStrategy::recoverInline, allow_raw_pointers(), allow_raw_pointer<Token *>())
-    .function("sync", &BailErrorStrategy::sync, allow_raw_pointers());
+    .function("sync", &BailErrorStrategy::sync, allow_raw_pointers())
+    .allow_subclass<BailErrorStrategyWrapper>("BailErrorStrategyWrapper");
+  ;
 
   class_<BaseErrorListener, base<ANTLRErrorListener>>("BaseErrorListener")
     .function("syntaxError", &BaseErrorListener::syntaxError, allow_raw_pointers())
