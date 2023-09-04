@@ -2,6 +2,12 @@
 
 This projects realizes a WebAssembly target for ANTLR4. It is based on the [ANTLR4 C++ target](https://github.com/antlr/antlr4/tree/dev/runtime/Cpp) and currently in an early stage and not ready for production use.
 
+## Status
+
+This project is on hold now, as it did not provide the expected results (see the [benchmark readme](benchmarks/mysql/readme.md) for more details). As it turned out the JavaScript/TypeScript runtime which already exists in the ANTLR4 repository is much faster than the WebAssembly runtime. So the focus will be on improving the existing runtime instead of continuing this project.
+
+A potential improvement of the wasm version is probably to also generate the parser/lexer files in the target language and compile all of that as a whole to WebAssembly. But then you need to have the full emscripten setup on your machine, which to avoid was one of the main goals of this project.
+
 ## Build
 
 To build the wasm module, you need to have the [Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html) installed. Then you can build the module with:

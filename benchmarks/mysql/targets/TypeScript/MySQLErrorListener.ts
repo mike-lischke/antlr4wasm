@@ -30,7 +30,8 @@ import MySQLLexer from "./MySQLLexer.js";
 import { ErrorReportCallback } from "../../helpers.js";
 import {
     ATNConfigSet, ErrorListener, FailedPredicateException, IntervalSet,
-    NoViableAltException, Parser, ParserRuleContext, RecognitionException, Recognizer, Token
+    LexerATNSimulator,
+    NoViableAltException, Parser, ParserATNSimulator, ParserRuleContext, RecognitionException, Recognizer, Token
 } from "antlr4";
 
 class BitSet {
@@ -48,7 +49,7 @@ class LexerNoViableAltException extends RecognitionException {
 class InputMismatchException extends RecognitionException {
 }
 
-export class MySQLErrorListener extends ErrorListener<number> {
+export class MySQLErrorListener extends ErrorListener<ParserATNSimulator | LexerATNSimulator> {
 
     private static simpleRules: Set<number> = new Set([
         MySQLParser.RULE_identifier,
@@ -99,8 +100,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
         super();
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public override syntaxError<T extends Token | number>(recognizer: Recognizer<any>, offendingSymbol: T | null,
+    public override syntaxError<T>(recognizer: Recognizer<ParserATNSimulator | LexerATNSimulator>, offendingSymbol: T | null,
         line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
 
         let message = "";
@@ -108,7 +108,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
         // If not undefined then offendingSymbol is of type Token.
         if (offendingSymbol) {
             // Need to clone the symbol to avoid releasing the original token prematurely.
-            let token = offendingSymbol as Token;
+            let token = offendingSymbol as unknown as Token;
 
             const parser = recognizer as MySQLParser;
             const lexer = parser._input.tokenSource as MySQLBaseLexer;
@@ -140,7 +140,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
             if (invalidForVersion) {
                 // The expected tokens set is read-only, so make a copy.
                 expected = new IntervalSet(expected.intervals);
-                expected.remove(tokenType);
+                expected.removeOne(tokenType);
             }
 
             // Try to find the expected input by examining the current parser context and
@@ -149,12 +149,12 @@ export class MySQLErrorListener extends ErrorListener<number> {
             let expectedText = "";
 
             // Walk up from generic rules to reach something that gives us more context, if needed.
-            let context = parser.getRuleContext();
-            while (MySQLErrorListener.simpleRules.has(context.getRuleIndex()) && context.parentCtx) {
+            let context = parser._ctx;
+            while (MySQLErrorListener.simpleRules.has(context.ruleIndex) && context.parentCtx) {
                 context = context.parentCtx as ParserRuleContext;
             }
 
-            switch (context.getRuleIndex()) {
+            switch (context.ruleIndex) {
                 case MySQLParser.RULE_functionCall:
                     expectedText = "a complete function call or other expression";
                     break;
@@ -180,7 +180,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
                 case MySQLParser.RULE_labelIdentifier:
                 case MySQLParser.RULE_roleIdentifier:
                 case MySQLParser.RULE_windowName: {
-                    const name = MySQLErrorListener.objectNames.get(context.getRuleIndex());
+                    const name = MySQLErrorListener.objectNames.get(context.ruleIndex);
                     if (!name) {
                         expectedText = "a new object name";
                     } else {
@@ -208,7 +208,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
                 case MySQLParser.RULE_pluginRef:
                 case MySQLParser.RULE_componentRef:
                 case MySQLParser.RULE_resourceGroupRef: {
-                    const name = MySQLErrorListener.objectNames.get(context.getRuleIndex());
+                    const name = MySQLErrorListener.objectNames.get(context.ruleIndex);
                     if (!name) {
                         expectedText = "the name of an existing object";
                     } else {
@@ -244,7 +244,7 @@ export class MySQLErrorListener extends ErrorListener<number> {
             if (!e) {
                 // Missing or unwanted tokens.
                 if (msg.includes("missing")) {
-                    if (expected.size === 1) {
+                    if (expected.length === 1) {
                         message = "Missing " + expectedText;
                     }
                 } else {
@@ -330,18 +330,6 @@ export class MySQLErrorListener extends ErrorListener<number> {
 
             }
         }
-    }
-
-    public reportAmbiguity(recognizer: Parser, startIndex: number, stopIndex: number, exact: boolean,
-        ambigAlts: BitSet, configs: ATNConfigSet): void {
-    }
-
-    public reportAttemptingFullContext(recognizer: Parser, startIndex: number, stopIndex: number,
-        conflictingAlts: BitSet, configs: ATNConfigSet): void {
-    }
-
-    public reportContextSensitivity(recognizer: Parser, startIndex: number, stopIndex: number,
-        prediction: number, configs: ATNConfigSet): void {
     }
 
     private intervalToString(set: IntervalSet, maxCount: number, vocabulary: Vocabulary): string {

@@ -146,19 +146,19 @@ export const sourceTextForRange = (start: Token | ParseTree, stop: Token | Parse
 
     const isToken = (start as Token).type !== undefined;
 
-    let startToken = start as Token;
+    let startToken: Token | null = start as Token;
     if (!isToken) {
         startToken = (start instanceof TerminalNode) ? start.symbol : (start as ParserRuleContext).start;
     }
 
-    let stopToken = stop as Token;
+    let stopToken: Token | null = stop as Token;
     if (!isToken) { // start + stop must either both Token or ParseTree instances.
         stopToken = (stop instanceof TerminalNode) ? stop.symbol : (stop as ParserRuleContext).start;
     }
 
-    const stream = startToken.tokenSource?.inputStream;
-    const stopIndex = stop ? stopToken.stop : 1e100;
-    let result = stream?.getText(startToken.start, stopIndex) || "";
+    const stream = startToken?.tokenSource?.inputStream;
+    const stopIndex = stop && stopToken ? stopToken.stop : 1e100;
+    let result = stream?.getText(startToken!.start, stopIndex) || "";
     if (keepQuotes || result.length < 2) {
         return result;
     }
@@ -185,5 +185,5 @@ export const sourceTextForRange = (start: Token | ParseTree, stop: Token | Parse
  * @returns The original source text.
  */
 export const sourceTextForContext = (ctx: ParserRuleContext, keepQuotes: boolean): string => {
-    return sourceTextForRange(ctx.start, ctx.stop, keepQuotes);
+    return sourceTextForRange(ctx.start!, ctx.stop!, keepQuotes);
 };

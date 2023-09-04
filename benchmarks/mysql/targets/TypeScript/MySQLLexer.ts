@@ -9,7 +9,8 @@ import {
     LexerATNSimulator,
     RuleContext,
     PredictionContextCache,
-    Token
+    Token,
+    Vocabulary
 } from "antlr4";
 /*
  * Copyright (c) 2020, 2022, Oracle and/or its affiliates.
@@ -7480,6 +7481,11 @@ export default class MySQLLexer extends MySQLBaseLexer {
         return MySQLLexer.__ATN;
     }
 
+    private static readonly vocabulary = new Vocabulary(MySQLLexer.literalNames, MySQLLexer.symbolicNames, []);
+
+    public override getVocabulary(): Vocabulary {
+        return MySQLLexer.vocabulary;
+    }
 
     static DecisionsToDFA = MySQLLexer._ATN.decisionToState.map((ds: DecisionState, index: number) => new DFA(ds, index));
 }

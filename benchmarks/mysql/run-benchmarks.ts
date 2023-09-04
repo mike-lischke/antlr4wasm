@@ -218,11 +218,11 @@ splitterTest();
 
 console.log("Splitter tests took " + (performance.now() - timestamp) + " ms");
 
-console.log("Running antlr4wasm parser (cold) ...");
+/*console.log("Running antlr4wasm parser (cold) ...");
 parserRun(true);
 
 console.log("Running antlr4wasm parser (warm) ...");
-parserRun(true);
+parserRun(true);*/
 
 wasmService.cleanup();
 
@@ -230,10 +230,6 @@ console.log("Running antlr4 JS parser (cold) ...");
 parserRun(false);
 
 console.log("Running antlr4 JS parser (warm) ...");
-parserRun(false);
-parserRun(false);
-parserRun(false);
-parserRun(false);
 parserRun(false);
 
 console.log("Done");

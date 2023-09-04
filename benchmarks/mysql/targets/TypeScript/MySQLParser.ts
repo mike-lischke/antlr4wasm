@@ -9,7 +9,7 @@ import {
     RuleContext, ParserRuleContext, PredictionMode, PredictionContextCache,
     TerminalNode, RuleNode,
     Token, TokenStream,
-    Interval, IntervalSet
+    Interval, IntervalSet, Vocabulary
 } from 'antlr4';
 import MySQLParserListener from "./MySQLParserListener.js";
 import MySQLParserVisitor from "./MySQLParserVisitor.js";
@@ -49657,6 +49657,11 @@ export default class MySQLParser extends MySQLBaseRecognizer {
         return MySQLParser.__ATN;
     }
 
+    private static readonly vocabulary = new Vocabulary(MySQLParser.literalNames, MySQLParser.symbolicNames, []);
+
+    public override getVocabulary(): Vocabulary {
+        return MySQLParser.vocabulary;
+    }
 
     static DecisionsToDFA = MySQLParser._ATN.decisionToState.map((ds: DecisionState, index: number) => new DFA(ds, index));
 
@@ -49679,7 +49684,7 @@ export class QueryContext extends ParserRuleContext {
     public SEMICOLON_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SEMICOLON_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_query;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -49927,7 +49932,7 @@ export class SimpleStatementContext extends ParserRuleContext {
     public resignalStatement(): ResignalStatementContext {
         return this.getTypedRuleContext(ResignalStatementContext, 0) as ResignalStatementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_simpleStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50001,7 +50006,7 @@ export class AlterStatementContext extends ParserRuleContext {
     public routineAlterOptions(): RoutineAlterOptionsContext {
         return this.getTypedRuleContext(RoutineAlterOptionsContext, 0) as RoutineAlterOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50042,7 +50047,7 @@ export class AlterDatabaseContext extends ParserRuleContext {
     public alterDatabaseOption(i: number): AlterDatabaseOptionContext {
         return this.getTypedRuleContext(AlterDatabaseOptionContext, i) as AlterDatabaseOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterDatabase;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50086,7 +50091,7 @@ export class AlterDatabaseOptionContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterDatabaseOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50175,7 +50180,7 @@ export class AlterEventContext extends ParserRuleContext {
     public replica(): ReplicaContext {
         return this.getTypedRuleContext(ReplicaContext, 0) as ReplicaContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterEvent;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50225,7 +50230,7 @@ export class AlterLogfileGroupContext extends ParserRuleContext {
     public alterLogfileGroupOptions(): AlterLogfileGroupOptionsContext {
         return this.getTypedRuleContext(AlterLogfileGroupOptionsContext, 0) as AlterLogfileGroupOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterLogfileGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50266,7 +50271,7 @@ export class AlterLogfileGroupOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterLogfileGroupOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50304,7 +50309,7 @@ export class AlterLogfileGroupOptionContext extends ParserRuleContext {
     public tsOptionWait(): TsOptionWaitContext {
         return this.getTypedRuleContext(TsOptionWaitContext, 0) as TsOptionWaitContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterLogfileGroupOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50342,7 +50347,7 @@ export class AlterServerContext extends ParserRuleContext {
     public serverOptions(): ServerOptionsContext {
         return this.getTypedRuleContext(ServerOptionsContext, 0) as ServerOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterServer;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50383,7 +50388,7 @@ export class AlterTableContext extends ParserRuleContext {
     public alterTableActions(): AlterTableActionsContext {
         return this.getTypedRuleContext(AlterTableActionsContext, 0) as AlterTableActionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50430,7 +50435,7 @@ export class AlterTableActionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterTableActions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50468,7 +50473,7 @@ export class AlterCommandListContext extends ParserRuleContext {
     public COMMA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterCommandList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50509,7 +50514,7 @@ export class AlterCommandsModifierListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterCommandsModifierList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50556,7 +50561,7 @@ export class StandaloneAlterCommandsContext extends ParserRuleContext {
     public SECONDARY_UNLOAD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SECONDARY_UNLOAD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_standaloneAlterCommands;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50681,7 +50686,7 @@ export class AlterPartitionContext extends ParserRuleContext {
     public IMPORT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IMPORT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterPartition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50734,7 +50739,7 @@ export class AlterListContext extends ParserRuleContext {
     public alterCommandsModifier(i: number): AlterCommandsModifierContext {
         return this.getTypedRuleContext(AlterCommandsModifierContext, i) as AlterCommandsModifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50772,7 +50777,7 @@ export class AlterCommandsModifierContext extends ParserRuleContext {
     public withValidation(): WithValidationContext {
         return this.getTypedRuleContext(WithValidationContext, 0) as WithValidationContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterCommandsModifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50939,7 +50944,7 @@ export class AlterListItemContext extends ParserRuleContext {
     public alterOrderList(): AlterOrderListContext {
         return this.getTypedRuleContext(AlterOrderListContext, 0) as AlterOrderListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterListItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -50977,7 +50982,7 @@ export class PlaceContext extends ParserRuleContext {
     public FIRST_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FIRST_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_place;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51012,7 +51017,7 @@ export class RestrictContext extends ParserRuleContext {
     public CASCADE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CASCADE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_restrict;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51059,7 +51064,7 @@ export class AlterOrderListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterOrderList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51100,7 +51105,7 @@ export class AlterAlgorithmOptionContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterAlgorithmOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51141,7 +51146,7 @@ export class AlterLockOptionContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterLockOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51176,7 +51181,7 @@ export class IndexLockAndAlgorithmContext extends ParserRuleContext {
     public alterLockOption(): AlterLockOptionContext {
         return this.getTypedRuleContext(AlterLockOptionContext, 0) as AlterLockOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexLockAndAlgorithm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51214,7 +51219,7 @@ export class WithValidationContext extends ParserRuleContext {
     public WITHOUT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.WITHOUT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_withValidation;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51249,7 +51254,7 @@ export class RemovePartitioningContext extends ParserRuleContext {
     public PARTITIONING_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PARTITIONING_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_removePartitioning;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51284,7 +51289,7 @@ export class AllOrPartitionNameListContext extends ParserRuleContext {
     public identifierList(): IdentifierListContext {
         return this.getTypedRuleContext(IdentifierListContext, 0) as IdentifierListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_allOrPartitionNameList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51343,7 +51348,7 @@ export class AlterTablespaceContext extends ParserRuleContext {
     public DROP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DROP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterTablespace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51393,7 +51398,7 @@ export class AlterUndoTablespaceContext extends ParserRuleContext {
     public undoTableSpaceOptions(): UndoTableSpaceOptionsContext {
         return this.getTypedRuleContext(UndoTableSpaceOptionsContext, 0) as UndoTableSpaceOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterUndoTablespace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51434,7 +51439,7 @@ export class UndoTableSpaceOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_undoTableSpaceOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51466,7 +51471,7 @@ export class UndoTableSpaceOptionContext extends ParserRuleContext {
     public tsOptionEngine(): TsOptionEngineContext {
         return this.getTypedRuleContext(TsOptionEngineContext, 0) as TsOptionEngineContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_undoTableSpaceOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51507,7 +51512,7 @@ export class AlterTablespaceOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterTablespaceOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51563,7 +51568,7 @@ export class AlterTablespaceOptionContext extends ParserRuleContext {
     public tsOptionEngineAttribute(): TsOptionEngineAttributeContext {
         return this.getTypedRuleContext(TsOptionEngineAttributeContext, 0) as TsOptionEngineAttributeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterTablespaceOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51607,7 +51612,7 @@ export class ChangeTablespaceOptionContext extends ParserRuleContext {
     public tsOptionMaxSize(): TsOptionMaxSizeContext {
         return this.getTypedRuleContext(TsOptionMaxSizeContext, 0) as TsOptionMaxSizeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeTablespaceOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51654,7 +51659,7 @@ export class AlterViewContext extends ParserRuleContext {
     public viewSuid(): ViewSuidContext {
         return this.getTypedRuleContext(ViewSuidContext, 0) as ViewSuidContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterView;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51692,7 +51697,7 @@ export class ViewTailContext extends ParserRuleContext {
     public columnInternalRefList(): ColumnInternalRefListContext {
         return this.getTypedRuleContext(ColumnInternalRefListContext, 0) as ColumnInternalRefListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewTail;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51727,7 +51732,7 @@ export class ViewQueryBlockContext extends ParserRuleContext {
     public viewCheckOption(): ViewCheckOptionContext {
         return this.getTypedRuleContext(ViewCheckOptionContext, 0) as ViewCheckOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewQueryBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51771,7 +51776,7 @@ export class ViewCheckOptionContext extends ParserRuleContext {
     public LOCAL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LOCAL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewCheckOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51854,7 +51859,7 @@ export class AlterInstanceStatementContext extends ParserRuleContext {
     public CHANNEL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CHANNEL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterInstanceStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51931,7 +51936,7 @@ export class CreateStatementContext extends ParserRuleContext {
     public createUndoTablespace(): CreateUndoTablespaceContext {
         return this.getTypedRuleContext(CreateUndoTablespaceContext, 0) as CreateUndoTablespaceContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -51975,7 +51980,7 @@ export class CreateDatabaseContext extends ParserRuleContext {
     public createDatabaseOption(i: number): CreateDatabaseOptionContext {
         return this.getTypedRuleContext(CreateDatabaseOptionContext, i) as CreateDatabaseOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createDatabase;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52013,7 +52018,7 @@ export class CreateDatabaseOptionContext extends ParserRuleContext {
     public defaultEncryption(): DefaultEncryptionContext {
         return this.getTypedRuleContext(DefaultEncryptionContext, 0) as DefaultEncryptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createDatabaseOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52072,7 +52077,7 @@ export class CreateTableContext extends ParserRuleContext {
     public createTableOptionsEtc(): CreateTableOptionsEtcContext {
         return this.getTypedRuleContext(CreateTableOptionsEtcContext, 0) as CreateTableOptionsEtcContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52113,7 +52118,7 @@ export class TableElementListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableElementList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52148,7 +52153,7 @@ export class TableElementContext extends ParserRuleContext {
     public tableConstraintDef(): TableConstraintDefContext {
         return this.getTypedRuleContext(TableConstraintDefContext, 0) as TableConstraintDefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableElement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52186,7 +52191,7 @@ export class DuplicateAsQeContext extends ParserRuleContext {
     public IGNORE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IGNORE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_duplicateAsQe;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52221,7 +52226,7 @@ export class AsCreateQueryExpressionContext extends ParserRuleContext {
     public AS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.AS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_asCreateQueryExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52259,7 +52264,7 @@ export class QueryExpressionOrParensContext extends ParserRuleContext {
     public queryExpressionParens(): QueryExpressionParensContext {
         return this.getTypedRuleContext(QueryExpressionParensContext, 0) as QueryExpressionParensContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryExpressionOrParens;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52294,7 +52299,7 @@ export class QueryExpressionWithOptLockingClausesContext extends ParserRuleConte
     public lockingClauseList(): LockingClauseListContext {
         return this.getTypedRuleContext(LockingClauseListContext, 0) as LockingClauseListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryExpressionWithOptLockingClauses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52341,7 +52346,7 @@ export class CreateRoutineContext extends ParserRuleContext {
     public SEMICOLON_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SEMICOLON_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createRoutine;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52409,7 +52414,7 @@ export class CreateProcedureContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createProcedure;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52483,7 +52488,7 @@ export class CreateFunctionContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52546,7 +52551,7 @@ export class CreateUdfContext extends ParserRuleContext {
     public ifNotExists(): IfNotExistsContext {
         return this.getTypedRuleContext(IfNotExistsContext, 0) as IfNotExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUdf;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52584,7 +52589,7 @@ export class RoutineCreateOptionContext extends ParserRuleContext {
     public NOT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NOT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_routineCreateOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52619,7 +52624,7 @@ export class RoutineAlterOptionsContext extends ParserRuleContext {
     public routineCreateOption(i: number): RoutineCreateOptionContext {
         return this.getTypedRuleContext(RoutineCreateOptionContext, i) as RoutineCreateOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_routineAlterOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52686,7 +52691,7 @@ export class RoutineOptionContext extends ParserRuleContext {
     public INVOKER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.INVOKER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_routineOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52761,7 +52766,7 @@ export class CreateIndexContext extends ParserRuleContext {
     public spatialIndexOption(i: number): SpatialIndexOptionContext {
         return this.getTypedRuleContext(SpatialIndexOptionContext, i) as SpatialIndexOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createIndex;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52802,7 +52807,7 @@ export class IndexNameAndTypeContext extends ParserRuleContext {
     public TYPE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TYPE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexNameAndType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52840,7 +52845,7 @@ export class CreateIndexTargetContext extends ParserRuleContext {
     public keyListWithExpression(): KeyListWithExpressionContext {
         return this.getTypedRuleContext(KeyListWithExpressionContext, 0) as KeyListWithExpressionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createIndexTarget;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52890,7 +52895,7 @@ export class CreateLogfileGroupContext extends ParserRuleContext {
     public logfileGroupOptions(): LogfileGroupOptionsContext {
         return this.getTypedRuleContext(LogfileGroupOptionsContext, 0) as LogfileGroupOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createLogfileGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52931,7 +52936,7 @@ export class LogfileGroupOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_logfileGroupOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -52978,7 +52983,7 @@ export class LogfileGroupOptionContext extends ParserRuleContext {
     public tsOptionComment(): TsOptionCommentContext {
         return this.getTypedRuleContext(TsOptionCommentContext, 0) as TsOptionCommentContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_logfileGroupOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53028,7 +53033,7 @@ export class CreateServerContext extends ParserRuleContext {
     public serverOptions(): ServerOptionsContext {
         return this.getTypedRuleContext(ServerOptionsContext, 0) as ServerOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createServer;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53078,7 +53083,7 @@ export class ServerOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_serverOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53135,7 +53140,7 @@ export class ServerOptionContext extends ParserRuleContext {
     public PORT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PORT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_serverOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53188,7 +53193,7 @@ export class CreateTablespaceContext extends ParserRuleContext {
     public tablespaceOptions(): TablespaceOptionsContext {
         return this.getTypedRuleContext(TablespaceOptionsContext, 0) as TablespaceOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTablespace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53235,7 +53240,7 @@ export class CreateUndoTablespaceContext extends ParserRuleContext {
     public undoTableSpaceOptions(): UndoTableSpaceOptionsContext {
         return this.getTypedRuleContext(UndoTableSpaceOptionsContext, 0) as UndoTableSpaceOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUndoTablespace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53270,7 +53275,7 @@ export class TsDataFileNameContext extends ParserRuleContext {
     public tsDataFile(): TsDataFileContext {
         return this.getTypedRuleContext(TsDataFileContext, 0) as TsDataFileContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsDataFileName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53305,7 +53310,7 @@ export class TsDataFileContext extends ParserRuleContext {
     public textLiteral(): TextLiteralContext {
         return this.getTypedRuleContext(TextLiteralContext, 0) as TextLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsDataFile;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53346,7 +53351,7 @@ export class TablespaceOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tablespaceOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53405,7 +53410,7 @@ export class TablespaceOptionContext extends ParserRuleContext {
     public tsOptionEncryption(): TsOptionEncryptionContext {
         return this.getTypedRuleContext(TsOptionEncryptionContext, 0) as TsOptionEncryptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tablespaceOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53443,7 +53448,7 @@ export class TsOptionInitialSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionInitialSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53484,7 +53489,7 @@ export class TsOptionUndoRedoBufferSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionUndoRedoBufferSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53522,7 +53527,7 @@ export class TsOptionAutoextendSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionAutoextendSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53560,7 +53565,7 @@ export class TsOptionMaxSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionMaxSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53598,7 +53603,7 @@ export class TsOptionExtentSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionExtentSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53636,7 +53641,7 @@ export class TsOptionNodegroupContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionNodegroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53677,7 +53682,7 @@ export class TsOptionEngineContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionEngine;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53712,7 +53717,7 @@ export class TsOptionWaitContext extends ParserRuleContext {
     public NO_WAIT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NO_WAIT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionWait;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53750,7 +53755,7 @@ export class TsOptionCommentContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionComment;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53788,7 +53793,7 @@ export class TsOptionFileblockSizeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionFileblockSize;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53826,7 +53831,7 @@ export class TsOptionEncryptionContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionEncryption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53864,7 +53869,7 @@ export class TsOptionEngineAttributeContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tsOptionEngineAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53911,7 +53916,7 @@ export class CreateViewContext extends ParserRuleContext {
     public viewSuid(): ViewSuidContext {
         return this.getTypedRuleContext(ViewSuidContext, 0) as ViewSuidContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createView;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53949,7 +53954,7 @@ export class ViewReplaceOrAlgorithmContext extends ParserRuleContext {
     public viewAlgorithm(): ViewAlgorithmContext {
         return this.getTypedRuleContext(ViewAlgorithmContext, 0) as ViewAlgorithmContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewReplaceOrAlgorithm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -53994,7 +53999,7 @@ export class ViewAlgorithmContext extends ParserRuleContext {
     public TEMPTABLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TEMPTABLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewAlgorithm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54035,7 +54040,7 @@ export class ViewSuidContext extends ParserRuleContext {
     public INVOKER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.INVOKER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewSuid;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54114,7 +54119,7 @@ export class CreateTriggerContext extends ParserRuleContext {
     public triggerFollowsPrecedesClause(): TriggerFollowsPrecedesClauseContext {
         return this.getTypedRuleContext(TriggerFollowsPrecedesClauseContext, 0) as TriggerFollowsPrecedesClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTrigger;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54153,7 +54158,7 @@ export class TriggerFollowsPrecedesClauseContext extends ParserRuleContext {
     public PRECEDES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRECEDES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_triggerFollowsPrecedesClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54236,7 +54241,7 @@ export class CreateEventContext extends ParserRuleContext {
     public replica(): ReplicaContext {
         return this.getTypedRuleContext(ReplicaContext, 0) as ReplicaContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createEvent;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54274,7 +54279,7 @@ export class CreateRoleContext extends ParserRuleContext {
     public ifNotExists(): IfNotExistsContext {
         return this.getTypedRuleContext(IfNotExistsContext, 0) as IfNotExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createRole;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54330,7 +54335,7 @@ export class CreateSpatialReferenceContext extends ParserRuleContext {
     public ifNotExists(): IfNotExistsContext {
         return this.getTypedRuleContext(IfNotExistsContext, 0) as IfNotExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createSpatialReference;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54386,7 +54391,7 @@ export class SrsAttributeContext extends ParserRuleContext {
     public DESCRIPTION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DESCRIPTION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_srsAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54460,7 +54465,7 @@ export class DropStatementContext extends ParserRuleContext {
     public dropUndoTablespace(): DropUndoTablespaceContext {
         return this.getTypedRuleContext(DropUndoTablespaceContext, 0) as DropUndoTablespaceContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54498,7 +54503,7 @@ export class DropDatabaseContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropDatabase;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54536,7 +54541,7 @@ export class DropEventContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropEvent;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54574,7 +54579,7 @@ export class DropFunctionContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54612,7 +54617,7 @@ export class DropProcedureContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropProcedure;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54660,7 +54665,7 @@ export class DropIndexContext extends ParserRuleContext {
     public indexLockAndAlgorithm(): IndexLockAndAlgorithmContext {
         return this.getTypedRuleContext(IndexLockAndAlgorithmContext, 0) as IndexLockAndAlgorithmContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropIndex;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54710,7 +54715,7 @@ export class DropLogfileGroupContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropLogfileGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54745,7 +54750,7 @@ export class DropLogfileGroupOptionContext extends ParserRuleContext {
     public tsOptionEngine(): TsOptionEngineContext {
         return this.getTypedRuleContext(TsOptionEngineContext, 0) as TsOptionEngineContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropLogfileGroupOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54783,7 +54788,7 @@ export class DropServerContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropServer;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54834,7 +54839,7 @@ export class DropTableContext extends ParserRuleContext {
     public CASCADE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CASCADE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54881,7 +54886,7 @@ export class DropTableSpaceContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropTableSpace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54919,7 +54924,7 @@ export class DropTriggerContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropTrigger;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -54963,7 +54968,7 @@ export class DropViewContext extends ParserRuleContext {
     public CASCADE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CASCADE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropView;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55001,7 +55006,7 @@ export class DropRoleContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropRole;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55045,7 +55050,7 @@ export class DropSpatialReferenceContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropSpatialReference;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55086,7 +55091,7 @@ export class DropUndoTablespaceContext extends ParserRuleContext {
     public undoTableSpaceOptions(): UndoTableSpaceOptionsContext {
         return this.getTypedRuleContext(UndoTableSpaceOptionsContext, 0) as UndoTableSpaceOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropUndoTablespace;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55136,7 +55141,7 @@ export class RenameTableStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_renameTableStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55174,7 +55179,7 @@ export class RenamePairContext extends ParserRuleContext {
     public tableName(): TableNameContext {
         return this.getTypedRuleContext(TableNameContext, 0) as TableNameContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_renamePair;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55212,7 +55217,7 @@ export class TruncateTableStatementContext extends ParserRuleContext {
     public TABLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TABLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_truncateTableStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55253,7 +55258,7 @@ export class ImportStatementContext extends ParserRuleContext {
     public textStringLiteralList(): TextStringLiteralListContext {
         return this.getTypedRuleContext(TextStringLiteralListContext, 0) as TextStringLiteralListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_importStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55297,7 +55302,7 @@ export class CallStatementContext extends ParserRuleContext {
     public exprList(): ExprListContext {
         return this.getTypedRuleContext(ExprListContext, 0) as ExprListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_callStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55368,7 +55373,7 @@ export class DeleteStatementContext extends ParserRuleContext {
     public simpleLimitClause(): SimpleLimitClauseContext {
         return this.getTypedRuleContext(SimpleLimitClauseContext, 0) as SimpleLimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_deleteStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55409,7 +55414,7 @@ export class PartitionDeleteContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionDelete;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55447,7 +55452,7 @@ export class DeleteStatementOptionContext extends ParserRuleContext {
     public IGNORE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IGNORE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_deleteStatementOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55482,7 +55487,7 @@ export class DoStatementContext extends ParserRuleContext {
     public selectItemList(): SelectItemListContext {
         return this.getTypedRuleContext(SelectItemListContext, 0) as SelectItemListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_doStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55541,7 +55546,7 @@ export class HandlerStatementContext extends ParserRuleContext {
     public limitClause(): LimitClauseContext {
         return this.getTypedRuleContext(LimitClauseContext, 0) as LimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_handlerStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55609,7 +55614,7 @@ export class HandlerReadOrScanContext extends ParserRuleContext {
     public GREATER_OR_EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.GREATER_OR_EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_handlerReadOrScan;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55674,7 +55679,7 @@ export class InsertStatementContext extends ParserRuleContext {
     public valuesReference(): ValuesReferenceContext {
         return this.getTypedRuleContext(ValuesReferenceContext, 0) as ValuesReferenceContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55712,7 +55717,7 @@ export class InsertLockOptionContext extends ParserRuleContext {
     public HIGH_PRIORITY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.HIGH_PRIORITY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertLockOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55753,7 +55758,7 @@ export class InsertFromConstructorContext extends ParserRuleContext {
     public fields(): FieldsContext {
         return this.getTypedRuleContext(FieldsContext, 0) as FieldsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertFromConstructor;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55794,7 +55799,7 @@ export class FieldsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fields;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55832,7 +55837,7 @@ export class InsertValuesContext extends ParserRuleContext {
     public VALUE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.VALUE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertValues;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55879,7 +55884,7 @@ export class InsertQueryExpressionContext extends ParserRuleContext {
     public fields(): FieldsContext {
         return this.getTypedRuleContext(FieldsContext, 0) as FieldsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertQueryExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55932,7 +55937,7 @@ export class ValueListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_valueList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -55979,7 +55984,7 @@ export class ValuesContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_values;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56017,7 +56022,7 @@ export class ValuesReferenceContext extends ParserRuleContext {
     public columnInternalRefList(): ColumnInternalRefListContext {
         return this.getTypedRuleContext(ColumnInternalRefListContext, 0) as ColumnInternalRefListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_valuesReference;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56061,7 +56066,7 @@ export class InsertUpdateListContext extends ParserRuleContext {
     public updateList(): UpdateListContext {
         return this.getTypedRuleContext(UpdateListContext, 0) as UpdateListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertUpdateList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56144,7 +56149,7 @@ export class LoadStatementContext extends ParserRuleContext {
     public IGNORE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IGNORE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_loadStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56179,7 +56184,7 @@ export class DataOrXmlContext extends ParserRuleContext {
     public XML_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.XML_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dataOrXml;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56220,7 +56225,7 @@ export class XmlRowsIdentifiedByContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_xmlRowsIdentifiedBy;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56270,7 +56275,7 @@ export class LoadDataFileTailContext extends ParserRuleContext {
     public ROWS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ROWS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_loadDataFileTail;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56308,7 +56313,7 @@ export class LoadDataFileTargetListContext extends ParserRuleContext {
     public fieldOrVariableList(): FieldOrVariableListContext {
         return this.getTypedRuleContext(FieldOrVariableListContext, 0) as FieldOrVariableListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_loadDataFileTargetList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56373,7 +56378,7 @@ export class FieldOrVariableListContext extends ParserRuleContext {
     public AT_TEXT_SUFFIX(i: number): TerminalNode {
         return this.getToken(MySQLParser.AT_TEXT_SUFFIX, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldOrVariableList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56432,7 +56437,7 @@ export class ReplaceStatementContext extends ParserRuleContext {
     public DELAYED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DELAYED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replaceStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56470,7 +56475,7 @@ export class SelectStatementContext extends ParserRuleContext {
     public selectStatementWithInto(): SelectStatementWithIntoContext {
         return this.getTypedRuleContext(SelectStatementWithIntoContext, 0) as SelectStatementWithIntoContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56520,7 +56525,7 @@ export class SelectStatementWithIntoContext extends ParserRuleContext {
     public queryExpressionParens(): QueryExpressionParensContext {
         return this.getTypedRuleContext(QueryExpressionParensContext, 0) as QueryExpressionParensContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectStatementWithInto;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56561,7 +56566,7 @@ export class QueryExpressionContext extends ParserRuleContext {
     public limitClause(): LimitClauseContext {
         return this.getTypedRuleContext(LimitClauseContext, 0) as LimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56626,7 +56631,7 @@ export class QueryExpressionBodyContext extends ParserRuleContext {
     public unionOption(i: number): UnionOptionContext {
         return this.getTypedRuleContext(UnionOptionContext, i) as UnionOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryExpressionBody;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56667,7 +56672,7 @@ export class QueryExpressionParensContext extends ParserRuleContext {
     public queryExpressionWithOptLockingClauses(): QueryExpressionWithOptLockingClausesContext {
         return this.getTypedRuleContext(QueryExpressionWithOptLockingClausesContext, 0) as QueryExpressionWithOptLockingClausesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryExpressionParens;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56705,7 +56710,7 @@ export class QueryPrimaryContext extends ParserRuleContext {
     public explicitTable(): ExplicitTableContext {
         return this.getTypedRuleContext(ExplicitTableContext, 0) as ExplicitTableContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_queryPrimary;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56764,7 +56769,7 @@ export class QuerySpecificationContext extends ParserRuleContext {
     public windowClause(): WindowClauseContext {
         return this.getTypedRuleContext(WindowClauseContext, 0) as WindowClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_querySpecification;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56796,7 +56801,7 @@ export class SubqueryContext extends ParserRuleContext {
     public queryExpressionParens(): QueryExpressionParensContext {
         return this.getTypedRuleContext(QueryExpressionParensContext, 0) as QueryExpressionParensContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_subquery;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56849,7 +56854,7 @@ export class QuerySpecOptionContext extends ParserRuleContext {
     public SQL_CALC_FOUND_ROWS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SQL_CALC_FOUND_ROWS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_querySpecOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56884,7 +56889,7 @@ export class LimitClauseContext extends ParserRuleContext {
     public limitOptions(): LimitOptionsContext {
         return this.getTypedRuleContext(LimitOptionsContext, 0) as LimitOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_limitClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56919,7 +56924,7 @@ export class SimpleLimitClauseContext extends ParserRuleContext {
     public limitOption(): LimitOptionContext {
         return this.getTypedRuleContext(LimitOptionContext, 0) as LimitOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_simpleLimitClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -56960,7 +56965,7 @@ export class LimitOptionsContext extends ParserRuleContext {
     public OFFSET_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OFFSET_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_limitOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57004,7 +57009,7 @@ export class LimitOptionContext extends ParserRuleContext {
     public INT_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.INT_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_limitOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57072,7 +57077,7 @@ export class IntoClauseContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_intoClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57119,7 +57124,7 @@ export class ProcedureAnalyseClauseContext extends ParserRuleContext {
     public COMMA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_procedureAnalyseClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57154,7 +57159,7 @@ export class HavingClauseContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_havingClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57198,7 +57203,7 @@ export class WindowClauseContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57236,7 +57241,7 @@ export class WindowDefinitionContext extends ParserRuleContext {
     public windowSpec(): WindowSpecContext {
         return this.getTypedRuleContext(WindowSpecContext, 0) as WindowSpecContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57274,7 +57279,7 @@ export class WindowSpecContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowSpec;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57321,7 +57326,7 @@ export class WindowSpecDetailsContext extends ParserRuleContext {
     public windowFrameClause(): WindowFrameClauseContext {
         return this.getTypedRuleContext(WindowFrameClauseContext, 0) as WindowFrameClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowSpecDetails;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57359,7 +57364,7 @@ export class WindowFrameClauseContext extends ParserRuleContext {
     public windowFrameExclusion(): WindowFrameExclusionContext {
         return this.getTypedRuleContext(WindowFrameExclusionContext, 0) as WindowFrameExclusionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57397,7 +57402,7 @@ export class WindowFrameUnitsContext extends ParserRuleContext {
     public GROUPS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.GROUPS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameUnits;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57432,7 +57437,7 @@ export class WindowFrameExtentContext extends ParserRuleContext {
     public windowFrameBetween(): WindowFrameBetweenContext {
         return this.getTypedRuleContext(WindowFrameBetweenContext, 0) as WindowFrameBetweenContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameExtent;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57488,7 +57493,7 @@ export class WindowFrameStartContext extends ParserRuleContext {
     public ROW_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ROW_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameStart;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57529,7 +57534,7 @@ export class WindowFrameBetweenContext extends ParserRuleContext {
     public AND_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.AND_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameBetween;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57582,7 +57587,7 @@ export class WindowFrameBoundContext extends ParserRuleContext {
     public interval(): IntervalContext {
         return this.getTypedRuleContext(IntervalContext, 0) as IntervalContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameBound;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57632,7 +57637,7 @@ export class WindowFrameExclusionContext extends ParserRuleContext {
     public OTHERS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OTHERS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFrameExclusion;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57679,7 +57684,7 @@ export class WithClauseContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_withClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57720,7 +57725,7 @@ export class CommonTableExpressionContext extends ParserRuleContext {
     public columnInternalRefList(): ColumnInternalRefListContext {
         return this.getTypedRuleContext(ColumnInternalRefListContext, 0) as ColumnInternalRefListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_commonTableExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57761,7 +57766,7 @@ export class GroupByClauseContext extends ParserRuleContext {
     public olapOption(): OlapOptionContext {
         return this.getTypedRuleContext(OlapOptionContext, 0) as OlapOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupByClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57796,7 +57801,7 @@ export class OlapOptionContext extends ParserRuleContext {
     public ROLLUP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ROLLUP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_olapOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57834,7 +57839,7 @@ export class OrderClauseContext extends ParserRuleContext {
     public orderList(): OrderListContext {
         return this.getTypedRuleContext(OrderListContext, 0) as OrderListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_orderClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57869,7 +57874,7 @@ export class DirectionContext extends ParserRuleContext {
     public DESC_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DESC_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_direction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57907,7 +57912,7 @@ export class FromClauseContext extends ParserRuleContext {
     public tableReferenceList(): TableReferenceListContext {
         return this.getTypedRuleContext(TableReferenceListContext, 0) as TableReferenceListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fromClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57948,7 +57953,7 @@ export class TableReferenceListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableReferenceList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -57992,7 +57997,7 @@ export class TableValueConstructorContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableValueConstructor;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58027,7 +58032,7 @@ export class ExplicitTableContext extends ParserRuleContext {
     public tableRef(): TableRefContext {
         return this.getTypedRuleContext(TableRefContext, 0) as TableRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_explicitTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58068,7 +58073,7 @@ export class RowValueExplicitContext extends ParserRuleContext {
     public values(): ValuesContext {
         return this.getTypedRuleContext(ValuesContext, 0) as ValuesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_rowValueExplicit;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58103,7 +58108,7 @@ export class SelectOptionContext extends ParserRuleContext {
     public SQL_NO_CACHE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SQL_NO_CACHE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58138,7 +58143,7 @@ export class LockingClauseListContext extends ParserRuleContext {
     public lockingClause(i: number): LockingClauseContext {
         return this.getTypedRuleContext(LockingClauseContext, i) as LockingClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockingClauseList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58194,7 +58199,7 @@ export class LockingClauseContext extends ParserRuleContext {
     public MODE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MODE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockingClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58229,7 +58234,7 @@ export class LockStrenghContext extends ParserRuleContext {
     public SHARE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SHARE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockStrengh;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58267,7 +58272,7 @@ export class LockedRowActionContext extends ParserRuleContext {
     public NOWAIT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NOWAIT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockedRowAction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58311,7 +58316,7 @@ export class SelectItemListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectItemList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58349,7 +58354,7 @@ export class SelectItemContext extends ParserRuleContext {
     public selectAlias(): SelectAliasContext {
         return this.getTypedRuleContext(SelectAliasContext, 0) as SelectAliasContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58387,7 +58392,7 @@ export class SelectAliasContext extends ParserRuleContext {
     public AS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.AS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_selectAlias;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58422,7 +58427,7 @@ export class WhereClauseContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_whereClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58475,7 +58480,7 @@ export class TableReferenceContext extends ParserRuleContext {
     public OJ_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OJ_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableReference;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58513,7 +58518,7 @@ export class EscapedTableReferenceContext extends ParserRuleContext {
     public joinedTable(i: number): JoinedTableContext {
         return this.getTypedRuleContext(JoinedTableContext, i) as JoinedTableContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_escapedTableReference;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58569,7 +58574,7 @@ export class JoinedTableContext extends ParserRuleContext {
     public tableFactor(): TableFactorContext {
         return this.getTypedRuleContext(TableFactorContext, 0) as TableFactorContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_joinedTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58616,7 +58621,7 @@ export class NaturalJoinTypeContext extends ParserRuleContext {
     public OUTER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OUTER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_naturalJoinType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58658,7 +58663,7 @@ export class InnerJoinTypeContext extends ParserRuleContext {
     public STRAIGHT_JOIN_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STRAIGHT_JOIN_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_innerJoinType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58700,7 +58705,7 @@ export class OuterJoinTypeContext extends ParserRuleContext {
     public OUTER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OUTER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_outerJoinType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58744,7 +58749,7 @@ export class TableFactorContext extends ParserRuleContext {
     public tableFunction(): TableFunctionContext {
         return this.getTypedRuleContext(TableFunctionContext, 0) as TableFunctionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableFactor;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58785,7 +58790,7 @@ export class SingleTableContext extends ParserRuleContext {
     public indexHintList(): IndexHintListContext {
         return this.getTypedRuleContext(IndexHintListContext, 0) as IndexHintListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_singleTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58826,7 +58831,7 @@ export class SingleTableParensContext extends ParserRuleContext {
     public singleTableParens(): SingleTableParensContext {
         return this.getTypedRuleContext(SingleTableParensContext, 0) as SingleTableParensContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_singleTableParens;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58867,7 +58872,7 @@ export class DerivedTableContext extends ParserRuleContext {
     public LATERAL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LATERAL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_derivedTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58908,7 +58913,7 @@ export class TableReferenceListParensContext extends ParserRuleContext {
     public tableReferenceListParens(): TableReferenceListParensContext {
         return this.getTypedRuleContext(TableReferenceListParensContext, 0) as TableReferenceListParensContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableReferenceListParens;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -58961,7 +58966,7 @@ export class TableFunctionContext extends ParserRuleContext {
     public tableAlias(): TableAliasContext {
         return this.getTypedRuleContext(TableAliasContext, 0) as TableAliasContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59011,7 +59016,7 @@ export class ColumnsClauseContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnsClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59073,7 +59078,7 @@ export class JtColumnContext extends ParserRuleContext {
     public columnsClause(): ColumnsClauseContext {
         return this.getTypedRuleContext(ColumnsClauseContext, 0) as ColumnsClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_jtColumn;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59108,7 +59113,7 @@ export class OnEmptyOrErrorContext extends ParserRuleContext {
     public onError(): OnErrorContext {
         return this.getTypedRuleContext(OnErrorContext, 0) as OnErrorContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_onEmptyOrError;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59146,7 +59151,7 @@ export class OnEmptyOrErrorJsonTableContext extends ParserRuleContext {
     public onEmpty(): OnEmptyContext {
         return this.getTypedRuleContext(OnEmptyContext, 0) as OnEmptyContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_onEmptyOrErrorJsonTable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59184,7 +59189,7 @@ export class OnEmptyContext extends ParserRuleContext {
     public EMPTY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EMPTY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_onEmpty;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59222,7 +59227,7 @@ export class OnErrorContext extends ParserRuleContext {
     public ERROR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ERROR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_onError;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59263,7 +59268,7 @@ export class JsonOnResponseContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_jsonOnResponse;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59298,7 +59303,7 @@ export class UnionOptionContext extends ParserRuleContext {
     public ALL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ALL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_unionOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59336,7 +59341,7 @@ export class TableAliasContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableAlias;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59377,7 +59382,7 @@ export class IndexHintListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexHintList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59427,7 +59432,7 @@ export class IndexHintContext extends ParserRuleContext {
     public USE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.USE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexHint;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59462,7 +59467,7 @@ export class IndexHintTypeContext extends ParserRuleContext {
     public IGNORE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IGNORE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexHintType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59497,7 +59502,7 @@ export class KeyOrIndexContext extends ParserRuleContext {
     public INDEX_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.INDEX_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyOrIndex;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59538,7 +59543,7 @@ export class ConstraintKeyTypeContext extends ParserRuleContext {
     public keyOrIndex(): KeyOrIndexContext {
         return this.getTypedRuleContext(KeyOrIndexContext, 0) as KeyOrIndexContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_constraintKeyType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59582,7 +59587,7 @@ export class IndexHintClauseContext extends ParserRuleContext {
     public GROUP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.GROUP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexHintClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59623,7 +59628,7 @@ export class IndexListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59658,7 +59663,7 @@ export class IndexListElementContext extends ParserRuleContext {
     public PRIMARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIMARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexListElement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59717,7 +59722,7 @@ export class UpdateStatementContext extends ParserRuleContext {
     public simpleLimitClause(): SimpleLimitClauseContext {
         return this.getTypedRuleContext(SimpleLimitClauseContext, 0) as SimpleLimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_updateStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59758,7 +59763,7 @@ export class TransactionOrLockingStatementContext extends ParserRuleContext {
     public xaStatement(): XaStatementContext {
         return this.getTypedRuleContext(XaStatementContext, 0) as XaStatementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_transactionOrLockingStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59820,7 +59825,7 @@ export class TransactionStatementContext extends ParserRuleContext {
     public NO_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.NO_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_transactionStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59855,7 +59860,7 @@ export class BeginWorkContext extends ParserRuleContext {
     public WORK_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.WORK_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_beginWork;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59902,7 +59907,7 @@ export class StartTransactionOptionListContext extends ParserRuleContext {
     public ONLY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ONLY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_startTransactionOptionList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -59961,7 +59966,7 @@ export class SavepointStatementContext extends ParserRuleContext {
     public NO_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.NO_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_savepointStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60023,7 +60028,7 @@ export class LockStatementContext extends ParserRuleContext {
     public UNLOCK_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.UNLOCK_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60061,7 +60066,7 @@ export class LockItemContext extends ParserRuleContext {
     public tableAlias(): TableAliasContext {
         return this.getTypedRuleContext(TableAliasContext, 0) as TableAliasContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60102,7 +60107,7 @@ export class LockOptionContext extends ParserRuleContext {
     public LOW_PRIORITY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LOW_PRIORITY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lockOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60182,7 +60187,7 @@ export class XaStatementContext extends ParserRuleContext {
     public MIGRATE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MIGRATE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_xaStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60217,7 +60222,7 @@ export class XaConvertContext extends ParserRuleContext {
     public XID_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.XID_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_xaConvert;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60261,7 +60266,7 @@ export class XidContext extends ParserRuleContext {
     public ulong_number(): Ulong_numberContext {
         return this.getTypedRuleContext(Ulong_numberContext, 0) as Ulong_numberContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_xid;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60356,7 +60361,7 @@ export class ReplicationStatementContext extends ParserRuleContext {
     public groupReplication(): GroupReplicationContext {
         return this.getTypedRuleContext(GroupReplicationContext, 0) as GroupReplicationContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replicationStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60400,7 +60405,7 @@ export class ResetOptionContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resetOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60435,7 +60440,7 @@ export class SourceResetOptionsContext extends ParserRuleContext {
     public real_ulonglong_number(): Real_ulonglong_numberContext {
         return this.getTypedRuleContext(Real_ulonglong_numberContext, 0) as Real_ulonglong_numberContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceResetOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60482,7 +60487,7 @@ export class ReplicationLoadContext extends ParserRuleContext {
     public tableRef(): TableRefContext {
         return this.getTypedRuleContext(TableRefContext, 0) as TableRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replicationLoad;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60520,7 +60525,7 @@ export class ChangeReplicationSourceContext extends ParserRuleContext {
     public SOURCE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSource;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60564,7 +60569,7 @@ export class ChangeSourceContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeSource;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60605,7 +60610,7 @@ export class SourceDefinitionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceDefinitions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60769,7 +60774,7 @@ export class SourceDefinitionContext extends ParserRuleContext {
     public sourceFileDef(): SourceFileDefContext {
         return this.getTypedRuleContext(SourceFileDefContext, 0) as SourceFileDefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60804,7 +60809,7 @@ export class ChangeReplicationSourceAutoPositionContext extends ParserRuleContex
     public SOURCE_AUTO_POSITION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_AUTO_POSITION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceAutoPosition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60839,7 +60844,7 @@ export class ChangeReplicationSourceHostContext extends ParserRuleContext {
     public SOURCE_HOST_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_HOST_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceHost;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60874,7 +60879,7 @@ export class ChangeReplicationSourceBindContext extends ParserRuleContext {
     public SOURCE_BIND_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_BIND_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceBind;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60909,7 +60914,7 @@ export class ChangeReplicationSourceUserContext extends ParserRuleContext {
     public SOURCE_USER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_USER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60944,7 +60949,7 @@ export class ChangeReplicationSourcePasswordContext extends ParserRuleContext {
     public SOURCE_PASSWORD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_PASSWORD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourcePassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -60979,7 +60984,7 @@ export class ChangeReplicationSourcePortContext extends ParserRuleContext {
     public SOURCE_PORT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_PORT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourcePort;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61014,7 +61019,7 @@ export class ChangeReplicationSourceConnectRetryContext extends ParserRuleContex
     public SOURCE_CONNECT_RETRY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_CONNECT_RETRY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceConnectRetry;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61049,7 +61054,7 @@ export class ChangeReplicationSourceRetryCountContext extends ParserRuleContext 
     public SOURCE_RETRY_COUNT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_RETRY_COUNT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceRetryCount;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61084,7 +61089,7 @@ export class ChangeReplicationSourceDelayContext extends ParserRuleContext {
     public SOURCE_DELAY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_DELAY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceDelay;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61119,7 +61124,7 @@ export class ChangeReplicationSourceSSLContext extends ParserRuleContext {
     public SOURCE_SSL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSL;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61154,7 +61159,7 @@ export class ChangeReplicationSourceSSLCAContext extends ParserRuleContext {
     public SOURCE_SSL_CA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCA;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61189,7 +61194,7 @@ export class ChangeReplicationSourceSSLCApathContext extends ParserRuleContext {
     public SOURCE_SSL_CAPATH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CAPATH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCApath;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61224,7 +61229,7 @@ export class ChangeReplicationSourceSSLCipherContext extends ParserRuleContext {
     public SOURCE_SSL_CIPHER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CIPHER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCipher;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61259,7 +61264,7 @@ export class ChangeReplicationSourceSSLCLRContext extends ParserRuleContext {
     public SOURCE_SSL_CRL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CRL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCLR;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61294,7 +61299,7 @@ export class ChangeReplicationSourceSSLCLRpathContext extends ParserRuleContext 
     public SOURCE_SSL_CRLPATH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CRLPATH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCLRpath;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61329,7 +61334,7 @@ export class ChangeReplicationSourceSSLKeyContext extends ParserRuleContext {
     public SOURCE_SSL_KEY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_KEY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLKey;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61364,7 +61369,7 @@ export class ChangeReplicationSourceSSLVerifyServerCertContext extends ParserRul
     public SOURCE_SSL_VERIFY_SERVER_CERT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_VERIFY_SERVER_CERT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLVerifyServerCert;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61399,7 +61404,7 @@ export class ChangeReplicationSourceTLSVersionContext extends ParserRuleContext 
     public SOURCE_TLS_VERSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_TLS_VERSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceTLSVersion;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61434,7 +61439,7 @@ export class ChangeReplicationSourceTLSCiphersuitesContext extends ParserRuleCon
     public SOURCE_TLS_CIPHERSUITES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_TLS_CIPHERSUITES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceTLSCiphersuites;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61469,7 +61474,7 @@ export class ChangeReplicationSourceSSLCertContext extends ParserRuleContext {
     public SOURCE_SSL_CERT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_SSL_CERT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceSSLCert;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61504,7 +61509,7 @@ export class ChangeReplicationSourcePublicKeyContext extends ParserRuleContext {
     public SOURCE_PUBLIC_KEY_PATH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_PUBLIC_KEY_PATH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourcePublicKey;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61539,7 +61544,7 @@ export class ChangeReplicationSourceGetSourcePublicKeyContext extends ParserRule
     public GET_SOURCE_PUBLIC_KEY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.GET_SOURCE_PUBLIC_KEY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceGetSourcePublicKey;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61574,7 +61579,7 @@ export class ChangeReplicationSourceHeartbeatPeriodContext extends ParserRuleCon
     public SOURCE_HEARTBEAT_PERIOD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_HEARTBEAT_PERIOD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceHeartbeatPeriod;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61609,7 +61614,7 @@ export class ChangeReplicationSourceCompressionAlgorithmContext extends ParserRu
     public SOURCE_COMPRESSION_ALGORITHM_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_COMPRESSION_ALGORITHM_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceCompressionAlgorithm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61644,7 +61649,7 @@ export class ChangeReplicationSourceZstdCompressionLevelContext extends ParserRu
     public SOURCE_ZSTD_COMPRESSION_LEVEL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_ZSTD_COMPRESSION_LEVEL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplicationSourceZstdCompressionLevel;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61679,7 +61684,7 @@ export class PrivilegeCheckDefContext extends ParserRuleContext {
     public NULL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NULL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_privilegeCheckDef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61717,7 +61722,7 @@ export class TablePrimaryKeyCheckDefContext extends ParserRuleContext {
     public OFF_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OFF_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tablePrimaryKeyCheckDef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61755,7 +61760,7 @@ export class AssignGtidsToAnonymousTransactionsDefinitionContext extends ParserR
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_assignGtidsToAnonymousTransactionsDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61790,7 +61795,7 @@ export class SourceTlsCiphersuitesDefContext extends ParserRuleContext {
     public NULL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NULL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceTlsCiphersuitesDef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61843,7 +61848,7 @@ export class SourceFileDefContext extends ParserRuleContext {
     public ulong_number(): Ulong_numberContext {
         return this.getTypedRuleContext(Ulong_numberContext, 0) as Ulong_numberContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceFileDef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61878,7 +61883,7 @@ export class SourceLogFileContext extends ParserRuleContext {
     public SOURCE_LOG_FILE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_LOG_FILE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceLogFile;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61913,7 +61918,7 @@ export class SourceLogPosContext extends ParserRuleContext {
     public SOURCE_LOG_POS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SOURCE_LOG_POS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sourceLogPos;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -61960,7 +61965,7 @@ export class ServerIdListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_serverIdList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62013,7 +62018,7 @@ export class ChangeReplicationContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_changeReplication;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62084,7 +62089,7 @@ export class FilterDefinitionContext extends ParserRuleContext {
     public filterDbPairList(): FilterDbPairListContext {
         return this.getTypedRuleContext(FilterDbPairListContext, 0) as FilterDbPairListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62125,7 +62130,7 @@ export class FilterDbListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterDbList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62166,7 +62171,7 @@ export class FilterTableListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterTableList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62207,7 +62212,7 @@ export class FilterStringListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterStringList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62239,7 +62244,7 @@ export class FilterWildDbTableStringContext extends ParserRuleContext {
     public textStringNoLinebreak(): TextStringNoLinebreakContext {
         return this.getTypedRuleContext(TextStringNoLinebreakContext, 0) as TextStringNoLinebreakContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterWildDbTableString;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62280,7 +62285,7 @@ export class FilterDbPairListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterDbPairList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62339,7 +62344,7 @@ export class StartReplicaStatementContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_startReplicaStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62380,7 +62385,7 @@ export class StopReplicaStatementContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_stopReplicaStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62436,7 +62441,7 @@ export class ReplicaUntilContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replicaUntil;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62474,7 +62479,7 @@ export class UserOptionContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62512,7 +62517,7 @@ export class PasswordOptionContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_passwordOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62550,7 +62555,7 @@ export class DefaultAuthOptionContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_defaultAuthOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62588,7 +62593,7 @@ export class PluginDirOptionContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_pluginDirOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62629,7 +62634,7 @@ export class ReplicaThreadOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replicaThreadOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62664,7 +62669,7 @@ export class ReplicaThreadOptionContext extends ParserRuleContext {
     public RELAY_THREAD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.RELAY_THREAD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replicaThreadOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62705,7 +62710,7 @@ export class GroupReplicationContext extends ParserRuleContext {
     public groupReplicationStartOptions(): GroupReplicationStartOptionsContext {
         return this.getTypedRuleContext(GroupReplicationStartOptionsContext, 0) as GroupReplicationStartOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplication;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62746,7 +62751,7 @@ export class GroupReplicationStartOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplicationStartOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62784,7 +62789,7 @@ export class GroupReplicationStartOptionContext extends ParserRuleContext {
     public groupReplicationPluginAuth(): GroupReplicationPluginAuthContext {
         return this.getTypedRuleContext(GroupReplicationPluginAuthContext, 0) as GroupReplicationPluginAuthContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplicationStartOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62822,7 +62827,7 @@ export class GroupReplicationUserContext extends ParserRuleContext {
     public textStringNoLinebreak(): TextStringNoLinebreakContext {
         return this.getTypedRuleContext(TextStringNoLinebreakContext, 0) as TextStringNoLinebreakContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplicationUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62860,7 +62865,7 @@ export class GroupReplicationPasswordContext extends ParserRuleContext {
     public textStringNoLinebreak(): TextStringNoLinebreakContext {
         return this.getTypedRuleContext(TextStringNoLinebreakContext, 0) as TextStringNoLinebreakContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplicationPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62898,7 +62903,7 @@ export class GroupReplicationPluginAuthContext extends ParserRuleContext {
     public textStringNoLinebreak(): TextStringNoLinebreakContext {
         return this.getTypedRuleContext(TextStringNoLinebreakContext, 0) as TextStringNoLinebreakContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupReplicationPluginAuth;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62933,7 +62938,7 @@ export class ReplicaContext extends ParserRuleContext {
     public REPLICA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.REPLICA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replica;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -62987,7 +62992,7 @@ export class PreparedStatementContext extends ParserRuleContext {
     public DROP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DROP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_preparedStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63028,7 +63033,7 @@ export class ExecuteStatementContext extends ParserRuleContext {
     public executeVarList(): ExecuteVarListContext {
         return this.getTypedRuleContext(ExecuteVarListContext, 0) as ExecuteVarListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_executeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63069,7 +63074,7 @@ export class ExecuteVarListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_executeVarList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63149,7 +63154,7 @@ export class CloneStatementContext extends ParserRuleContext {
     public dataDirSSL(): DataDirSSLContext {
         return this.getTypedRuleContext(DataDirSSLContext, 0) as DataDirSSLContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cloneStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63193,7 +63198,7 @@ export class DataDirSSLContext extends ParserRuleContext {
     public equal(): EqualContext {
         return this.getTypedRuleContext(EqualContext, 0) as EqualContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dataDirSSL;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63231,7 +63236,7 @@ export class SslContext extends ParserRuleContext {
     public NO_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NO_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ssl;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63281,7 +63286,7 @@ export class AccountManagementStatementContext extends ParserRuleContext {
     public setRoleStatement(): SetRoleStatementContext {
         return this.getTypedRuleContext(SetRoleStatementContext, 0) as SetRoleStatementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_accountManagementStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63373,7 +63378,7 @@ export class AlterUserStatementContext extends ParserRuleContext {
     public userRegistration(): UserRegistrationContext {
         return this.getTypedRuleContext(UserRegistrationContext, 0) as UserRegistrationContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterUserStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63414,7 +63419,7 @@ export class AlterUserListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterUserList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63509,7 +63514,7 @@ export class AlterUserContext extends ParserRuleContext {
     public discardOldPassword(): DiscardOldPasswordContext {
         return this.getTypedRuleContext(DiscardOldPasswordContext, 0) as DiscardOldPasswordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63580,7 +63585,7 @@ export class OldAlterUserContext extends ParserRuleContext {
     public discardOldPassword(): DiscardOldPasswordContext {
         return this.getTypedRuleContext(DiscardOldPasswordContext, 0) as DiscardOldPasswordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_oldAlterUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63615,7 +63620,7 @@ export class UserFunctionContext extends ParserRuleContext {
     public parentheses(): ParenthesesContext {
         return this.getTypedRuleContext(ParenthesesContext, 0) as ParenthesesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63662,7 +63667,7 @@ export class CreateUserStatementContext extends ParserRuleContext {
     public defaultRoleClause(): DefaultRoleClauseContext {
         return this.getTypedRuleContext(DefaultRoleClauseContext, 0) as DefaultRoleClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUserStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63706,7 +63711,7 @@ export class CreateUserTailContext extends ParserRuleContext {
     public userAttributes(): UserAttributesContext {
         return this.getTypedRuleContext(UserAttributesContext, 0) as UserAttributesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUserTail;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63744,7 +63749,7 @@ export class UserAttributesContext extends ParserRuleContext {
     public COMMENT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMENT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userAttributes;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63782,7 +63787,7 @@ export class DefaultRoleClauseContext extends ParserRuleContext {
     public roleList(): RoleListContext {
         return this.getTypedRuleContext(RoleListContext, 0) as RoleListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_defaultRoleClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63827,7 +63832,7 @@ export class RequireClauseContext extends ParserRuleContext {
     public NONE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NONE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_requireClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63889,7 +63894,7 @@ export class ConnectOptionsContext extends ParserRuleContext {
     public MAX_USER_CONNECTIONS_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.MAX_USER_CONNECTIONS_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_connectOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -63972,7 +63977,7 @@ export class AccountLockPasswordExpireOptionsContext extends ParserRuleContext {
     public UNBOUNDED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.UNBOUNDED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_accountLockPasswordExpireOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64010,7 +64015,7 @@ export class UserAttributeContext extends ParserRuleContext {
     public COMMENT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMENT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64051,7 +64056,7 @@ export class DropUserStatementContext extends ParserRuleContext {
     public ifExists(): IfExistsContext {
         return this.getTypedRuleContext(IfExistsContext, 0) as IfExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropUserStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64137,7 +64142,7 @@ export class GrantStatementContext extends ParserRuleContext {
     public PRIVILEGES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIVILEGES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64172,7 +64177,7 @@ export class GrantTargetListContext extends ParserRuleContext {
     public userList(): UserListContext {
         return this.getTypedRuleContext(UserListContext, 0) as UserListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantTargetList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64210,7 +64215,7 @@ export class GrantOptionsContext extends ParserRuleContext {
     public grantOption(i: number): GrantOptionContext {
         return this.getTypedRuleContext(GrantOptionContext, i) as GrantOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64245,7 +64250,7 @@ export class ExceptRoleListContext extends ParserRuleContext {
     public roleList(): RoleListContext {
         return this.getTypedRuleContext(RoleListContext, 0) as RoleListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_exceptRoleList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64295,7 +64300,7 @@ export class WithRolesContext extends ParserRuleContext {
     public exceptRoleList(): ExceptRoleListContext {
         return this.getTypedRuleContext(ExceptRoleListContext, 0) as ExceptRoleListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_withRoles;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64333,7 +64338,7 @@ export class GrantAsContext extends ParserRuleContext {
     public withRoles(): WithRolesContext {
         return this.getTypedRuleContext(WithRolesContext, 0) as WithRolesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantAs;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64365,7 +64370,7 @@ export class VersionedRequireClauseContext extends ParserRuleContext {
     public requireClause(): RequireClauseContext {
         return this.getTypedRuleContext(RequireClauseContext, 0) as RequireClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_versionedRequireClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64418,7 +64423,7 @@ export class RenameUserStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_renameUserStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64495,7 +64500,7 @@ export class RevokeStatementContext extends ParserRuleContext {
     public PRIVILEGES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIVILEGES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_revokeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64533,7 +64538,7 @@ export class AclTypeContext extends ParserRuleContext {
     public PROCEDURE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PROCEDURE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_aclType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64574,7 +64579,7 @@ export class RoleOrPrivilegesListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleOrPrivilegesList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64721,7 +64726,7 @@ export class RoleOrPrivilegeContext extends ParserRuleContext {
     public ROLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ROLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleOrPrivilege;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64765,7 +64770,7 @@ export class GrantIdentifierContext extends ParserRuleContext {
     public tableRef(): TableRefContext {
         return this.getTypedRuleContext(TableRefContext, 0) as TableRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64806,7 +64811,7 @@ export class RequireListContext extends ParserRuleContext {
     public AND_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.AND_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_requireList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64848,7 +64853,7 @@ export class RequireListElementContext extends ParserRuleContext {
     public SUBJECT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SUBJECT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_requireListElement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64899,7 +64904,7 @@ export class GrantOptionContext extends ParserRuleContext {
     public MAX_USER_CONNECTIONS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MAX_USER_CONNECTIONS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_grantOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64955,7 +64960,7 @@ export class SetRoleStatementContext extends ParserRuleContext {
     public EXCEPT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EXCEPT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setRoleStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -64996,7 +65001,7 @@ export class RoleListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65031,7 +65036,7 @@ export class RoleContext extends ParserRuleContext {
     public userVariable(): UserVariableContext {
         return this.getTypedRuleContext(UserVariableContext, 0) as UserVariableContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_role;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65106,7 +65111,7 @@ export class TableAdministrationStatementContext extends ParserRuleContext {
     public repairType(i: number): RepairTypeContext {
         return this.getTypedRuleContext(RepairTypeContext, i) as RepairTypeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableAdministrationStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65168,7 +65173,7 @@ export class HistogramContext extends ParserRuleContext {
     public DROP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DROP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_histogram;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65218,7 +65223,7 @@ export class CheckOptionContext extends ParserRuleContext {
     public CHANGED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CHANGED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_checkOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65256,7 +65261,7 @@ export class RepairTypeContext extends ParserRuleContext {
     public USE_FRM_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.USE_FRM_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_repairType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65326,7 +65331,7 @@ export class InstallUninstallStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_installUninstallStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65361,7 +65366,7 @@ export class SetStatementContext extends ParserRuleContext {
     public startOptionValueList(): StartOptionValueListContext {
         return this.getTypedRuleContext(StartOptionValueListContext, 0) as StartOptionValueListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65444,7 +65449,7 @@ export class StartOptionValueListContext extends ParserRuleContext {
     public RANDOM_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.RANDOM_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_startOptionValueList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65482,7 +65487,7 @@ export class TransactionCharacteristicsContext extends ParserRuleContext {
     public COMMA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_transactionCharacteristics;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65520,7 +65525,7 @@ export class TransactionAccessModeContext extends ParserRuleContext {
     public ONLY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ONLY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_transactionAccessMode;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65570,7 +65575,7 @@ export class IsolationLevelContext extends ParserRuleContext {
     public UNCOMMITTED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.UNCOMMITTED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_isolationLevel;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65611,7 +65616,7 @@ export class OptionValueListContinuedContext extends ParserRuleContext {
     public optionValue(i: number): OptionValueContext {
         return this.getTypedRuleContext(OptionValueContext, i) as OptionValueContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_optionValueListContinued;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65676,7 +65681,7 @@ export class OptionValueNoOptionTypeContext extends ParserRuleContext {
     public collate(): CollateContext {
         return this.getTypedRuleContext(CollateContext, 0) as CollateContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_optionValueNoOptionType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65720,7 +65725,7 @@ export class OptionValueContext extends ParserRuleContext {
     public optionValueNoOptionType(): OptionValueNoOptionTypeContext {
         return this.getTypedRuleContext(OptionValueNoOptionTypeContext, 0) as OptionValueNoOptionTypeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_optionValue;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65758,7 +65763,7 @@ export class SetSystemVariableContext extends ParserRuleContext {
     public setVarIdentType(): SetVarIdentTypeContext {
         return this.getTypedRuleContext(SetVarIdentTypeContext, 0) as SetVarIdentTypeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setSystemVariable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65799,7 +65804,7 @@ export class StartOptionValueListFollowingOptionTypeContext extends ParserRuleCo
     public transactionCharacteristics(): TransactionCharacteristicsContext {
         return this.getTypedRuleContext(TransactionCharacteristicsContext, 0) as TransactionCharacteristicsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_startOptionValueListFollowingOptionType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65837,7 +65842,7 @@ export class OptionValueFollowingOptionTypeContext extends ParserRuleContext {
     public setExprOrDefault(): SetExprOrDefaultContext {
         return this.getTypedRuleContext(SetExprOrDefaultContext, 0) as SetExprOrDefaultContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_optionValueFollowingOptionType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65887,7 +65892,7 @@ export class SetExprOrDefaultContext extends ParserRuleContext {
     public SYSTEM_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SYSTEM_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setExprOrDefault;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65925,7 +65930,7 @@ export class ShowDatabasesStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showDatabasesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -65970,7 +65975,7 @@ export class ShowTablesStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showTablesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66014,7 +66019,7 @@ export class ShowTriggersStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showTriggersStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66055,7 +66060,7 @@ export class ShowEventsStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showEventsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66099,7 +66104,7 @@ export class ShowTableStatusStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showTableStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66143,7 +66148,7 @@ export class ShowOpenTablesStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showOpenTablesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66178,7 +66183,7 @@ export class ShowPluginsStatementContext extends ParserRuleContext {
     public PLUGINS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PLUGINS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showPluginsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66219,7 +66224,7 @@ export class ShowEngineLogsStatementContext extends ParserRuleContext {
     public LOGS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LOGS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showEngineLogsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66260,7 +66265,7 @@ export class ShowEngineMutexStatementContext extends ParserRuleContext {
     public MUTEX_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MUTEX_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showEngineMutexStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66301,7 +66306,7 @@ export class ShowEngineStatusStatementContext extends ParserRuleContext {
     public STATUS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STATUS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showEngineStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66354,7 +66359,7 @@ export class ShowColumnsStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showColumnsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66396,7 +66401,7 @@ export class ShowBinaryLogsStatementContext extends ParserRuleContext {
     public LOGS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LOGS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showBinaryLogsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66437,7 +66442,7 @@ export class ShowReplicasStatementContext extends ParserRuleContext {
     public REPLICAS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.REPLICAS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showReplicasStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66493,7 +66498,7 @@ export class ShowBinlogEventsStatementContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showBinlogEventsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66549,7 +66554,7 @@ export class ShowRelaylogEventsStatementContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showRelaylogEventsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66605,7 +66610,7 @@ export class ShowKeysStatementContext extends ParserRuleContext {
     public whereClause(): WhereClauseContext {
         return this.getTypedRuleContext(WhereClauseContext, 0) as WhereClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showKeysStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66644,7 +66649,7 @@ export class ShowEnginesStatementContext extends ParserRuleContext {
     public STORAGE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STORAGE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showEnginesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66691,7 +66696,7 @@ export class ShowCountWarningsStatementContext extends ParserRuleContext {
     public WARNINGS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.WARNINGS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCountWarningsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66738,7 +66743,7 @@ export class ShowCountErrorsStatementContext extends ParserRuleContext {
     public ERRORS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ERRORS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCountErrorsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66776,7 +66781,7 @@ export class ShowWarningsStatementContext extends ParserRuleContext {
     public limitClause(): LimitClauseContext {
         return this.getTypedRuleContext(LimitClauseContext, 0) as LimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showWarningsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66814,7 +66819,7 @@ export class ShowErrorsStatementContext extends ParserRuleContext {
     public limitClause(): LimitClauseContext {
         return this.getTypedRuleContext(LimitClauseContext, 0) as LimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showErrorsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66849,7 +66854,7 @@ export class ShowProfilesStatementContext extends ParserRuleContext {
     public PROFILES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PROFILES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showProfilesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66899,7 +66904,7 @@ export class ShowProfileStatementContext extends ParserRuleContext {
     public limitClause(): LimitClauseContext {
         return this.getTypedRuleContext(LimitClauseContext, 0) as LimitClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showProfileStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66940,7 +66945,7 @@ export class ShowStatusStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -66978,7 +66983,7 @@ export class ShowProcessListStatementContext extends ParserRuleContext {
     public FULL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FULL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showProcessListStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67019,7 +67024,7 @@ export class ShowVariablesStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showVariablesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67057,7 +67062,7 @@ export class ShowCharacterSetStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCharacterSetStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67095,7 +67100,7 @@ export class ShowCollationStatementContext extends ParserRuleContext {
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCollationStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67130,7 +67135,7 @@ export class ShowPrivilegesStatementContext extends ParserRuleContext {
     public PRIVILEGES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIVILEGES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showPrivilegesStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67177,7 +67182,7 @@ export class ShowGrantsStatementContext extends ParserRuleContext {
     public userList(): UserListContext {
         return this.getTypedRuleContext(UserListContext, 0) as UserListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showGrantsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67221,7 +67226,7 @@ export class ShowCreateDatabaseStatementContext extends ParserRuleContext {
     public ifNotExists(): IfNotExistsContext {
         return this.getTypedRuleContext(IfNotExistsContext, 0) as IfNotExistsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateDatabaseStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67262,7 +67267,7 @@ export class ShowCreateTableStatementContext extends ParserRuleContext {
     public tableRef(): TableRefContext {
         return this.getTypedRuleContext(TableRefContext, 0) as TableRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateTableStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67303,7 +67308,7 @@ export class ShowCreateViewStatementContext extends ParserRuleContext {
     public viewRef(): ViewRefContext {
         return this.getTypedRuleContext(ViewRefContext, 0) as ViewRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateViewStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67341,7 +67346,7 @@ export class ShowMasterStatusStatementContext extends ParserRuleContext {
     public STATUS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STATUS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showMasterStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67382,7 +67387,7 @@ export class ShowReplicaStatusStatementContext extends ParserRuleContext {
     public channel(): ChannelContext {
         return this.getTypedRuleContext(ChannelContext, 0) as ChannelContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showReplicaStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67423,7 +67428,7 @@ export class ShowCreateProcedureStatementContext extends ParserRuleContext {
     public procedureRef(): ProcedureRefContext {
         return this.getTypedRuleContext(ProcedureRefContext, 0) as ProcedureRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateProcedureStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67464,7 +67469,7 @@ export class ShowCreateFunctionStatementContext extends ParserRuleContext {
     public functionRef(): FunctionRefContext {
         return this.getTypedRuleContext(FunctionRefContext, 0) as FunctionRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateFunctionStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67505,7 +67510,7 @@ export class ShowCreateTriggerStatementContext extends ParserRuleContext {
     public triggerRef(): TriggerRefContext {
         return this.getTypedRuleContext(TriggerRefContext, 0) as TriggerRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateTriggerStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67549,7 +67554,7 @@ export class ShowCreateProcedureStatusStatementContext extends ParserRuleContext
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateProcedureStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67593,7 +67598,7 @@ export class ShowCreateFunctionStatusStatementContext extends ParserRuleContext 
     public likeOrWhere(): LikeOrWhereContext {
         return this.getTypedRuleContext(LikeOrWhereContext, 0) as LikeOrWhereContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateFunctionStatusStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67637,7 +67642,7 @@ export class ShowCreateProcedureCodeStatementContext extends ParserRuleContext {
     public procedureRef(): ProcedureRefContext {
         return this.getTypedRuleContext(ProcedureRefContext, 0) as ProcedureRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateProcedureCodeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67681,7 +67686,7 @@ export class ShowCreateFunctionCodeStatementContext extends ParserRuleContext {
     public functionRef(): FunctionRefContext {
         return this.getTypedRuleContext(FunctionRefContext, 0) as FunctionRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateFunctionCodeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67722,7 +67727,7 @@ export class ShowCreateEventStatementContext extends ParserRuleContext {
     public eventRef(): EventRefContext {
         return this.getTypedRuleContext(EventRefContext, 0) as EventRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateEventStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67763,7 +67768,7 @@ export class ShowCreateUserStatementContext extends ParserRuleContext {
     public user(): UserContext {
         return this.getTypedRuleContext(UserContext, 0) as UserContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCreateUserStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67798,7 +67803,7 @@ export class ShowCommandTypeContext extends ParserRuleContext {
     public EXTENDED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EXTENDED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_showCommandType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67833,7 +67838,7 @@ export class EngineOrAllContext extends ParserRuleContext {
     public ALL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ALL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_engineOrAll;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67868,7 +67873,7 @@ export class FromOrInContext extends ParserRuleContext {
     public IN_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IN_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fromOrIn;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67903,7 +67908,7 @@ export class InDbContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_inDb;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -67944,7 +67949,7 @@ export class ProfileDefinitionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_profileDefinitions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68009,7 +68014,7 @@ export class ProfileDefinitionContext extends ParserRuleContext {
     public SWAPS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SWAPS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_profileDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68108,7 +68113,7 @@ export class OtherAdministrativeStatementContext extends ParserRuleContext {
     public SHUTDOWN_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SHUTDOWN_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_otherAdministrativeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68143,7 +68148,7 @@ export class KeyCacheListOrPartsContext extends ParserRuleContext {
     public assignToKeycachePartition(): AssignToKeycachePartitionContext {
         return this.getTypedRuleContext(AssignToKeycachePartitionContext, 0) as AssignToKeycachePartitionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyCacheListOrParts;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68184,7 +68189,7 @@ export class KeyCacheListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyCacheList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68219,7 +68224,7 @@ export class AssignToKeycacheContext extends ParserRuleContext {
     public cacheKeyList(): CacheKeyListContext {
         return this.getTypedRuleContext(CacheKeyListContext, 0) as CacheKeyListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_assignToKeycache;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68266,7 +68271,7 @@ export class AssignToKeycachePartitionContext extends ParserRuleContext {
     public cacheKeyList(): CacheKeyListContext {
         return this.getTypedRuleContext(CacheKeyListContext, 0) as CacheKeyListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_assignToKeycachePartition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68307,7 +68312,7 @@ export class CacheKeyListContext extends ParserRuleContext {
     public keyUsageList(): KeyUsageListContext {
         return this.getTypedRuleContext(KeyUsageListContext, 0) as KeyUsageListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cacheKeyList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68342,7 +68347,7 @@ export class KeyUsageElementContext extends ParserRuleContext {
     public PRIMARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIMARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyUsageElement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68383,7 +68388,7 @@ export class KeyUsageListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyUsageList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68440,7 +68445,7 @@ export class FlushOptionContext extends ParserRuleContext {
     public OPTIMIZER_COSTS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OPTIMIZER_COSTS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_flushOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68484,7 +68489,7 @@ export class LogTypeContext extends ParserRuleContext {
     public SLOW_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SLOW_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_logType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68534,7 +68539,7 @@ export class FlushTablesContext extends ParserRuleContext {
     public flushTablesOptions(): FlushTablesOptionsContext {
         return this.getTypedRuleContext(FlushTablesOptionsContext, 0) as FlushTablesOptionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_flushTables;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68578,7 +68583,7 @@ export class FlushTablesOptionsContext extends ParserRuleContext {
     public LOCK_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LOCK_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_flushTablesOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68625,7 +68630,7 @@ export class PreloadTailContext extends ParserRuleContext {
     public preloadList(): PreloadListContext {
         return this.getTypedRuleContext(PreloadListContext, 0) as PreloadListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_preloadTail;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68666,7 +68671,7 @@ export class PreloadListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_preloadList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68707,7 +68712,7 @@ export class PreloadKeysContext extends ParserRuleContext {
     public LEAVES_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LEAVES_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_preloadKeys;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68748,7 +68753,7 @@ export class AdminPartitionContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_adminPartition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68789,7 +68794,7 @@ export class ResourceGroupManagementContext extends ParserRuleContext {
     public dropResourceGroup(): DropResourceGroupContext {
         return this.getTypedRuleContext(DropResourceGroupContext, 0) as DropResourceGroupContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resourceGroupManagement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68851,7 +68856,7 @@ export class CreateResourceGroupContext extends ParserRuleContext {
     public resourceGroupEnableDisable(): ResourceGroupEnableDisableContext {
         return this.getTypedRuleContext(ResourceGroupEnableDisableContext, 0) as ResourceGroupEnableDisableContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createResourceGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68898,7 +68903,7 @@ export class ResourceGroupVcpuListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resourceGroupVcpuList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68936,7 +68941,7 @@ export class VcpuNumOrRangeContext extends ParserRuleContext {
     public MINUS_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.MINUS_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_vcpuNumOrRange;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -68974,7 +68979,7 @@ export class ResourceGroupPriorityContext extends ParserRuleContext {
     public equal(): EqualContext {
         return this.getTypedRuleContext(EqualContext, 0) as EqualContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resourceGroupPriority;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69009,7 +69014,7 @@ export class ResourceGroupEnableDisableContext extends ParserRuleContext {
     public DISABLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DISABLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resourceGroupEnableDisable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69062,7 +69067,7 @@ export class AlterResourceGroupContext extends ParserRuleContext {
     public FORCE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FORCE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_alterResourceGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69109,7 +69114,7 @@ export class SetResourceGroupContext extends ParserRuleContext {
     public threadIdList(): ThreadIdListContext {
         return this.getTypedRuleContext(ThreadIdListContext, 0) as ThreadIdListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setResourceGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69150,7 +69155,7 @@ export class ThreadIdListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_threadIdList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69194,7 +69199,7 @@ export class DropResourceGroupContext extends ParserRuleContext {
     public FORCE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FORCE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dropResourceGroup;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69238,7 +69243,7 @@ export class UtilityStatementContext extends ParserRuleContext {
     public restartServer(): RestartServerContext {
         return this.getTypedRuleContext(RestartServerContext, 0) as RestartServerContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_utilityStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69285,7 +69290,7 @@ export class DescribeStatementContext extends ParserRuleContext {
     public columnRef(): ColumnRefContext {
         return this.getTypedRuleContext(ColumnRefContext, 0) as ColumnRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_describeStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69341,7 +69346,7 @@ export class ExplainStatementContext extends ParserRuleContext {
     public ANALYZE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ANALYZE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_explainStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69394,7 +69399,7 @@ export class ExplainableStatementContext extends ParserRuleContext {
     public real_ulong_number(): Real_ulong_numberContext {
         return this.getTypedRuleContext(Real_ulong_numberContext, 0) as Real_ulong_numberContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_explainableStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69429,7 +69434,7 @@ export class HelpCommandContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_helpCommand;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69464,7 +69469,7 @@ export class UseCommandContext extends ParserRuleContext {
     public schemaRef(): SchemaRefContext {
         return this.getTypedRuleContext(SchemaRefContext, 0) as SchemaRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_useCommand;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69496,7 +69501,7 @@ export class RestartServerContext extends ParserRuleContext {
     public RESTART_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.RESTART_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_restartServer;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69525,7 +69530,7 @@ export class ExprContext extends ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_expr;
     }
     public override copyFrom(ctx: ExprContext): void {
@@ -69535,7 +69540,7 @@ export class ExprContext extends ParserRuleContext {
 export class ExprOrContext extends ExprContext {
     public _op!: Token;
     constructor(parser: MySQLParser, ctx: ExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public expr_list(): ExprContext[] {
@@ -69571,7 +69576,7 @@ export class ExprOrContext extends ExprContext {
 }
 export class ExprNotContext extends ExprContext {
     constructor(parser: MySQLParser, ctx: ExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public NOT_SYMBOL(): TerminalNode {
@@ -69602,7 +69607,7 @@ export class ExprNotContext extends ExprContext {
 export class ExprIsContext extends ExprContext {
     public _type_!: Token;
     constructor(parser: MySQLParser, ctx: ExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public boolPri(): BoolPriContext {
@@ -69645,7 +69650,7 @@ export class ExprIsContext extends ExprContext {
 export class ExprAndContext extends ExprContext {
     public _op!: Token;
     constructor(parser: MySQLParser, ctx: ExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public expr_list(): ExprContext[] {
@@ -69681,7 +69686,7 @@ export class ExprAndContext extends ExprContext {
 }
 export class ExprXorContext extends ExprContext {
     constructor(parser: MySQLParser, ctx: ExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public expr_list(): ExprContext[] {
@@ -69719,7 +69724,7 @@ export class BoolPriContext extends ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_boolPri;
     }
     public override copyFrom(ctx: BoolPriContext): void {
@@ -69728,7 +69733,7 @@ export class BoolPriContext extends ParserRuleContext {
 }
 export class PrimaryExprPredicateContext extends BoolPriContext {
     constructor(parser: MySQLParser, ctx: BoolPriContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public predicate(): PredicateContext {
@@ -69755,7 +69760,7 @@ export class PrimaryExprPredicateContext extends BoolPriContext {
 }
 export class PrimaryExprCompareContext extends BoolPriContext {
     constructor(parser: MySQLParser, ctx: BoolPriContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public boolPri(): BoolPriContext {
@@ -69788,7 +69793,7 @@ export class PrimaryExprCompareContext extends BoolPriContext {
 }
 export class PrimaryExprAllAnyContext extends BoolPriContext {
     constructor(parser: MySQLParser, ctx: BoolPriContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public boolPri(): BoolPriContext {
@@ -69827,7 +69832,7 @@ export class PrimaryExprAllAnyContext extends BoolPriContext {
 }
 export class PrimaryExprIsNullContext extends BoolPriContext {
     constructor(parser: MySQLParser, ctx: BoolPriContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public boolPri(): BoolPriContext {
@@ -69889,7 +69894,7 @@ export class CompOpContext extends ParserRuleContext {
     public NOT_EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.NOT_EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_compOp;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69945,7 +69950,7 @@ export class PredicateContext extends ParserRuleContext {
     public OF_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OF_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_predicate;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -69974,7 +69979,7 @@ export class PredicateOperationsContext extends ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_predicateOperations;
     }
     public override copyFrom(ctx: PredicateOperationsContext): void {
@@ -69983,7 +69988,7 @@ export class PredicateOperationsContext extends ParserRuleContext {
 }
 export class PredicateExprRegexContext extends PredicateOperationsContext {
     constructor(parser: MySQLParser, ctx: PredicateOperationsContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public REGEXP_SYMBOL(): TerminalNode {
@@ -70013,7 +70018,7 @@ export class PredicateExprRegexContext extends PredicateOperationsContext {
 }
 export class PredicateExprBetweenContext extends PredicateOperationsContext {
     constructor(parser: MySQLParser, ctx: PredicateOperationsContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public BETWEEN_SYMBOL(): TerminalNode {
@@ -70049,7 +70054,7 @@ export class PredicateExprBetweenContext extends PredicateOperationsContext {
 }
 export class PredicateExprInContext extends PredicateOperationsContext {
     constructor(parser: MySQLParser, ctx: PredicateOperationsContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public IN_SYMBOL(): TerminalNode {
@@ -70088,7 +70093,7 @@ export class PredicateExprInContext extends PredicateOperationsContext {
 }
 export class PredicateExprLikeContext extends PredicateOperationsContext {
     constructor(parser: MySQLParser, ctx: PredicateOperationsContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public LIKE_SYMBOL(): TerminalNode {
@@ -70184,7 +70189,7 @@ export class BitExprContext extends ParserRuleContext {
     public interval(): IntervalContext {
         return this.getTypedRuleContext(IntervalContext, 0) as IntervalContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_bitExpr;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -70213,7 +70218,7 @@ export class SimpleExprContext extends ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_simpleExpr;
     }
     public override copyFrom(ctx: SimpleExprContext): void {
@@ -70222,7 +70227,7 @@ export class SimpleExprContext extends ParserRuleContext {
 }
 export class SimpleExprConvertContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public CONVERT_SYMBOL(): TerminalNode {
@@ -70264,7 +70269,7 @@ export class SimpleExprConvertContext extends SimpleExprContext {
 }
 export class SimpleExprCastContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public CAST_SYMBOL(): TerminalNode {
@@ -70316,7 +70321,7 @@ export class SimpleExprCastContext extends SimpleExprContext {
 export class SimpleExprUnaryContext extends SimpleExprContext {
     public _op!: Token;
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public simpleExpr(): SimpleExprContext {
@@ -70352,7 +70357,7 @@ export class SimpleExprUnaryContext extends SimpleExprContext {
 }
 export class SimpleExpressionRValueContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public rvalueSystemOrUserVariable(): RvalueSystemOrUserVariableContext {
@@ -70379,7 +70384,7 @@ export class SimpleExpressionRValueContext extends SimpleExprContext {
 }
 export class SimpleExprOdbcContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public OPEN_CURLY_SYMBOL(): TerminalNode {
@@ -70415,7 +70420,7 @@ export class SimpleExprOdbcContext extends SimpleExprContext {
 }
 export class SimpleExprRuntimeFunctionContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public runtimeFunctionCall(): RuntimeFunctionCallContext {
@@ -70442,7 +70447,7 @@ export class SimpleExprRuntimeFunctionContext extends SimpleExprContext {
 }
 export class SimpleExprFunctionContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public functionCall(): FunctionCallContext {
@@ -70469,7 +70474,7 @@ export class SimpleExprFunctionContext extends SimpleExprContext {
 }
 export class SimpleExprCollateContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public simpleExpr(): SimpleExprContext {
@@ -70502,7 +70507,7 @@ export class SimpleExprCollateContext extends SimpleExprContext {
 }
 export class SimpleExprMatchContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public MATCH_SYMBOL(): TerminalNode {
@@ -70547,7 +70552,7 @@ export class SimpleExprMatchContext extends SimpleExprContext {
 }
 export class SimpleExprWindowingFunctionContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public windowFunctionCall(): WindowFunctionCallContext {
@@ -70574,7 +70579,7 @@ export class SimpleExprWindowingFunctionContext extends SimpleExprContext {
 }
 export class SimpleExprBinaryContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public BINARY_SYMBOL(): TerminalNode {
@@ -70604,7 +70609,7 @@ export class SimpleExprBinaryContext extends SimpleExprContext {
 }
 export class SimpleExprColumnRefContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public columnRef(): ColumnRefContext {
@@ -70634,7 +70639,7 @@ export class SimpleExprColumnRefContext extends SimpleExprContext {
 }
 export class SimpleExprParamMarkerContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public PARAM_MARKER(): TerminalNode {
@@ -70661,7 +70666,7 @@ export class SimpleExprParamMarkerContext extends SimpleExprContext {
 }
 export class SimpleExprSumContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public sumExpr(): SumExprContext {
@@ -70688,7 +70693,7 @@ export class SimpleExprSumContext extends SimpleExprContext {
 }
 export class SimpleExprCastTimeContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public CAST_SYMBOL(): TerminalNode {
@@ -70748,7 +70753,7 @@ export class SimpleExprCastTimeContext extends SimpleExprContext {
 }
 export class SimpleExprConvertUsingContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public CONVERT_SYMBOL(): TerminalNode {
@@ -70790,7 +70795,7 @@ export class SimpleExprConvertUsingContext extends SimpleExprContext {
 }
 export class SimpleExprSubQueryContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public subquery(): SubqueryContext {
@@ -70820,7 +70825,7 @@ export class SimpleExprSubQueryContext extends SimpleExprContext {
 }
 export class SimpleExprGroupingOperationContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public groupingOperation(): GroupingOperationContext {
@@ -70847,7 +70852,7 @@ export class SimpleExprGroupingOperationContext extends SimpleExprContext {
 }
 export class SimpleExprNotContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public not2Rule(): Not2RuleContext {
@@ -70877,7 +70882,7 @@ export class SimpleExprNotContext extends SimpleExprContext {
 }
 export class SimpleExprValuesContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public VALUES_SYMBOL(): TerminalNode {
@@ -70913,7 +70918,7 @@ export class SimpleExprValuesContext extends SimpleExprContext {
 }
 export class SimpleExprUserVariableAssignmentContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public inExpressionUserVariableAssignment(): InExpressionUserVariableAssignmentContext {
@@ -70940,7 +70945,7 @@ export class SimpleExprUserVariableAssignmentContext extends SimpleExprContext {
 }
 export class SimpleExprDefaultContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public DEFAULT_SYMBOL(): TerminalNode {
@@ -70976,7 +70981,7 @@ export class SimpleExprDefaultContext extends SimpleExprContext {
 }
 export class SimpleExprListContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public OPEN_PAR_SYMBOL(): TerminalNode {
@@ -71012,7 +71017,7 @@ export class SimpleExprListContext extends SimpleExprContext {
 }
 export class SimpleExprIntervalContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public INTERVAL_SYMBOL(): TerminalNode {
@@ -71051,7 +71056,7 @@ export class SimpleExprIntervalContext extends SimpleExprContext {
 }
 export class SimpleExprCaseContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public CASE_SYMBOL(): TerminalNode {
@@ -71099,7 +71104,7 @@ export class SimpleExprCaseContext extends SimpleExprContext {
 }
 export class SimpleExprConcatContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public simpleExpr_list(): SimpleExprContext[] {
@@ -71132,7 +71137,7 @@ export class SimpleExprConcatContext extends SimpleExprContext {
 }
 export class SimpleExprLiteralContext extends SimpleExprContext {
     constructor(parser: MySQLParser, ctx: SimpleExprContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public literalOrNull(): LiteralOrNullContext {
@@ -71167,7 +71172,7 @@ export class ArrayCastContext extends ParserRuleContext {
     public ARRAY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ARRAY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_arrayCast;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71205,7 +71210,7 @@ export class JsonOperatorContext extends ParserRuleContext {
     public JSON_UNQUOTED_SEPARATOR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.JSON_UNQUOTED_SEPARATOR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_jsonOperator;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71313,7 +71318,7 @@ export class SumExprContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sumExpr;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71354,7 +71359,7 @@ export class GroupingOperationContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupingOperation;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71461,7 +71466,7 @@ export class WindowFunctionCallContext extends ParserRuleContext {
     public LAST_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.LAST_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowFunctionCall;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71499,7 +71504,7 @@ export class WindowingClauseContext extends ParserRuleContext {
     public windowSpec(): WindowSpecContext {
         return this.getTypedRuleContext(WindowSpecContext, 0) as WindowSpecContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowingClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71546,7 +71551,7 @@ export class LeadLagInfoContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_leadLagInfo;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71581,7 +71586,7 @@ export class StableIntegerContext extends ParserRuleContext {
     public paramOrVar(): ParamOrVarContext {
         return this.getTypedRuleContext(ParamOrVarContext, 0) as ParamOrVarContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_stableInteger;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71622,7 +71627,7 @@ export class ParamOrVarContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_paramOrVar;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71660,7 +71665,7 @@ export class NullTreatmentContext extends ParserRuleContext {
     public IGNORE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.IGNORE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_nullTreatment;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71713,7 +71718,7 @@ export class JsonFunctionContext extends ParserRuleContext {
     public COMMA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_jsonFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71748,7 +71753,7 @@ export class InSumExprContext extends ParserRuleContext {
     public ALL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ALL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_inSumExpr;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71786,7 +71791,7 @@ export class IdentListArgContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identListArg;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71827,7 +71832,7 @@ export class IdentListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -71880,7 +71885,7 @@ export class FulltextOptionsContext extends ParserRuleContext {
     public EXPANSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EXPANSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fulltextOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72158,7 +72163,7 @@ export class RuntimeFunctionCallContext extends ParserRuleContext {
     public geometryFunction(): GeometryFunctionContext {
         return this.getTypedRuleContext(GeometryFunctionContext, 0) as GeometryFunctionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_runtimeFunctionCall;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72193,7 +72198,7 @@ export class ReturningTypeContext extends ParserRuleContext {
     public castType(): CastTypeContext {
         return this.getTypedRuleContext(CastTypeContext, 0) as CastTypeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_returningType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72264,7 +72269,7 @@ export class GeometryFunctionContext extends ParserRuleContext {
     public POLYGON_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.POLYGON_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_geometryFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72302,7 +72307,7 @@ export class TimeFunctionParametersContext extends ParserRuleContext {
     public fractionalPrecision(): FractionalPrecisionContext {
         return this.getTypedRuleContext(FractionalPrecisionContext, 0) as FractionalPrecisionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_timeFunctionParameters;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72334,7 +72339,7 @@ export class FractionalPrecisionContext extends ParserRuleContext {
     public INT_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.INT_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fractionalPrecision;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72387,7 +72392,7 @@ export class WeightStringLevelsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_weightStringLevels;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72428,7 +72433,7 @@ export class WeightStringLevelListItemContext extends ParserRuleContext {
     public DESC_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DESC_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_weightStringLevelListItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72469,7 +72474,7 @@ export class DateTimeTtypeContext extends ParserRuleContext {
     public TIMESTAMP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TIMESTAMP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dateTimeTtype;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72525,7 +72530,7 @@ export class TrimFunctionContext extends ParserRuleContext {
     public BOTH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.BOTH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_trimFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72581,7 +72586,7 @@ export class SubstringFunctionContext extends ParserRuleContext {
     public FOR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FOR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_substringFunction;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72628,7 +72633,7 @@ export class FunctionCallContext extends ParserRuleContext {
     public exprList(): ExprListContext {
         return this.getTypedRuleContext(ExprListContext, 0) as ExprListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_functionCall;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72669,7 +72674,7 @@ export class UdfExprListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_udfExprList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72704,7 +72709,7 @@ export class UdfExprContext extends ParserRuleContext {
     public selectAlias(): SelectAliasContext {
         return this.getTypedRuleContext(SelectAliasContext, 0) as SelectAliasContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_udfExpr;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72742,7 +72747,7 @@ export class UserVariableContext extends ParserRuleContext {
     public AT_TEXT_SUFFIX(): TerminalNode {
         return this.getToken(MySQLParser.AT_TEXT_SUFFIX, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userVariable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72780,7 +72785,7 @@ export class InExpressionUserVariableAssignmentContext extends ParserRuleContext
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_inExpressionUserVariableAssignment;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72821,7 +72826,7 @@ export class RvalueSystemOrUserVariableContext extends ParserRuleContext {
     public rvalueSystemVariableType(): RvalueSystemVariableTypeContext {
         return this.getTypedRuleContext(RvalueSystemVariableTypeContext, 0) as RvalueSystemVariableTypeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_rvalueSystemOrUserVariable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72862,7 +72867,7 @@ export class LvalueVariableContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lvalueVariable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72897,7 +72902,7 @@ export class RvalueSystemVariableContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_rvalueSystemVariable;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72932,7 +72937,7 @@ export class WhenExpressionContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_whenExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -72967,7 +72972,7 @@ export class ThenExpressionContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_thenExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73002,7 +73007,7 @@ export class ElseExpressionContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_elseExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73109,7 +73114,7 @@ export class CastTypeContext extends ParserRuleContext {
     public GEOMETRYCOLLECTION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.GEOMETRYCOLLECTION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_castType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73150,7 +73155,7 @@ export class ExprListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_exprList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73188,7 +73193,7 @@ export class CharsetContext extends ParserRuleContext {
     public CHARSET_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CHARSET_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_charset;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73223,7 +73228,7 @@ export class NotRuleContext extends ParserRuleContext {
     public NOT2_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NOT2_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_notRule;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73258,7 +73263,7 @@ export class Not2RuleContext extends ParserRuleContext {
     public NOT2_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NOT2_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_not2Rule;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73323,7 +73328,7 @@ export class IntervalContext extends ParserRuleContext {
     public YEAR_MONTH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.YEAR_MONTH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_interval;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73379,7 +73384,7 @@ export class IntervalTimeStampContext extends ParserRuleContext {
     public YEAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.YEAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_intervalTimeStamp;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73417,7 +73422,7 @@ export class ExprListWithParenthesesContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_exprListWithParentheses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73455,7 +73460,7 @@ export class ExprWithParenthesesContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_exprWithParentheses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73493,7 +73498,7 @@ export class SimpleExprWithParenthesesContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_simpleExprWithParentheses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73534,7 +73539,7 @@ export class OrderListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_orderList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73569,7 +73574,7 @@ export class OrderExpressionContext extends ParserRuleContext {
     public direction(): DirectionContext {
         return this.getTypedRuleContext(DirectionContext, 0) as DirectionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_orderExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73610,7 +73615,7 @@ export class GroupListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73642,7 +73647,7 @@ export class GroupingExpressionContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_groupingExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73680,7 +73685,7 @@ export class ChannelContext extends ParserRuleContext {
     public textStringNoLinebreak(): TextStringNoLinebreakContext {
         return this.getTypedRuleContext(TextStringNoLinebreakContext, 0) as TextStringNoLinebreakContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_channel;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73748,7 +73753,7 @@ export class CompoundStatementContext extends ParserRuleContext {
     public cursorClose(): CursorCloseContext {
         return this.getTypedRuleContext(CursorCloseContext, 0) as CursorCloseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_compoundStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73783,7 +73788,7 @@ export class ReturnStatementContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_returnStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73824,7 +73829,7 @@ export class IfStatementContext extends ParserRuleContext {
     public END_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.END_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ifStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73871,7 +73876,7 @@ export class IfBodyContext extends ParserRuleContext {
     public compoundStatementList(): CompoundStatementListContext {
         return this.getTypedRuleContext(CompoundStatementListContext, 0) as CompoundStatementListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ifBody;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73906,7 +73911,7 @@ export class ThenStatementContext extends ParserRuleContext {
     public compoundStatementList(): CompoundStatementListContext {
         return this.getTypedRuleContext(CompoundStatementListContext, 0) as CompoundStatementListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_thenStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -73947,7 +73952,7 @@ export class CompoundStatementListContext extends ParserRuleContext {
     public SEMICOLON_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.SEMICOLON_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_compoundStatementList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74003,7 +74008,7 @@ export class CaseStatementContext extends ParserRuleContext {
     public elseStatement(): ElseStatementContext {
         return this.getTypedRuleContext(ElseStatementContext, 0) as ElseStatementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_caseStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74038,7 +74043,7 @@ export class ElseStatementContext extends ParserRuleContext {
     public compoundStatementList(): CompoundStatementListContext {
         return this.getTypedRuleContext(CompoundStatementListContext, 0) as CompoundStatementListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_elseStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74076,7 +74081,7 @@ export class LabeledBlockContext extends ParserRuleContext {
     public labelRef(): LabelRefContext {
         return this.getTypedRuleContext(LabelRefContext, 0) as LabelRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_labeledBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74108,7 +74113,7 @@ export class UnlabeledBlockContext extends ParserRuleContext {
     public beginEndBlock(): BeginEndBlockContext {
         return this.getTypedRuleContext(BeginEndBlockContext, 0) as BeginEndBlockContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_unlabeledBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74143,7 +74148,7 @@ export class LabelContext extends ParserRuleContext {
     public COLON_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COLON_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_label;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74184,7 +74189,7 @@ export class BeginEndBlockContext extends ParserRuleContext {
     public compoundStatementList(): CompoundStatementListContext {
         return this.getTypedRuleContext(CompoundStatementListContext, 0) as CompoundStatementListContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_beginEndBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74222,7 +74227,7 @@ export class LabeledControlContext extends ParserRuleContext {
     public labelRef(): LabelRefContext {
         return this.getTypedRuleContext(LabelRefContext, 0) as LabelRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_labeledControl;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74260,7 +74265,7 @@ export class UnlabeledControlContext extends ParserRuleContext {
     public repeatUntilBlock(): RepeatUntilBlockContext {
         return this.getTypedRuleContext(RepeatUntilBlockContext, 0) as RepeatUntilBlockContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_unlabeledControl;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74301,7 +74306,7 @@ export class LoopBlockContext extends ParserRuleContext {
     public END_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.END_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_loopBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74348,7 +74353,7 @@ export class WhileDoBlockContext extends ParserRuleContext {
     public END_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.END_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_whileDoBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74395,7 +74400,7 @@ export class RepeatUntilBlockContext extends ParserRuleContext {
     public END_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.END_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_repeatUntilBlock;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74436,7 +74441,7 @@ export class SpDeclarationsContext extends ParserRuleContext {
     public SEMICOLON_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.SEMICOLON_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_spDeclarations;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74477,7 +74482,7 @@ export class SpDeclarationContext extends ParserRuleContext {
     public cursorDeclaration(): CursorDeclarationContext {
         return this.getTypedRuleContext(CursorDeclarationContext, 0) as CursorDeclarationContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_spDeclaration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74524,7 +74529,7 @@ export class VariableDeclarationContext extends ParserRuleContext {
     public expr(): ExprContext {
         return this.getTypedRuleContext(ExprContext, 0) as ExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_variableDeclaration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74568,7 +74573,7 @@ export class ConditionDeclarationContext extends ParserRuleContext {
     public spCondition(): SpConditionContext {
         return this.getTypedRuleContext(SpConditionContext, 0) as SpConditionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_conditionDeclaration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74603,7 +74608,7 @@ export class SpConditionContext extends ParserRuleContext {
     public sqlstate(): SqlstateContext {
         return this.getTypedRuleContext(SqlstateContext, 0) as SqlstateContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_spCondition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74641,7 +74646,7 @@ export class SqlstateContext extends ParserRuleContext {
     public VALUE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.VALUE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sqlstate;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74703,7 +74708,7 @@ export class HandlerDeclarationContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_handlerDeclaration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74750,7 +74755,7 @@ export class HandlerConditionContext extends ParserRuleContext {
     public SQLEXCEPTION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SQLEXCEPTION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_handlerCondition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74794,7 +74799,7 @@ export class CursorDeclarationContext extends ParserRuleContext {
     public selectStatement(): SelectStatementContext {
         return this.getTypedRuleContext(SelectStatementContext, 0) as SelectStatementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cursorDeclaration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74829,7 +74834,7 @@ export class IterateStatementContext extends ParserRuleContext {
     public labelRef(): LabelRefContext {
         return this.getTypedRuleContext(LabelRefContext, 0) as LabelRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_iterateStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74864,7 +74869,7 @@ export class LeaveStatementContext extends ParserRuleContext {
     public labelRef(): LabelRefContext {
         return this.getTypedRuleContext(LabelRefContext, 0) as LabelRefContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_leaveStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74929,7 +74934,7 @@ export class GetDiagnosticsStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_getDiagnosticsStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -74967,7 +74972,7 @@ export class SignalAllowedExprContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signalAllowedExpr;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75011,7 +75016,7 @@ export class StatementInformationItemContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_statementInformationItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75055,7 +75060,7 @@ export class ConditionInformationItemContext extends ParserRuleContext {
     public RETURNED_SQLSTATE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.RETURNED_SQLSTATE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_conditionInformationItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75120,7 +75125,7 @@ export class SignalInformationItemNameContext extends ParserRuleContext {
     public MYSQL_ERRNO_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MYSQL_ERRNO_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signalInformationItemName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75173,7 +75178,7 @@ export class SignalStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signalStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75226,7 +75231,7 @@ export class ResignalStatementContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resignalStatement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75264,7 +75269,7 @@ export class SignalInformationItemContext extends ParserRuleContext {
     public signalAllowedExpr(): SignalAllowedExprContext {
         return this.getTypedRuleContext(SignalAllowedExprContext, 0) as SignalAllowedExprContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signalInformationItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75299,7 +75304,7 @@ export class CursorOpenContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cursorOpen;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75334,7 +75339,7 @@ export class CursorCloseContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cursorClose;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75381,7 +75386,7 @@ export class CursorFetchContext extends ParserRuleContext {
     public NEXT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NEXT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_cursorFetch;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75431,7 +75436,7 @@ export class ScheduleContext extends ParserRuleContext {
     public ENDS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ENDS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_schedule;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75469,7 +75474,7 @@ export class ColumnDefinitionContext extends ParserRuleContext {
     public checkOrReferences(): CheckOrReferencesContext {
         return this.getTypedRuleContext(CheckOrReferencesContext, 0) as CheckOrReferencesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75504,7 +75509,7 @@ export class CheckOrReferencesContext extends ParserRuleContext {
     public references(): ReferencesContext {
         return this.getTypedRuleContext(ReferencesContext, 0) as ReferencesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_checkOrReferences;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75539,7 +75544,7 @@ export class CheckConstraintContext extends ParserRuleContext {
     public exprWithParentheses(): ExprWithParenthesesContext {
         return this.getTypedRuleContext(ExprWithParenthesesContext, 0) as ExprWithParenthesesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_checkConstraint;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75574,7 +75579,7 @@ export class ConstraintEnforcementContext extends ParserRuleContext {
     public NOT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NOT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_constraintEnforcement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75670,7 +75675,7 @@ export class TableConstraintDefContext extends ParserRuleContext {
     public constraintEnforcement(): ConstraintEnforcementContext {
         return this.getTypedRuleContext(ConstraintEnforcementContext, 0) as ConstraintEnforcementContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableConstraintDef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75705,7 +75710,7 @@ export class ConstraintNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_constraintName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75764,7 +75769,7 @@ export class FieldDefinitionContext extends ParserRuleContext {
     public STORED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STORED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75893,7 +75898,7 @@ export class ColumnAttributeContext extends ParserRuleContext {
     public visibility(): VisibilityContext {
         return this.getTypedRuleContext(VisibilityContext, 0) as VisibilityContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75931,7 +75936,7 @@ export class ColumnFormatContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnFormat;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -75969,7 +75974,7 @@ export class StorageMediaContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_storageMedia;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76004,7 +76009,7 @@ export class NowContext extends ParserRuleContext {
     public functionDatetimePrecision(): FunctionDatetimePrecisionContext {
         return this.getTypedRuleContext(FunctionDatetimePrecisionContext, 0) as FunctionDatetimePrecisionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_now;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76039,7 +76044,7 @@ export class NowOrSignedLiteralContext extends ParserRuleContext {
     public signedLiteralOrNull(): SignedLiteralOrNullContext {
         return this.getTypedRuleContext(SignedLiteralOrNullContext, 0) as SignedLiteralOrNullContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_nowOrSignedLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76089,7 +76094,7 @@ export class GcolAttributeContext extends ParserRuleContext {
     public PRIMARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRIMARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_gcolAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76159,7 +76164,7 @@ export class ReferencesContext extends ParserRuleContext {
     public SIMPLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SIMPLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_references;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76209,7 +76214,7 @@ export class DeleteOptionContext extends ParserRuleContext {
     public ACTION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ACTION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_deleteOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76256,7 +76261,7 @@ export class KeyListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76294,7 +76299,7 @@ export class KeyPartContext extends ParserRuleContext {
     public direction(): DirectionContext {
         return this.getTypedRuleContext(DirectionContext, 0) as DirectionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyPart;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76341,7 +76346,7 @@ export class KeyListWithExpressionContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyListWithExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76379,7 +76384,7 @@ export class KeyPartOrExpressionContext extends ParserRuleContext {
     public direction(): DirectionContext {
         return this.getTypedRuleContext(DirectionContext, 0) as DirectionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_keyPartOrExpression;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76418,7 +76423,7 @@ export class IndexTypeContext extends ParserRuleContext {
     public HASH_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.HASH_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76453,7 +76458,7 @@ export class IndexOptionContext extends ParserRuleContext {
     public indexTypeClause(): IndexTypeClauseContext {
         return this.getTypedRuleContext(IndexTypeClauseContext, 0) as IndexTypeClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76509,7 +76514,7 @@ export class CommonIndexOptionContext extends ParserRuleContext {
     public SECONDARY_ENGINE_ATTRIBUTE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SECONDARY_ENGINE_ATTRIBUTE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_commonIndexOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76544,7 +76549,7 @@ export class VisibilityContext extends ParserRuleContext {
     public INVISIBLE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.INVISIBLE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_visibility;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76582,7 +76587,7 @@ export class IndexTypeClauseContext extends ParserRuleContext {
     public TYPE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TYPE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexTypeClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76623,7 +76628,7 @@ export class FulltextIndexOptionContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fulltextIndexOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76655,7 +76660,7 @@ export class SpatialIndexOptionContext extends ParserRuleContext {
     public commonIndexOption(): CommonIndexOptionContext {
         return this.getTypedRuleContext(CommonIndexOptionContext, 0) as CommonIndexOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_spatialIndexOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76690,7 +76695,7 @@ export class DataTypeDefinitionContext extends ParserRuleContext {
     public EOF(): TerminalNode {
         return this.getToken(MySQLParser.EOF, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dataTypeDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76891,7 +76896,7 @@ export class DataTypeContext extends ParserRuleContext {
     public MULTIPOLYGON_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MULTIPOLYGON_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dataType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76930,7 +76935,7 @@ export class NcharContext extends ParserRuleContext {
     public NATIONAL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NATIONAL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_nchar;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -76969,7 +76974,7 @@ export class RealTypeContext extends ParserRuleContext {
     public PRECISION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PRECISION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_realType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77010,7 +77015,7 @@ export class FieldLengthContext extends ParserRuleContext {
     public DECIMAL_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.DECIMAL_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldLength;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77057,7 +77062,7 @@ export class FieldOptionsContext extends ParserRuleContext {
     public ZEROFILL_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.ZEROFILL_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77104,7 +77109,7 @@ export class CharsetWithOptBinaryContext extends ParserRuleContext {
     public BINARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.BINARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_charsetWithOptBinary;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77139,7 +77144,7 @@ export class AsciiContext extends ParserRuleContext {
     public BINARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.BINARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ascii;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77174,7 +77179,7 @@ export class UnicodeContext extends ParserRuleContext {
     public BINARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.BINARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_unicode;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77212,7 +77217,7 @@ export class WsNumCodepointsContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_wsNumCodepoints;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77250,7 +77255,7 @@ export class TypeDatetimePrecisionContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_typeDatetimePrecision;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77291,7 +77296,7 @@ export class FunctionDatetimePrecisionContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_functionDatetimePrecision;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77329,7 +77334,7 @@ export class CharsetNameContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_charsetName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77367,7 +77372,7 @@ export class CollationNameContext extends ParserRuleContext {
     public BINARY_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.BINARY_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_collationName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77408,7 +77413,7 @@ export class CreateTableOptionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTableOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77443,7 +77448,7 @@ export class CreateTableOptionsEtcContext extends ParserRuleContext {
     public createPartitioningEtc(): CreatePartitioningEtcContext {
         return this.getTypedRuleContext(CreatePartitioningEtcContext, 0) as CreatePartitioningEtcContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTableOptionsEtc;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77478,7 +77483,7 @@ export class CreatePartitioningEtcContext extends ParserRuleContext {
     public duplicateAsQe(): DuplicateAsQeContext {
         return this.getTypedRuleContext(DuplicateAsQeContext, 0) as DuplicateAsQeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createPartitioningEtc;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77513,7 +77518,7 @@ export class CreateTableOptionsSpaceSeparatedContext extends ParserRuleContext {
     public createTableOption(i: number): CreateTableOptionContext {
         return this.getTypedRuleContext(CreateTableOptionContext, i) as CreateTableOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTableOptionsSpaceSeparated;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77725,7 +77730,7 @@ export class CreateTableOptionContext extends ParserRuleContext {
     public tsOptionAutoextendSize(): TsOptionAutoextendSizeContext {
         return this.getTypedRuleContext(TsOptionAutoextendSizeContext, 0) as TsOptionAutoextendSizeContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createTableOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77760,7 +77765,7 @@ export class TernaryOptionContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ternaryOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77801,7 +77806,7 @@ export class DefaultCollationContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_defaultCollation;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77842,7 +77847,7 @@ export class DefaultEncryptionContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_defaultEncryption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77883,7 +77888,7 @@ export class DefaultCharsetContext extends ParserRuleContext {
     public EQUAL_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.EQUAL_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_defaultCharset;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77933,7 +77938,7 @@ export class PartitionClauseContext extends ParserRuleContext {
     public partitionDefinitions(): PartitionDefinitionsContext {
         return this.getTypedRuleContext(PartitionDefinitionsContext, 0) as PartitionDefinitionsContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -77962,7 +77967,7 @@ export class PartitionTypeDefContext extends ParserRuleContext {
         super(parent, invokingState);
         this.parser = parser;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionTypeDef;
     }
     public override copyFrom(ctx: PartitionTypeDefContext): void {
@@ -77971,7 +77976,7 @@ export class PartitionTypeDefContext extends ParserRuleContext {
 }
 export class PartitionDefRangeListContext extends PartitionTypeDefContext {
     constructor(parser: MySQLParser, ctx: PartitionTypeDefContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public RANGE_SYMBOL(): TerminalNode {
@@ -78016,7 +78021,7 @@ export class PartitionDefRangeListContext extends PartitionTypeDefContext {
 }
 export class PartitionDefKeyContext extends PartitionTypeDefContext {
     constructor(parser: MySQLParser, ctx: PartitionTypeDefContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public KEY_SYMBOL(): TerminalNode {
@@ -78058,7 +78063,7 @@ export class PartitionDefKeyContext extends PartitionTypeDefContext {
 }
 export class PartitionDefHashContext extends PartitionTypeDefContext {
     constructor(parser: MySQLParser, ctx: PartitionTypeDefContext) {
-        super(parser, ctx.parentCtx, ctx.invokingState);
+        super(parser, ctx.parentCtx as ParserRuleContext, ctx.invokingState);
         super.copyFrom(ctx);
     }
     public HASH_SYMBOL(): TerminalNode {
@@ -78138,7 +78143,7 @@ export class SubPartitionsContext extends ParserRuleContext {
     public partitionKeyAlgorithm(): PartitionKeyAlgorithmContext {
         return this.getTypedRuleContext(PartitionKeyAlgorithmContext, 0) as PartitionKeyAlgorithmContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_subPartitions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78176,7 +78181,7 @@ export class PartitionKeyAlgorithmContext extends ParserRuleContext {
     public real_ulong_number(): Real_ulong_numberContext {
         return this.getTypedRuleContext(Real_ulong_numberContext, 0) as Real_ulong_numberContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionKeyAlgorithm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78223,7 +78228,7 @@ export class PartitionDefinitionsContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionDefinitions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78303,7 +78308,7 @@ export class PartitionDefinitionContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78350,7 +78355,7 @@ export class PartitionValuesInContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionValuesIn;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78425,7 +78430,7 @@ export class PartitionOptionContext extends ParserRuleContext {
     public COMMENT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.COMMENT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78466,7 +78471,7 @@ export class SubpartitionDefinitionContext extends ParserRuleContext {
     public partitionOption(i: number): PartitionOptionContext {
         return this.getTypedRuleContext(PartitionOptionContext, i) as PartitionOptionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_subpartitionDefinition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78513,7 +78518,7 @@ export class PartitionValueItemListParenContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionValueItemListParen;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78548,7 +78553,7 @@ export class PartitionValueItemContext extends ParserRuleContext {
     public MAXVALUE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.MAXVALUE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_partitionValueItem;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78586,7 +78591,7 @@ export class DefinerClauseContext extends ParserRuleContext {
     public user(): UserContext {
         return this.getTypedRuleContext(UserContext, 0) as UserContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_definerClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78621,7 +78626,7 @@ export class IfExistsContext extends ParserRuleContext {
     public EXISTS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EXISTS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ifExists;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78659,7 +78664,7 @@ export class IfNotExistsContext extends ParserRuleContext {
     public EXISTS_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.EXISTS_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ifNotExists;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78697,7 +78702,7 @@ export class IgnoreUnknownUserContext extends ParserRuleContext {
     public USER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.USER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ignoreUnknownUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78739,7 +78744,7 @@ export class ProcedureParameterContext extends ParserRuleContext {
     public INOUT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.INOUT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_procedureParameter;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78774,7 +78779,7 @@ export class FunctionParameterContext extends ParserRuleContext {
     public typeWithOptCollate(): TypeWithOptCollateContext {
         return this.getTypedRuleContext(TypeWithOptCollateContext, 0) as TypeWithOptCollateContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_functionParameter;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78809,7 +78814,7 @@ export class CollateContext extends ParserRuleContext {
     public collationName(): CollationNameContext {
         return this.getTypedRuleContext(CollationNameContext, 0) as CollationNameContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_collate;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78844,7 +78849,7 @@ export class TypeWithOptCollateContext extends ParserRuleContext {
     public collate(): CollateContext {
         return this.getTypedRuleContext(CollateContext, 0) as CollateContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_typeWithOptCollate;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78888,7 +78893,7 @@ export class SchemaIdentifierPairContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_schemaIdentifierPair;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78929,7 +78934,7 @@ export class ViewRefListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewRefList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -78970,7 +78975,7 @@ export class UpdateListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_updateList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79011,7 +79016,7 @@ export class UpdateElementContext extends ParserRuleContext {
     public DEFAULT_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.DEFAULT_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_updateElement;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79046,7 +79051,7 @@ export class CharsetClauseContext extends ParserRuleContext {
     public charsetName(): CharsetNameContext {
         return this.getTypedRuleContext(CharsetNameContext, 0) as CharsetNameContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_charsetClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79084,7 +79089,7 @@ export class FieldsClauseContext extends ParserRuleContext {
     public fieldTerm(i: number): FieldTermContext {
         return this.getTypedRuleContext(FieldTermContext, i) as FieldTermContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldsClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79131,7 +79136,7 @@ export class FieldTermContext extends ParserRuleContext {
     public ESCAPED_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ESCAPED_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldTerm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79169,7 +79174,7 @@ export class LinesClauseContext extends ParserRuleContext {
     public lineTerm(i: number): LineTermContext {
         return this.getTypedRuleContext(LineTermContext, i) as LineTermContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_linesClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79210,7 +79215,7 @@ export class LineTermContext extends ParserRuleContext {
     public STARTING_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STARTING_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lineTerm;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79251,7 +79256,7 @@ export class UserListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79292,7 +79297,7 @@ export class CreateUserListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUserList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79336,7 +79341,7 @@ export class CreateUserContext extends ParserRuleContext {
     public initialAuth(): InitialAuthContext {
         return this.getTypedRuleContext(InitialAuthContext, 0) as InitialAuthContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUser;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79377,7 +79382,7 @@ export class CreateUserWithMfaContext extends ParserRuleContext {
     public identification(i: number): IdentificationContext {
         return this.getTypedRuleContext(IdentificationContext, i) as IdentificationContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_createUserWithMfa;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79424,7 +79429,7 @@ export class IdentificationContext extends ParserRuleContext {
     public identifiedWithPluginByRandomPassword(): IdentifiedWithPluginByRandomPasswordContext {
         return this.getTypedRuleContext(IdentifiedWithPluginByRandomPasswordContext, 0) as IdentifiedWithPluginByRandomPasswordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identification;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79462,7 +79467,7 @@ export class IdentifiedByPasswordContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedByPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79503,7 +79508,7 @@ export class IdentifiedByRandomPasswordContext extends ParserRuleContext {
     public PASSWORD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PASSWORD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedByRandomPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79541,7 +79546,7 @@ export class IdentifiedWithPluginContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedWithPlugin;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79585,7 +79590,7 @@ export class IdentifiedWithPluginAsAuthContext extends ParserRuleContext {
     public textStringHash(): TextStringHashContext {
         return this.getTypedRuleContext(TextStringHashContext, 0) as TextStringHashContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedWithPluginAsAuth;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79629,7 +79634,7 @@ export class IdentifiedWithPluginByPasswordContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedWithPluginByPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79676,7 +79681,7 @@ export class IdentifiedWithPluginByRandomPasswordContext extends ParserRuleConte
     public PASSWORD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PASSWORD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifiedWithPluginByRandomPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79720,7 +79725,7 @@ export class InitialAuthContext extends ParserRuleContext {
     public identifiedByPassword(): IdentifiedByPasswordContext {
         return this.getTypedRuleContext(IdentifiedByPasswordContext, 0) as IdentifiedByPasswordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_initialAuth;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79758,7 +79763,7 @@ export class RetainCurrentPasswordContext extends ParserRuleContext {
     public PASSWORD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PASSWORD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_retainCurrentPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79796,7 +79801,7 @@ export class DiscardOldPasswordContext extends ParserRuleContext {
     public PASSWORD_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.PASSWORD_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_discardOldPassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79852,7 +79857,7 @@ export class UserRegistrationContext extends ParserRuleContext {
     public textStringHash(): TextStringHashContext {
         return this.getTypedRuleContext(TextStringHashContext, 0) as TextStringHashContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userRegistration;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79887,7 +79892,7 @@ export class FactorContext extends ParserRuleContext {
     public FACTOR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FACTOR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_factor;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79922,7 +79927,7 @@ export class ReplacePasswordContext extends ParserRuleContext {
     public textString(): TextStringContext {
         return this.getTypedRuleContext(TextStringContext, 0) as TextStringContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_replacePassword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79957,7 +79962,7 @@ export class UserIdentifierOrTextContext extends ParserRuleContext {
     public userVariable(): UserVariableContext {
         return this.getTypedRuleContext(UserVariableContext, 0) as UserVariableContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_userIdentifierOrText;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -79995,7 +80000,7 @@ export class UserContext extends ParserRuleContext {
     public parentheses(): ParenthesesContext {
         return this.getTypedRuleContext(ParenthesesContext, 0) as ParenthesesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_user;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80030,7 +80035,7 @@ export class LikeClauseContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_likeClause;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80065,7 +80070,7 @@ export class LikeOrWhereContext extends ParserRuleContext {
     public whereClause(): WhereClauseContext {
         return this.getTypedRuleContext(WhereClauseContext, 0) as WhereClauseContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_likeOrWhere;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80100,7 +80105,7 @@ export class OnlineOptionContext extends ParserRuleContext {
     public OFFLINE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.OFFLINE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_onlineOption;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80135,7 +80140,7 @@ export class NoWriteToBinLogContext extends ParserRuleContext {
     public NO_WRITE_TO_BINLOG_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NO_WRITE_TO_BINLOG_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_noWriteToBinLog;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80170,7 +80175,7 @@ export class UsePartitionContext extends ParserRuleContext {
     public identifierListWithParentheses(): IdentifierListWithParenthesesContext {
         return this.getTypedRuleContext(IdentifierListWithParenthesesContext, 0) as IdentifierListWithParenthesesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_usePartition;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80205,7 +80210,7 @@ export class FieldIdentifierContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_fieldIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80237,7 +80242,7 @@ export class ColumnNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80269,7 +80274,7 @@ export class ColumnInternalRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnInternalRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80316,7 +80321,7 @@ export class ColumnInternalRefListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnInternalRefList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80348,7 +80353,7 @@ export class ColumnRefContext extends ParserRuleContext {
     public fieldIdentifier(): FieldIdentifierContext {
         return this.getTypedRuleContext(FieldIdentifierContext, 0) as FieldIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_columnRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80383,7 +80388,7 @@ export class InsertIdentifierContext extends ParserRuleContext {
     public tableWild(): TableWildContext {
         return this.getTypedRuleContext(TableWildContext, 0) as TableWildContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_insertIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80415,7 +80420,7 @@ export class IndexNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80447,7 +80452,7 @@ export class IndexRefContext extends ParserRuleContext {
     public fieldIdentifier(): FieldIdentifierContext {
         return this.getTypedRuleContext(FieldIdentifierContext, 0) as FieldIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_indexRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80491,7 +80496,7 @@ export class TableWildContext extends ParserRuleContext {
     public MULT_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.MULT_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableWild;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80523,7 +80528,7 @@ export class SchemaNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_schemaName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80555,7 +80560,7 @@ export class SchemaRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_schemaRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80587,7 +80592,7 @@ export class ProcedureNameContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_procedureName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80619,7 +80624,7 @@ export class ProcedureRefContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_procedureRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80651,7 +80656,7 @@ export class FunctionNameContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_functionName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80683,7 +80688,7 @@ export class FunctionRefContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_functionRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80715,7 +80720,7 @@ export class TriggerNameContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_triggerName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80747,7 +80752,7 @@ export class TriggerRefContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_triggerRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80782,7 +80787,7 @@ export class ViewNameContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80817,7 +80822,7 @@ export class ViewRefContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_viewRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80849,7 +80854,7 @@ export class TablespaceNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tablespaceName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80881,7 +80886,7 @@ export class TablespaceRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tablespaceRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80913,7 +80918,7 @@ export class LogfileGroupNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_logfileGroupName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80945,7 +80950,7 @@ export class LogfileGroupRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_logfileGroupRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -80977,7 +80982,7 @@ export class EventNameContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_eventName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81009,7 +81014,7 @@ export class EventRefContext extends ParserRuleContext {
     public qualifiedIdentifier(): QualifiedIdentifierContext {
         return this.getTypedRuleContext(QualifiedIdentifierContext, 0) as QualifiedIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_eventRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81041,7 +81046,7 @@ export class UdfNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_udfName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81073,7 +81078,7 @@ export class ServerNameContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_serverName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81105,7 +81110,7 @@ export class ServerRefContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_serverRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81137,7 +81142,7 @@ export class EngineRefContext extends ParserRuleContext {
     public textOrIdentifier(): TextOrIdentifierContext {
         return this.getTypedRuleContext(TextOrIdentifierContext, 0) as TextOrIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_engineRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81172,7 +81177,7 @@ export class TableNameContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81207,7 +81212,7 @@ export class FilterTableRefContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_filterTableRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81248,7 +81253,7 @@ export class TableRefWithWildcardContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableRefWithWildcard;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81283,7 +81288,7 @@ export class TableRefContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81324,7 +81329,7 @@ export class TableRefListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableRefList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81365,7 +81370,7 @@ export class TableAliasRefListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_tableAliasRefList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81397,7 +81402,7 @@ export class ParameterNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_parameterName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81432,7 +81437,7 @@ export class LabelIdentifierContext extends ParserRuleContext {
     public labelKeyword(): LabelKeywordContext {
         return this.getTypedRuleContext(LabelKeywordContext, 0) as LabelKeywordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_labelIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81464,7 +81469,7 @@ export class LabelRefContext extends ParserRuleContext {
     public labelIdentifier(): LabelIdentifierContext {
         return this.getTypedRuleContext(LabelIdentifierContext, 0) as LabelIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_labelRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81499,7 +81504,7 @@ export class RoleIdentifierContext extends ParserRuleContext {
     public roleKeyword(): RoleKeywordContext {
         return this.getTypedRuleContext(RoleKeywordContext, 0) as RoleKeywordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81531,7 +81536,7 @@ export class PluginRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_pluginRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81563,7 +81568,7 @@ export class ComponentRefContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_componentRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81595,7 +81600,7 @@ export class ResourceGroupRefContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_resourceGroupRef;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81627,7 +81632,7 @@ export class WindowNameContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_windowName;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81665,7 +81670,7 @@ export class PureIdentifierContext extends ParserRuleContext {
     public DOUBLE_QUOTED_TEXT(): TerminalNode {
         return this.getToken(MySQLParser.DOUBLE_QUOTED_TEXT, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_pureIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81700,7 +81705,7 @@ export class IdentifierContext extends ParserRuleContext {
     public identifierKeyword(): IdentifierKeywordContext {
         return this.getTypedRuleContext(IdentifierKeywordContext, 0) as IdentifierKeywordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81741,7 +81746,7 @@ export class IdentifierListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81779,7 +81784,7 @@ export class IdentifierListWithParenthesesContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierListWithParentheses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81814,7 +81819,7 @@ export class QualifiedIdentifierContext extends ParserRuleContext {
     public dotIdentifier(): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, 0) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_qualifiedIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81852,7 +81857,7 @@ export class SimpleIdentifierContext extends ParserRuleContext {
     public dotIdentifier(i: number): DotIdentifierContext {
         return this.getTypedRuleContext(DotIdentifierContext, i) as DotIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_simpleIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81887,7 +81892,7 @@ export class DotIdentifierContext extends ParserRuleContext {
     public identifier(): IdentifierContext {
         return this.getTypedRuleContext(IdentifierContext, 0) as IdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_dotIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81934,7 +81939,7 @@ export class Ulong_numberContext extends ParserRuleContext {
     public FLOAT_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.FLOAT_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ulong_number;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -81975,7 +81980,7 @@ export class Real_ulong_numberContext extends ParserRuleContext {
     public ULONGLONG_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.ULONGLONG_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_real_ulong_number;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82019,7 +82024,7 @@ export class Ulonglong_numberContext extends ParserRuleContext {
     public FLOAT_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.FLOAT_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_ulonglong_number;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82060,7 +82065,7 @@ export class Real_ulonglong_numberContext extends ParserRuleContext {
     public LONG_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.LONG_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_real_ulonglong_number;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82101,7 +82106,7 @@ export class SignedLiteralContext extends ParserRuleContext {
     public MINUS_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.MINUS_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signedLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82136,7 +82141,7 @@ export class SignedLiteralOrNullContext extends ParserRuleContext {
     public nullAsLiteral(): NullAsLiteralContext {
         return this.getTypedRuleContext(NullAsLiteralContext, 0) as NullAsLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_signedLiteralOrNull;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82189,7 +82194,7 @@ export class LiteralContext extends ParserRuleContext {
     public UNDERSCORE_CHARSET(): TerminalNode {
         return this.getToken(MySQLParser.UNDERSCORE_CHARSET, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_literal;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82224,7 +82229,7 @@ export class LiteralOrNullContext extends ParserRuleContext {
     public nullAsLiteral(): NullAsLiteralContext {
         return this.getTypedRuleContext(NullAsLiteralContext, 0) as NullAsLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_literalOrNull;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82256,7 +82261,7 @@ export class NullAsLiteralContext extends ParserRuleContext {
     public NULL_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NULL_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_nullAsLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82303,7 +82308,7 @@ export class StringListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_stringList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82339,7 +82344,7 @@ export class TextStringLiteralContext extends ParserRuleContext {
     public DOUBLE_QUOTED_TEXT(): TerminalNode {
         return this.getToken(MySQLParser.DOUBLE_QUOTED_TEXT, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textStringLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82377,7 +82382,7 @@ export class TextStringContext extends ParserRuleContext {
     public BIN_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.BIN_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textString;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82412,7 +82417,7 @@ export class TextStringHashContext extends ParserRuleContext {
     public HEX_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.HEX_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textStringHash;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82453,7 +82458,7 @@ export class TextLiteralContext extends ParserRuleContext {
     public UNDERSCORE_CHARSET(): TerminalNode {
         return this.getToken(MySQLParser.UNDERSCORE_CHARSET, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82485,7 +82490,7 @@ export class TextStringNoLinebreakContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textStringNoLinebreak;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82526,7 +82531,7 @@ export class TextStringLiteralListContext extends ParserRuleContext {
     public COMMA_SYMBOL(i: number): TerminalNode {
         return this.getToken(MySQLParser.COMMA_SYMBOL, i);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textStringLiteralList;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82564,7 +82569,7 @@ export class NumLiteralContext extends ParserRuleContext {
     public FLOAT_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.FLOAT_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_numLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82599,7 +82604,7 @@ export class BoolLiteralContext extends ParserRuleContext {
     public FALSE_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.FALSE_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_boolLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82634,7 +82639,7 @@ export class NullLiteralContext extends ParserRuleContext {
     public NULL2_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.NULL2_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_nullLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82672,7 +82677,7 @@ export class Int64LiteralContext extends ParserRuleContext {
     public ULONGLONG_NUMBER(): TerminalNode {
         return this.getToken(MySQLParser.ULONGLONG_NUMBER, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_int64Literal;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82713,7 +82718,7 @@ export class TemporalLiteralContext extends ParserRuleContext {
     public TIMESTAMP_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.TIMESTAMP_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_temporalLiteral;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82748,7 +82753,7 @@ export class FloatOptionsContext extends ParserRuleContext {
     public precision(): PrecisionContext {
         return this.getTypedRuleContext(PrecisionContext, 0) as PrecisionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_floatOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82780,7 +82785,7 @@ export class StandardFloatOptionsContext extends ParserRuleContext {
     public precision(): PrecisionContext {
         return this.getTypedRuleContext(PrecisionContext, 0) as PrecisionContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_standardFloatOptions;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82824,7 +82829,7 @@ export class PrecisionContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_precision;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82859,7 +82864,7 @@ export class TextOrIdentifierContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_textOrIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82894,7 +82899,7 @@ export class LValueIdentifierContext extends ParserRuleContext {
     public lValueKeyword(): LValueKeywordContext {
         return this.getTypedRuleContext(LValueKeywordContext, 0) as LValueKeywordContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lValueIdentifier;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82929,7 +82934,7 @@ export class RoleIdentifierOrTextContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleIdentifierOrText;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82964,7 +82969,7 @@ export class SizeNumberContext extends ParserRuleContext {
     public pureIdentifier(): PureIdentifierContext {
         return this.getTypedRuleContext(PureIdentifierContext, 0) as PureIdentifierContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_sizeNumber;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -82999,7 +83004,7 @@ export class ParenthesesContext extends ParserRuleContext {
     public CLOSE_PAR_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.CLOSE_PAR_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_parentheses;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83034,7 +83039,7 @@ export class EqualContext extends ParserRuleContext {
     public ASSIGN_OPERATOR(): TerminalNode {
         return this.getToken(MySQLParser.ASSIGN_OPERATOR, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_equal;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83078,7 +83083,7 @@ export class OptionTypeContext extends ParserRuleContext {
     public SESSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SESSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_optionType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83119,7 +83124,7 @@ export class RvalueSystemVariableTypeContext extends ParserRuleContext {
     public SESSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SESSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_rvalueSystemVariableType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83166,7 +83171,7 @@ export class SetVarIdentTypeContext extends ParserRuleContext {
     public SESSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SESSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_setVarIdentType;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83198,7 +83203,7 @@ export class JsonAttributeContext extends ParserRuleContext {
     public textStringLiteral(): TextStringLiteralContext {
         return this.getTypedRuleContext(TextStringLiteralContext, 0) as TextStringLiteralContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_jsonAttribute;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83257,7 +83262,7 @@ export class IdentifierKeywordContext extends ParserRuleContext {
     public identifierKeywordsAmbiguous4SystemVariables(): IdentifierKeywordsAmbiguous4SystemVariablesContext {
         return this.getTypedRuleContext(IdentifierKeywordsAmbiguous4SystemVariablesContext, 0) as IdentifierKeywordsAmbiguous4SystemVariablesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83295,7 +83300,7 @@ export class IdentifierKeywordsAmbiguous1RolesAndLabelsContext extends ParserRul
     public SHUTDOWN_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SHUTDOWN_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeywordsAmbiguous1RolesAndLabels;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83429,7 +83434,7 @@ export class IdentifierKeywordsAmbiguous2LabelsContext extends ParserRuleContext
     public XA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.XA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeywordsAmbiguous2Labels;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83497,7 +83502,7 @@ export class LabelKeywordContext extends ParserRuleContext {
     public identifierKeywordsAmbiguous4SystemVariables(): IdentifierKeywordsAmbiguous4SystemVariablesContext {
         return this.getTypedRuleContext(IdentifierKeywordsAmbiguous4SystemVariablesContext, 0) as IdentifierKeywordsAmbiguous4SystemVariablesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_labelKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -83553,7 +83558,7 @@ export class IdentifierKeywordsAmbiguous3RolesContext extends ParserRuleContext 
     public SUPER_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SUPER_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeywordsAmbiguous3Roles;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -84851,7 +84856,7 @@ export class IdentifierKeywordsUnambiguousContext extends ParserRuleContext {
     public STREAM_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.STREAM_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeywordsUnambiguous;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -84895,7 +84900,7 @@ export class RoleKeywordContext extends ParserRuleContext {
     public identifierKeywordsAmbiguous4SystemVariables(): IdentifierKeywordsAmbiguous4SystemVariablesContext {
         return this.getTypedRuleContext(IdentifierKeywordsAmbiguous4SystemVariablesContext, 0) as IdentifierKeywordsAmbiguous4SystemVariablesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -84936,7 +84941,7 @@ export class LValueKeywordContext extends ParserRuleContext {
     public identifierKeywordsAmbiguous3Roles(): IdentifierKeywordsAmbiguous3RolesContext {
         return this.getTypedRuleContext(IdentifierKeywordsAmbiguous3RolesContext, 0) as IdentifierKeywordsAmbiguous3RolesContext;
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_lValueKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -84980,7 +84985,7 @@ export class IdentifierKeywordsAmbiguous4SystemVariablesContext extends ParserRu
     public SESSION_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.SESSION_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_identifierKeywordsAmbiguous4SystemVariables;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -85195,7 +85200,7 @@ export class RoleOrIdentifierKeywordContext extends ParserRuleContext {
     public XA_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.XA_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleOrIdentifierKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {
@@ -86217,7 +86222,7 @@ export class RoleOrLabelKeywordContext extends ParserRuleContext {
     public ADMIN_SYMBOL(): TerminalNode {
         return this.getToken(MySQLParser.ADMIN_SYMBOL, 0);
     }
-    public get ruleIndex(): number {
+    public override get ruleIndex(): number {
         return MySQLParser.RULE_roleOrLabelKeyword;
     }
     public enterRule(listener: MySQLParserListener): void {

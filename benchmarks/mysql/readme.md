@@ -17,7 +17,9 @@ The antlr4ts test results came from the Jest tests of the [MySQL Shell for VS Co
 
 All applications used the same [MySQL grammar](https://github.com/mysql/mysql-shell-plugins/tree/master/gui/frontend/src/parsing/mysql) and the same data files.
 
-The query collection file contains more than 900 MySQL queries of all kinds, from very simple to complex stored procedures (minimum MySQL server version used was 8.0.0). The large binary inserts file contains only a few queries but they are really large, stressing so the prediction engine of the parser. Additionally, one query contains binary (image) data which contains input characters from the whole UTF-8 range.
+The query collection file contains more than 900 MySQL queries of all kinds, from very simple to complex stored procedures, including some deeply nested select queries that can easily exhaust available stack space. The minimum MySQL server version used was 8.0.0.
+
+The large binary inserts file contains only a few dozen queries, but they are really large with deep recursions, stressing so the prediction engine of the parser. Additionally, one query contains binary (image) data which contains input characters from the whole UTF-8 range.
 
 Each number has been measured 5 times and the average was used in the table above.
 
