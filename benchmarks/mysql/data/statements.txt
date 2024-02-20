@@ -2221,10 +2221,14 @@ xa commit '1'$$
 xa recover$$
 
 purge binary logs to 'blah'$$
-purge master logs before (select * from customer)$$
-change master to master_bind = 'blah', relay_log_pos = 1, ignore_server_ids = (1, 2, 3, 4)$$
-start slave relay_thread, sql_thread, sql_thread until master_log_pos = 42 user = 'mike'$$
-stop slave relay_thread, sql_thread$$
+[<80024]purge master logs before (select * from customer)$$
+[<80024]change master to master_bind = 'blah', relay_log_pos = 1, ignore_server_ids = (1, 2, 3, 4)$$
+[<80024]start slave relay_thread, sql_thread, sql_thread until master_log_pos = 42 user = 'mike'$$
+[<80024]stop slave relay_thread, sql_thread$$
+[>=80024]purge replication source logs before (select * from customer)$$
+[>=80024]change replication source to source_bind = 'blah', relay_log_pos = 1, ignore_server_ids = (1, 2, 3, 4)$$
+[>=80024]start replica relay_thread, sql_thread, sql_thread until source_log_pos = 42 user = 'mike'$$
+[>=80024]stop replica relay_thread, sql_thread$$
 
 prepare s1 from 'select * from customer'$$
 prepare s2 from @select_var$$
@@ -2263,7 +2267,8 @@ cache index actor index (idx_actor_last_name, primary, primary), category key (p
 kill query 1$$
 load index into cache inventory$$
 [<80000]reset master, query cache, slave$$
-reset master, slave$$
+[<80024]reset master, slave$$
+[>=80024]reset replication source, replica$$
 
 describe sakila.inventory store_id$$
 [<80000]explain extended replace staff (staff_id, address_id, active) (select staff_id, address_id, active from staff where staff_id < 5) union (select staff_id, address_id, active from staff where staff_id > 10)$$
@@ -2892,3 +2897,7 @@ create user mike identified by 'a'$$
 [>=80031]revoke proxy on mike from current_user() ignore unknown user$$
 [>=80031]analyze table a, b, c update histogram on x using data 'xyz' $$
 [>=80031]select 1 except select 2 $$
+[>=80100]show parse tree drop logfile group Test WAIT, WAIT, storage engine = InnoDB $$
+[>=80200]load xml concurrent from S3 'blah' count 10 in primary key order into table dummy ignore 10 lines parallel=10 memory =100 algorithm = bulk $$
+[>=80200]select * qualify 1 + 1 $$
+[>=80200]analyze table a, b, c update histogram on x with 10 buckets manual update $$

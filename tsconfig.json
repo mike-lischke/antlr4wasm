@@ -10,7 +10,7 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "noImplicitAny": true,
-        "noImplicitOverride": true,
+        "noImplicitOverride": false,
         "strictNullChecks": true,
         "strictPropertyInitialization": true,
         "removeComments": false,

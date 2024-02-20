@@ -36,6 +36,7 @@
     ],
     "import": [],
     "ignorePaths": [
-        "wasm/antlr4-runtime-wasm.js"
+        "wasm/antlr4-runtime-wasm.js",
+        "benchmarks/**/targets"
     ]
 }

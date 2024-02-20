@@ -10,6 +10,14 @@ A potential improvement of the wasm version is probably to also generate the par
 
 ## Build
 
+Patch the antlr4 runtime:
+
+```bash
+patch --directory . -p1 --unified < antlr4.patch
+```
+
+in the node_modules directory.
+
 To build the wasm module, you need to have the [Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html) installed. Then you can build the module with:
 
 ```bash

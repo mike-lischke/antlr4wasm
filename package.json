@@ -20,17 +20,26 @@
     "scripts": {
         "build-wasm-debug": "./scripts/build-debug.sh",
         "build-wasm-release": "./scripts/build-release.sh",
+        "build-cpp": "cd benchmarks/mysql/targets/antlr4-cpp/ && ./build.sh",
         "build-ts": "tsc -w",
         "generate-test-parser": "./scripts/generate.sh",
         "generate-benchmark-parsers": "cd ./benchmarks/mysql && ./generate.sh",
-        "run-benchmarks": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/run-benchmarks.ts"
+        "run-cpp-benchmark": "cd benchmarks/mysql/targets/antlr4-cpp/ && ./mysql-benchmark",
+        "run-antlr4ng-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4ng/run-benchmark.ts",
+        "run-antlr4-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4/run-benchmark.ts",
+        "run-antlr4ts-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4ts/run-benchmark.ts",
+        "run-antlr4wasm-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4wasm/run-benchmark.ts",
+        "run-benchmarks": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/run-benchmark.ts"
     },
     "devDependencies": {
         "@tsconfig/node-lts-strictest-esm": "18.12.1",
         "@types/emscripten": "1.39.7",
+        "@types/node": "20.11.19",
         "antlr4": "4.13.0",
+        "antlr4ng": "2.0.10",
+        "antlr4ts": "0.5.0-alpha.4",
+        "antlr4ts-cli": "0.5.0-alpha.4",
         "ts-node": "10.9.1",
         "typescript": "5.1.6"
-    },
-    "dependencies": {}
+    }
 }
