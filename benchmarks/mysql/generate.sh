@@ -20,7 +20,7 @@ java -jar ../../antlr/antlr4-4.13.2-SNAPSHOT-complete.jar \
     -Dlanguage=TypeScript -o ./targets/antlr4ng -visitor -listener -package antlr4 -Xexact-output-dir -Werror \
     ./targets/antlr4ng/MySQLLexer.g4 ./targets/antlr4ng/MySQLParser.g4
 
-# ANTLR4TS
+# antlr4ts
 antlr4ts \
     -o ./targets/antlr4ts -visitor -listener -package antlr4 -Xexact-output-dir -Werror \
     ./targets/antlr4ts/MySQLLexer.g4 ./targets/antlr4ts/MySQLParser.g4

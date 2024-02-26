@@ -28,8 +28,7 @@
         "run-antlr4ng-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4ng/run-benchmark.ts",
         "run-antlr4-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4/run-benchmark.ts",
         "run-antlr4ts-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4ts/run-benchmark.ts",
-        "run-antlr4wasm-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4wasm/run-benchmark.ts",
-        "run-benchmarks": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/run-benchmark.ts"
+        "run-antlr4wasm-benchmark": "node --no-warnings=ExperimentalWarning --loader ts-node/esm benchmarks/mysql/targets/antlr4wasm/run-benchmark.ts"
     },
     "devDependencies": {
         "@tsconfig/node-lts-strictest-esm": "18.12.1",
