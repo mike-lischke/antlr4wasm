@@ -16,7 +16,7 @@ java -jar ../../antlr/antlr-4.13.1-complete.jar \
     ./targets/antlr4/MySQLLexer.g4 ./targets/antlr4/MySQLParser.g4
 
 # New TypeScript
-java -jar ../../antlr/antlr4-4.13.2-SNAPSHOT-complete.jar \
+antlr4ng \
     -Dlanguage=TypeScript -o ./targets/antlr4ng -visitor -listener -package antlr4 -Xexact-output-dir -Werror \
     ./targets/antlr4ng/MySQLLexer.g4 ./targets/antlr4ng/MySQLParser.g4
 

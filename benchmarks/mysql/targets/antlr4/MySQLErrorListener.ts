@@ -106,7 +106,7 @@ export class MySQLErrorListener extends ErrorListener<ParserATNSimulator | Lexer
         let message = "";
 
         // If not undefined then offendingSymbol is of type Token.
-        if (offendingSymbol) {
+        /*if (offendingSymbol) {
             // Need to clone the symbol to avoid releasing the original token prematurely.
             let token = offendingSymbol as unknown as Token;
 
@@ -134,7 +134,7 @@ export class MySQLErrorListener extends ErrorListener<ParserATNSimulator | Lexer
                 if (expected.contains(tokenType)) {
                     invalidForVersion = true;
                 }
-                */
+                /
             }
 
             if (invalidForVersion) {
@@ -329,7 +329,7 @@ export class MySQLErrorListener extends ErrorListener<ParserATNSimulator | Lexer
                     input.index - lexer._tokenStartCharIndex);
 
             }
-        }
+        }*/
     }
 
     private intervalToString(set: IntervalSet, maxCount: number, vocabulary: Vocabulary): string {

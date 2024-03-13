@@ -14,7 +14,6 @@ em++ \
     -o wasm/antlr4-runtime-wasm.js\
     -s EXPORT_ES6=1\
     -s WASM=1\
-    -s WASM_BIGINT=1\
     -s ALLOW_MEMORY_GROWTH=1\
     -s FILESYSTEM=0\
     -s MODULARIZE\

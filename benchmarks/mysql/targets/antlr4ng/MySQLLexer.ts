@@ -1419,7 +1419,7 @@ export class MySQLLexer extends MySQLBaseLexer {
 
     public get modeNames(): string[] { return MySQLLexer.modeNames; }
 
-    public override action(localContext: antlr.RuleContext | null, ruleIndex: number, actionIndex: number): void {
+    public override action(localContext: antlr.ParserRuleContext | null, ruleIndex: number, actionIndex: number): void {
         switch (ruleIndex) {
         case 21:
             this.LOGICAL_OR_OPERATOR_action(localContext, actionIndex);
@@ -1546,294 +1546,294 @@ export class MySQLLexer extends MySQLBaseLexer {
             break;
         }
     }
-    private LOGICAL_OR_OPERATOR_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private LOGICAL_OR_OPERATOR_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 0:
              this.type = this.isSqlModeActive(SqlMode.PipesAsConcat) ? MySQLLexer.CONCAT_PIPES_SYMBOL : MySQLLexer.LOGICAL_OR_OPERATOR; 
             break;
         }
     }
-    private INT_NUMBER_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private INT_NUMBER_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 1:
              this.type = this.determineNumericType(this.text); 
             break;
         }
     }
-    private DOT_IDENTIFIER_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private DOT_IDENTIFIER_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 2:
              this.emitDot(); 
             break;
         }
     }
-    private ADDDATE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private ADDDATE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 3:
              this.type = this.determineFunction(MySQLLexer.ADDDATE_SYMBOL); 
             break;
         }
     }
-    private BIT_AND_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private BIT_AND_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 4:
              this.type = this.determineFunction(MySQLLexer.BIT_AND_SYMBOL); 
             break;
         }
     }
-    private BIT_OR_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private BIT_OR_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 5:
              this.type = this.determineFunction(MySQLLexer.BIT_OR_SYMBOL); 
             break;
         }
     }
-    private BIT_XOR_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private BIT_XOR_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 6:
              this.type = this.determineFunction(MySQLLexer.BIT_XOR_SYMBOL); 
             break;
         }
     }
-    private CAST_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private CAST_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 7:
              this.type = this.determineFunction(MySQLLexer.CAST_SYMBOL); 
             break;
         }
     }
-    private COUNT_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private COUNT_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 8:
              this.type = this.determineFunction(MySQLLexer.COUNT_SYMBOL); 
             break;
         }
     }
-    private CURDATE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private CURDATE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 9:
              this.type = this.determineFunction(MySQLLexer.CURDATE_SYMBOL); 
             break;
         }
     }
-    private CURRENT_DATE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private CURRENT_DATE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 10:
              this.type = this.determineFunction(MySQLLexer.CURDATE_SYMBOL); 
             break;
         }
     }
-    private CURRENT_TIME_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private CURRENT_TIME_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 11:
              this.type = this.determineFunction(MySQLLexer.CURTIME_SYMBOL); 
             break;
         }
     }
-    private CURTIME_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private CURTIME_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 12:
              this.type = this.determineFunction(MySQLLexer.CURTIME_SYMBOL); 
             break;
         }
     }
-    private DATE_ADD_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private DATE_ADD_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 13:
              this.type = this.determineFunction(MySQLLexer.DATE_ADD_SYMBOL); 
             break;
         }
     }
-    private DATE_SUB_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private DATE_SUB_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 14:
              this.type = this.determineFunction(MySQLLexer.DATE_SUB_SYMBOL); 
             break;
         }
     }
-    private EXTRACT_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private EXTRACT_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 15:
              this.type = this.determineFunction(MySQLLexer.EXTRACT_SYMBOL); 
             break;
         }
     }
-    private GROUP_CONCAT_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private GROUP_CONCAT_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 16:
              this.type = this.determineFunction(MySQLLexer.GROUP_CONCAT_SYMBOL); 
             break;
         }
     }
-    private MAX_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private MAX_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 17:
              this.type = this.determineFunction(MySQLLexer.MAX_SYMBOL); 
             break;
         }
     }
-    private MID_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private MID_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 18:
              this.type = this.determineFunction(MySQLLexer.SUBSTRING_SYMBOL); 
             break;
         }
     }
-    private MIN_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private MIN_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 19:
              this.type = this.determineFunction(MySQLLexer.MIN_SYMBOL); 
             break;
         }
     }
-    private NOT_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private NOT_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 20:
              this.type = this.isSqlModeActive(SqlMode.HighNotPrecedence) ? MySQLLexer.NOT2_SYMBOL: MySQLLexer.NOT_SYMBOL; 
             break;
         }
     }
-    private NOW_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private NOW_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 21:
              this.type = this.determineFunction(MySQLLexer.NOW_SYMBOL); 
             break;
         }
     }
-    private POSITION_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private POSITION_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 22:
              this.type = this.determineFunction(MySQLLexer.POSITION_SYMBOL); 
             break;
         }
     }
-    private SESSION_USER_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SESSION_USER_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 23:
              this.type = this.determineFunction(MySQLLexer.USER_SYMBOL); 
             break;
         }
     }
-    private STDDEV_SAMP_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private STDDEV_SAMP_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 24:
              this.type = this.determineFunction(MySQLLexer.STDDEV_SAMP_SYMBOL); 
             break;
         }
     }
-    private STDDEV_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private STDDEV_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 25:
              this.type = this.determineFunction(MySQLLexer.STD_SYMBOL); 
             break;
         }
     }
-    private STDDEV_POP_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private STDDEV_POP_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 26:
              this.type = this.determineFunction(MySQLLexer.STD_SYMBOL); 
             break;
         }
     }
-    private STD_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private STD_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 27:
              this.type = this.determineFunction(MySQLLexer.STD_SYMBOL); 
             break;
         }
     }
-    private SUBDATE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SUBDATE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 28:
              this.type = this.determineFunction(MySQLLexer.SUBDATE_SYMBOL); 
             break;
         }
     }
-    private SUBSTR_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SUBSTR_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 29:
              this.type = this.determineFunction(MySQLLexer.SUBSTRING_SYMBOL); 
             break;
         }
     }
-    private SUBSTRING_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SUBSTRING_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 30:
              this.type = this.determineFunction(MySQLLexer.SUBSTRING_SYMBOL); 
             break;
         }
     }
-    private SUM_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SUM_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 31:
              this.type = this.determineFunction(MySQLLexer.SUM_SYMBOL); 
             break;
         }
     }
-    private SYSDATE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SYSDATE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 32:
              this.type = this.determineFunction(MySQLLexer.SYSDATE_SYMBOL); 
             break;
         }
     }
-    private SYSTEM_USER_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private SYSTEM_USER_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 33:
              this.type = this.determineFunction(MySQLLexer.USER_SYMBOL); 
             break;
         }
     }
-    private TRIM_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private TRIM_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 34:
              this.type = this.determineFunction(MySQLLexer.TRIM_SYMBOL); 
             break;
         }
     }
-    private VARIANCE_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private VARIANCE_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 35:
              this.type = this.determineFunction(MySQLLexer.VARIANCE_SYMBOL); 
             break;
         }
     }
-    private VAR_POP_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private VAR_POP_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 36:
              this.type = this.determineFunction(MySQLLexer.VARIANCE_SYMBOL); 
             break;
         }
     }
-    private VAR_SAMP_SYMBOL_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private VAR_SAMP_SYMBOL_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 37:
              this.type = this.determineFunction(MySQLLexer.VAR_SAMP_SYMBOL); 
             break;
         }
     }
-    private UNDERSCORE_CHARSET_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private UNDERSCORE_CHARSET_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 38:
              this.type = this.checkCharset(this.text); 
             break;
         }
     }
-    private MYSQL_COMMENT_START_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private MYSQL_COMMENT_START_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 39:
              this.inVersionComment = true; 
             break;
         }
     }
-    private VERSION_COMMENT_END_action(localContext: antlr.RuleContext | null, actionIndex: number): void {
+    private VERSION_COMMENT_END_action(localContext: antlr.ParserRuleContext | null, actionIndex: number): void {
         switch (actionIndex) {
         case 40:
              this.inVersionComment = false; 
             break;
         }
     }
-    public override sempred(localContext: antlr.RuleContext | null, ruleIndex: number, predIndex: number): boolean {
+    public override sempred(localContext: antlr.ParserRuleContext | null, ruleIndex: number, predIndex: number): boolean {
         switch (ruleIndex) {
         case 360:
             return this.MASTER_AUTO_POSITION_SYMBOL_sempred(localContext, predIndex);
@@ -2092,889 +2092,889 @@ export class MySQLLexer extends MySQLBaseLexer {
         }
         return true;
     }
-    private MASTER_AUTO_POSITION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_AUTO_POSITION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 0:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_BIND_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_BIND_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 1:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_CONNECT_RETRY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_CONNECT_RETRY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 2:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_DELAY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_DELAY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 3:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_HOST_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_HOST_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 4:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_LOG_FILE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_LOG_FILE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 5:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_LOG_POS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_LOG_POS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 6:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_PASSWORD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_PASSWORD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 7:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_PORT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_PORT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 8:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_RETRY_COUNT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_RETRY_COUNT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 9:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CAPATH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CAPATH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 10:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CA_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CA_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 11:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CERT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CERT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 12:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CIPHER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CIPHER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 13:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CRL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CRL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 14:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_CRLPATH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_CRLPATH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 15:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_KEY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_KEY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 16:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 17:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SSL_VERIFY_SERVER_CERT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SSL_VERIFY_SERVER_CERT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 18:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 19:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_TLS_VERSION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_TLS_VERSION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 20:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_USER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_USER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 21:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_HEARTBEAT_PERIOD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_HEARTBEAT_PERIOD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 22:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private UDF_RETURNS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private UDF_RETURNS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 23:
             return this.serverVersion < 80031;
         }
         return true;
     }
-    private REMOTE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REMOTE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 24:
             return this.serverVersion < 80014;
         }
         return true;
     }
-    private GET_MASTER_PUBLIC_KEY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GET_MASTER_PUBLIC_KEY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 25:
             return this.serverVersion < 80024;
         }
         return true;
     }
-    private RESTART_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private RESTART_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 26:
             return this.serverVersion >= 80011;
         }
         return true;
     }
-    private DEFINITION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private DEFINITION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 27:
             return this.serverVersion >= 80011;
         }
         return true;
     }
-    private DESCRIPTION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private DESCRIPTION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 28:
             return this.serverVersion >= 80011;
         }
         return true;
     }
-    private ORGANIZATION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ORGANIZATION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 29:
             return this.serverVersion >= 80011;
         }
         return true;
     }
-    private REFERENCE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REFERENCE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 30:
             return this.serverVersion >= 80011;
         }
         return true;
     }
-    private OPTIONAL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private OPTIONAL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 31:
             return this.serverVersion >= 80013;
         }
         return true;
     }
-    private SECONDARY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SECONDARY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 32:
             return this.serverVersion >= 80013;
         }
         return true;
     }
-    private SECONDARY_ENGINE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SECONDARY_ENGINE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 33:
             return this.serverVersion >= 80013;
         }
         return true;
     }
-    private SECONDARY_LOAD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SECONDARY_LOAD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 34:
             return this.serverVersion >= 80013;
         }
         return true;
     }
-    private SECONDARY_UNLOAD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SECONDARY_UNLOAD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 35:
             return this.serverVersion >= 80013;
         }
         return true;
     }
-    private ACTIVE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ACTIVE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 36:
             return this.serverVersion >= 80014;
         }
         return true;
     }
-    private INACTIVE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private INACTIVE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 37:
             return this.serverVersion >= 80014;
         }
         return true;
     }
-    private LATERAL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private LATERAL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 38:
             return this.serverVersion >= 80014;
         }
         return true;
     }
-    private RETAIN_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private RETAIN_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 39:
             return this.serverVersion >= 80014;
         }
         return true;
     }
-    private OLD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private OLD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 40:
             return this.serverVersion >= 80014;
         }
         return true;
     }
-    private NETWORK_NAMESPACE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private NETWORK_NAMESPACE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 41:
             return this.serverVersion >= 80017;
         }
         return true;
     }
-    private ENFORCED_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ENFORCED_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 42:
             return this.serverVersion >= 80017;
         }
         return true;
     }
-    private ARRAY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ARRAY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 43:
             return this.serverVersion >= 80017;
         }
         return true;
     }
-    private OJ_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private OJ_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 44:
             return this.serverVersion >= 80017;
         }
         return true;
     }
-    private MEMBER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MEMBER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 45:
             return this.serverVersion >= 80017;
         }
         return true;
     }
-    private RANDOM_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private RANDOM_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 46:
             return this.serverVersion >= 80018;
         }
         return true;
     }
-    private MASTER_COMPRESSION_ALGORITHM_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_COMPRESSION_ALGORITHM_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 47:
             return this.serverVersion >= 80018 && this.serverVersion < 80024;
         }
         return true;
     }
-    private MASTER_ZSTD_COMPRESSION_LEVEL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_ZSTD_COMPRESSION_LEVEL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 48:
             return this.serverVersion >= 80018;
         }
         return true;
     }
-    private PRIVILEGE_CHECKS_USER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private PRIVILEGE_CHECKS_USER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 49:
             return this.serverVersion >= 80018;
         }
         return true;
     }
-    private MASTER_TLS_CIPHERSUITES_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MASTER_TLS_CIPHERSUITES_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 50:
             return this.serverVersion >= 80018;
         }
         return true;
     }
-    private REQUIRE_ROW_FORMAT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REQUIRE_ROW_FORMAT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 51:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private PASSWORD_LOCK_TIME_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private PASSWORD_LOCK_TIME_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 52:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private FAILED_LOGIN_ATTEMPTS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private FAILED_LOGIN_ATTEMPTS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 53:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private REQUIRE_TABLE_PRIMARY_KEY_CHECK_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REQUIRE_TABLE_PRIMARY_KEY_CHECK_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 54:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private STREAM_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private STREAM_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 55:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private OFF_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private OFF_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 56:
             return this.serverVersion >= 80019;
         }
         return true;
     }
-    private RETURNING_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private RETURNING_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 57:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private JSON_VALUE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private JSON_VALUE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 58:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private TLS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private TLS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 59:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private ATTRIBUTE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ATTRIBUTE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 60:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private ENGINE_ATTRIBUTE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ENGINE_ATTRIBUTE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 61:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SECONDARY_ENGINE_ATTRIBUTE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SECONDARY_ENGINE_ATTRIBUTE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 62:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_CONNECTION_AUTO_FAILOVER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_CONNECTION_AUTO_FAILOVER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 63:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private ZONE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ZONE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 64:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private GRAMMAR_SELECTOR_DERIVED_EXPR_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GRAMMAR_SELECTOR_DERIVED_EXPR_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 65:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private REPLICA_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REPLICA_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 66:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private REPLICAS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REPLICAS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 67:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private ASSIGN_GTIDS_TO_ANONYMOUS_TRANSACTIONS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ASSIGN_GTIDS_TO_ANONYMOUS_TRANSACTIONS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 68:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private GET_SOURCE_PUBLIC_KEY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GET_SOURCE_PUBLIC_KEY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 69:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_AUTO_POSITION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_AUTO_POSITION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 70:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_BIND_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_BIND_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 71:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_COMPRESSION_ALGORITHM_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_COMPRESSION_ALGORITHM_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 72:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_CONNECT_RETRY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_CONNECT_RETRY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 73:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_DELAY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_DELAY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 74:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_HEARTBEAT_PERIOD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_HEARTBEAT_PERIOD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 75:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_HOST_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_HOST_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 76:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_LOG_FILE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_LOG_FILE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 77:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_LOG_POS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_LOG_POS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 78:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_PASSWORD_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_PASSWORD_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 79:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_PORT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_PORT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 80:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_PUBLIC_KEY_PATH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_PUBLIC_KEY_PATH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 81:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_RETRY_COUNT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_RETRY_COUNT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 82:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 83:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CA_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CA_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 84:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CAPATH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CAPATH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 85:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CERT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CERT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 86:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CIPHER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CIPHER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 87:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CRL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CRL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 88:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_CRLPATH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_CRLPATH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 89:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_KEY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_KEY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 90:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_SSL_VERIFY_SERVER_CERT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_SSL_VERIFY_SERVER_CERT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 91:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_TLS_CIPHERSUITES_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_TLS_CIPHERSUITES_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 92:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_TLS_VERSION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_TLS_VERSION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 93:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_USER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_USER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 94:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private SOURCE_ZSTD_COMPRESSION_LEVEL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SOURCE_ZSTD_COMPRESSION_LEVEL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 95:
             return this.serverVersion >= 80024;
         }
         return true;
     }
-    private ST_COLLECT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private ST_COLLECT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 96:
             return this.serverVersion >= 80025;
         }
         return true;
     }
-    private KEYRING_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private KEYRING_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 97:
             return this.serverVersion >= 80025;
         }
         return true;
     }
-    private AUTHENTICATION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private AUTHENTICATION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 98:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private FACTOR_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private FACTOR_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 99:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private FINISH_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private FINISH_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 100:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private INITIATE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private INITIATE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 101:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private REGISTRATION_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private REGISTRATION_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 102:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private UNREGISTER_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private UNREGISTER_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 103:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private INITIAL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private INITIAL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 104:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private CHALLENGE_RESPONSE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private CHALLENGE_RESPONSE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 105:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private GTID_ONLY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GTID_ONLY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 106:
             return this.serverVersion >= 80027;
         }
         return true;
     }
-    private INTERSECT_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private INTERSECT_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 107:
             return this.serverVersion >= 80031;
         }
         return true;
     }
-    private BULK_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private BULK_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 108:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private URL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private URL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 109:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private GENERATE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GENERATE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 110:
             return this.serverVersion >= 80032;
         }
         return true;
     }
-    private PARSE_TREE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private PARSE_TREE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 111:
             return this.serverVersion >= 80100;
         }
         return true;
     }
-    private LOG_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private LOG_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 112:
             return this.serverVersion >= 80032;
         }
         return true;
     }
-    private GTIDS_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private GTIDS_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 113:
             return this.serverVersion >= 80032;
         }
         return true;
     }
-    private PARALLEL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private PARALLEL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 114:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private S3_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private S3_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 115:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private QUALIFY_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private QUALIFY_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 116:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private AUTO_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private AUTO_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 117:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private MANUAL_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private MANUAL_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 118:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private BENROULLI_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private BENROULLI_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 119:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private TABLESAMPLE_SYMBOL_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private TABLESAMPLE_SYMBOL_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 120:
             return this.serverVersion >= 80200;
         }
         return true;
     }
-    private BACK_TICK_QUOTED_ID_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private BACK_TICK_QUOTED_ID_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 121:
             return !this.isSqlModeActive(SqlMode.NoBackslashEscapes);
         }
         return true;
     }
-    private DOUBLE_QUOTED_TEXT_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private DOUBLE_QUOTED_TEXT_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 122:
             return !this.isSqlModeActive(SqlMode.NoBackslashEscapes);
         }
         return true;
     }
-    private SINGLE_QUOTED_TEXT_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private SINGLE_QUOTED_TEXT_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 123:
             return !this.isSqlModeActive(SqlMode.NoBackslashEscapes);
         }
         return true;
     }
-    private DOLLAR_QUOTED_STRING_TEXT_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private DOLLAR_QUOTED_STRING_TEXT_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 124:
             return this.supportMle;
         }
         return true;
     }
-    private VERSION_COMMENT_START_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private VERSION_COMMENT_START_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 125:
             return this.checkMySQLVersion(this.text);
         }
         return true;
     }
-    private VERSION_COMMENT_END_sempred(localContext: antlr.RuleContext | null, predIndex: number): boolean {
+    private VERSION_COMMENT_END_sempred(localContext: antlr.ParserRuleContext | null, predIndex: number): boolean {
         switch (predIndex) {
         case 126:
             return this.inVersionComment;

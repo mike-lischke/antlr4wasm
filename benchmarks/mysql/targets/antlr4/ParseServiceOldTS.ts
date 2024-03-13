@@ -11,7 +11,7 @@ import MySQLLexer from "./MySQLLexer.js";
 import MySQLParser from "./MySQLParser.js";
 import { IParserErrorInfo, IStatementSpan, MySQLParseUnit } from "../../helpers.js";
 
-import { MySQLErrorListener } from "./MySQLErrorListener.js";
+import { MySQLErrorListener } from "./MySQLErrorListener";
 
 export class ParseService {
     private errors: IParserErrorInfo[] = [];

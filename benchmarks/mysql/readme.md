@@ -35,16 +35,69 @@ Cold tests only ran once, while the warm tests have been executed 5 times, the 2
   - Using wasm exceptions requires [additional handling](https://emscripten.org/docs/porting/exceptions.html#handling-c-exceptions-from-javascript).
   - Exceptions thrown in C++ cannot be identified using `instanceof` in JS. To get wasm exception information, you can enable `-sEXPORT_EXCEPTION_HANDLING_HELPERS`, but that will partially disable optimization.
 
-## Notes on the TypeScript Runtime
-
-The existing TypeScript runtime only comes with a subset of the required type definitions, so it did not compile out of the box. This [patch file](../antlr4%20TS%20runtime%20changes.patch) contains the minimal changes required to make it compile.
-
-Also the generated files need some (manual) changes: the test scripts are executed using ts-node with Node.js' ESM support enabled. This requires that all imports must include the `.js` extension (even for TypeScript source files). And there are a couple actions in the MySQL grammar that are tailored to the new WebAssembly runtime, for example `this.type = ...`, which need to be changed to `this._type = ...`.
-
 ## Running the Benchmarks
 
-Before you can run the JS/TS benchmarks, you have to generate the parser code and you must install the antlr4 runtime, by running `npm install` in the root directory of this repository. After that generate the parser code by running `npm run generate-benchmark-parsers`. This will generate the parser code for 3 targets: C++, JS/TS and WebAssembly in the `benchmarks/mysql/targets` folder.
+### Installing Dependencies
 
-The C++ benchmark first must be built. You need `clang` for that. The (very simple, no fancy cmake) `build.sh` script will create an executable named `mysql-benchmark` in the same folder, which you can directly execute from there (don't move it, or the paths won't work anymore).
+You first have install all dependencies needed for building and running the benchmarks.
 
-After that run the benchmarks using `npm run run-benchmarks`. This will run the WebAssembly parser first and then the JS/TS parser. Each run will print its results to the console.
+- C++ Runtime: you need `clang` installed on your box. Use your package manager or similar to install that if necessary.
+- JS and TS runtimes: run `npm i` in the root of the project, which will install antlr4, antlr4ts and antlr4ng packages.
+- C++ WASM Runtime: this is the most complex one to set up. Follow the [Getting Started](https://emscripten.org/docs/getting_started/downloads.html) description on how to install emscripten.
+
+### Building
+
+The next step is to generate the benchmark parser. Run
+
+```bash
+npm run generate-benchmark-parsers
+```
+
+which will run a script that does the actual work.
+
+> Note: there's no Windows batch file yet. You have to run each of the calls to ANTLR4 manually.
+
+Then build the C++ benchmark app, by executing:
+
+```bash
+npm run build-cpp
+```
+
+and finally the WebAssembly:
+
+```bash
+npm run build-wasm-release
+```
+
+Once all this has succeeded you are ready to run the benchmarks.
+
+### Benchmarks Execution
+
+For each runtime there's a separate NPM script available. They follow the pattern `run-xyz-benchmark` where `xyz` is either `antlr4ng`, `antlr4`, `antlr4ts` or `antlr4wasm`. Each of them will print a record like this:
+
+```
+Starting  MySQL C++ parser benchmarks
+Splitter tests took 20 ms
+Running antlr4 C++ parser once (cold)
+    Found 944 statements in file 1 (statements.txt).
+    Parsing all statements took: 1350 ms
+    Found 529 statements in file 2 (bitrix_queries_cut.sql).
+    Parsing all statements took: 201 ms
+    Found 57 statements in file 3 (sakila-db/sakila-data.sql).
+    Parsing all statements took: 4967 ms
+Overall parse run took: 6539 ms
+Running antlr4 C++ parser 5 times (warm) .....
+    File 1 took  131 ms
+    File 2 took  69 ms
+    File 3 took  4935 ms
+Overall parse run took 5157 ms
+Done
+```
+
+This is the command to run the C++ benchmark:
+
+```bash
+npm run run-cpp-benchmark
+```
+
+Alternatively, you can open the project in VS Code, open the NPM Scripts sidebar section and click the play button for each entry.
