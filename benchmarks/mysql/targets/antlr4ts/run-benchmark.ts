@@ -49,19 +49,19 @@ const relationMap = new Map<string, number>([
 ]);
 
 /**
- * Similar like checkStatementVersion, but only extracts the statement version and checks that against the given
- * minimum version. Relational operators are only used to adjust the extracted version.
+ * Determines if the version info in the statement matches the given version (if there's version info at all).
+ * The version info is removed from the statement, if any.
  *
  * @param statement The statement with an optional version part at the beginning.
- * @param minimumVersion The server version to match the version part against.
+ * @param serverVersion The server version to match the version part against.
  *
  * @returns The check result.
  */
-export const checkMinStatementVersion = (statement: string, minimumVersion: number): IVersionCheckResult => {
+export const checkStatementVersion = (statement: string, serverVersion: number): IVersionCheckResult => {
     const result: IVersionCheckResult = {
         matched: true,
         statement,
-        version: minimumVersion,
+        version: serverVersion,
     };
 
     const matches = statement.match(versionPattern);
@@ -72,13 +72,40 @@ export const checkMinStatementVersion = (statement: string, minimumVersion: numb
         result.version = parseInt(matches[2], 10);
 
         switch (relationMap.get(relation)) {
-            case 0: { // Less than the given version.
+            case 0: {
+                if (serverVersion >= result.version) {
+                    result.matched = false;
+                }
                 --result.version;
 
                 break;
             }
 
-            case 4: { // Greater than the given version.
+            case 1: {
+                if (serverVersion > result.version) {
+                    result.matched = false;
+                }
+                break;
+            }
+
+            case 2: {
+                if (serverVersion !== result.version) {
+                    result.matched = false;
+                }
+                break;
+            }
+
+            case 3: {
+                if (serverVersion < result.version) {
+                    result.matched = false;
+                }
+                break;
+            }
+
+            case 4: {
+                if (serverVersion <= result.version) {
+                    result.matched = false;
+                }
                 ++result.version;
 
                 break;
@@ -87,8 +114,6 @@ export const checkMinStatementVersion = (statement: string, minimumVersion: numb
             default:
         }
     }
-
-    result.matched = result.version >= minimumVersion;
 
     return result;
 };
@@ -157,10 +182,6 @@ const parseFiles = (logResults: boolean): number[] => {
 
     const result: number[] = [];
 
-    //parsingService.errorCheck("select 1", MySQLParseUnit.Generic, 80400, "ANSI_QUOTES");
-
-    //return result;
-
     testFiles.forEach((entry, index) => {
         const sql = fs.readFileSync(path.join(path.dirname(__filename), entry.name), { encoding: "utf-8" });
 
@@ -178,7 +199,7 @@ const parseFiles = (logResults: boolean): number[] => {
             const statement = sql.substring(range.span.start, end).trim();
 
             // The parser only supports syntax from 8.0 onwards. So we expect errors for older statements.
-            const checkResult = checkMinStatementVersion(statement, 80400);
+            const checkResult = checkStatementVersion(statement, 80400);
             if (checkResult.matched) {
                 let error: IParserErrorInfo | undefined;
                 const result = parsingService.errorCheck(checkResult.statement, MySQLParseUnit.Generic,
@@ -195,6 +216,7 @@ const parseFiles = (logResults: boolean): number[] => {
             } else {
                 // Ignore all other statements. Since we don't check for versions below 8.0 in the grammar they
                 // may unexpectedly succeed.
+                console.log(`Ignoring statement ${index} with version ${checkResult.version}:\n${statement}`);
             }
         });
 

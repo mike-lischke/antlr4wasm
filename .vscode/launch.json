@@ -29,7 +29,7 @@
                 "--no-warnings=ExperimentalWarning",
                 "--loader",
                 "ts-node/esm",
-                "./benchmarks/mysql/targets/antlr4/run-benchmark.ts",
+                "./benchmarks/mysql/targets/antlr4ts/run-benchmark.ts",
             ],
         }
     ]
